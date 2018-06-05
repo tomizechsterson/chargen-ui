@@ -13,6 +13,29 @@
   font-size: 1.5em;
 }
 
-.App-intro {
+ul.selectorHeader li {
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+}
+
+ul.selectorHeader {
+  background-color: #111;
+  padding: 0;
+}
+
+ul.selectorHeader li a {
+  color: #FFF;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  display: inline-block;
+}
+
+.selectorContent {
   font-size: large;
+}
+
+.active {
+  background-color: #60605e;
 }

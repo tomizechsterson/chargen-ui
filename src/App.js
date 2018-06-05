@@ -18,7 +18,7 @@ class App extends Component {
                         <li><NavLink to="/add2">AD&D 2nd Edition</NavLink></li>
                         <li><NavLink to="/dd35">D&D 3.5</NavLink></li>
                     </ul>
-                    <div className="content">
+                    <div className="selectorContent">
                         <Route exact path="/" component={Home} />
                         <Route path="/add2" component={ADD2} />
                         <Route path="/dd35" component={DD35} />

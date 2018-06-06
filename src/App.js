@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Route, NavLink, HashRouter} from "react-router-dom";
 import './App.css';
 import HomeSelector from "./HomeSelector";
-import ADD2Selector from "./ADD2/ADD2Selector";
+import ADD2Selector from "./ADD2Selector";
 import DD35Selector from "./DD35/DD35Selector";
 
 export default class App extends Component {

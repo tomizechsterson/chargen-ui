@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 
-class ADD2 extends Component {
+class DD35Selector extends Component {
     render() {
         return (
             <div>
-                <p>This is for AD&D 2nd edition characters</p>
+                <p>D&D 3.5 characters</p>
             </div>
         );
     }
 }
-export default ADD2;
+export default DD35Selector;

@@ -5,7 +5,7 @@ import HomeSelector from "./HomeSelector";
 import ADD2Selector from "./ADD2/ADD2Selector";
 import DD35Selector from "./DD35/DD35Selector";
 
-class App extends Component {
+export default class App extends Component {
     render() {
         return (
             <HashRouter>
@@ -29,4 +29,3 @@ class App extends Component {
         );
     }
 }
-export default App;

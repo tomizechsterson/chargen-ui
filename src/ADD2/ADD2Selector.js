@@ -1,10 +1,12 @@
 import React, {Component} from "react";
+import ADD2Characters from "./ADD2Characters";
 
 class ADD2Selector extends Component {
     render() {
         return (
             <div>
-                <p>This is for AD&D 2nd edition characters</p>
+                <p>Character List</p>
+                <ADD2Characters/>
             </div>
         );
     }

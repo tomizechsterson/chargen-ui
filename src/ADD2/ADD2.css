@@ -1,0 +1,11 @@
+.add2Characters {
+    column-count: 2;
+    column-rule-style: solid;
+}
+
+.add2CharactersColumn {
+    column-span: 1;
+}
+
+.selectedADD2Column {
+}

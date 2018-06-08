@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ADD2CharacterTable from './ADD2CharacterTable';
+import ADD2CharacterDetails from './ADD2CharacterDetails';
 
 const testData = [
     {id: 1, name: 'Biff', playedBy: 'someone', completionStep: 2, str: 18, dex: 14, con: 9, int: 16, wis: 11, chr: 12},
@@ -71,11 +72,11 @@ export default class ADD2Characters extends Component {
                 <ADD2CharacterTable characters={this.state.characterData}
                                     onCharacterSelect={this.handleSelect} />
                 <div>
-                    <p>Selected Character Details</p>
-                    <p>Selected Character Details</p>
-                    <p>Selected Character Details</p>
-                    <p>Selected Character Details</p>
-                    <p>Selected Character Details</p>
+                    <ADD2CharacterDetails/>
+                    <ADD2CharacterDetails/>
+                    <ADD2CharacterDetails/>
+                    <ADD2CharacterDetails/>
+                    <ADD2CharacterDetails/>
                 </div>
             </div>
         );

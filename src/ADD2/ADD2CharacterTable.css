@@ -1,11 +1,11 @@
 table {
     width: 100%;
+    border-collapse: collapse;
 }
 
-th {
-    text-align: left;
-    background-color: #60605e;
-    color: white;
+th, td {
+    border: 1px solid #dddddd;
+    padding: 5px;
 }
 
 tr:nth-child(even) {
@@ -14,4 +14,12 @@ tr:nth-child(even) {
 
 tr:hover {
     background-color: #A0A0Ae;
+}
+
+th {
+    text-align: left;
+    background-color: #60605e;
+    color: white;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }

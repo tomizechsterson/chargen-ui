@@ -15,8 +15,11 @@ export default class ADD2Characters extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            characterData: []
+            characterData: [],
+            selected: null
         };
+
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
     loadCharsFromServer() {
@@ -34,6 +37,25 @@ export default class ADD2Characters extends Component {
         }
     }
 
+    handleSelect(id) {
+        if(this.state.selected === null) {
+            for(let i = 0; i < this.state.characterData.length; i++) {
+                if(this.state.characterData[i].id === id) {
+                    this.setState({selected: this.state.characterData[i]});
+                    return; // is this really needed??
+                }
+            }
+        }
+        else {
+            for(let i = 0; i < this.state.characterData.length; i++) {
+                if(this.state.characterData[i].id === id && this.state.selected.id !== id) {
+                    this.setState({selected: this.state.characterData[i]});
+                    return; // Same
+                }
+            }
+        }
+    }
+
     componentDidMount() {
         this.loadCharsFromServer();
     }
@@ -46,8 +68,15 @@ export default class ADD2Characters extends Component {
 
         return (
             <div style={topLevelStyle}>
-                <ADD2CharacterTable characters={this.state.characterData} />
-                <p>Selected Character Details</p>
+                <ADD2CharacterTable characters={this.state.characterData}
+                                    onCharacterSelect={this.handleSelect} />
+                <div>
+                    <p>Selected Character Details</p>
+                    <p>Selected Character Details</p>
+                    <p>Selected Character Details</p>
+                    <p>Selected Character Details</p>
+                    <p>Selected Character Details</p>
+                </div>
             </div>
         );
     }

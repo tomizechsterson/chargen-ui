@@ -9,7 +9,7 @@ export default class ADD2CharacterTable extends Component {
     }
 
     static createRows(item) {
-        return <tr key={item.id} onClick={() => alert('clicked row:\nid:' + item.id)}>
+        return <tr key={item.id} onClick={() => this.props.onCharacterSelect(item.id)}>
             <td>{item.name}</td>
             <td>{item.playedBy}</td>
             <td>No</td>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './ADD2CharacterTable.css';
 
 export default class ADD2CharacterTable extends Component {
     constructor(props) {
@@ -16,15 +17,11 @@ export default class ADD2CharacterTable extends Component {
     }
 
     render() {
-        const tableStyle = {
-            width: '100%'
-        };
-
         const entries = this.props.characters;
         const rowItems = entries.map(ADD2CharacterTable.createRows);
 
         return (
-            <table style={tableStyle}>
+            <table>
                 <thead>
                 <tr>
                     <th>Name</th>

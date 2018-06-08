@@ -1,0 +1,17 @@
+table {
+    width: 100%;
+}
+
+th {
+    text-align: left;
+    background-color: #60605e;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #A0A0Ae;
+}

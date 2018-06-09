@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route, NavLink, HashRouter} from "react-router-dom";
+import {Route, NavLink, BrowserRouter} from "react-router-dom";
 import './App.css';
 import SelectorHome from "./SelectorHome";
 import SelectorADD2 from "./SelectorADD2";
@@ -8,7 +8,7 @@ import SelectorDD35 from "./SelectorDD35";
 export default class App extends Component {
     render() {
         return (
-            <HashRouter>
+            <BrowserRouter>
                 <div className="App">
                     <header className="App-header">
                         <h1 className="App-title">Character Generator</h1>
@@ -24,7 +24,7 @@ export default class App extends Component {
                         <Route path="/dd35" component={SelectorDD35} />
                     </div>
                 </div>
-            </HashRouter>
+            </BrowserRouter>
         );
     }
 }

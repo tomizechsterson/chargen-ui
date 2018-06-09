@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Route, NavLink, HashRouter} from "react-router-dom";
 import './App.css';
-import HomeSelector from "./HomeSelector";
-import ADD2Selector from "./ADD2Selector";
-import DD35Selector from "./DD35Selector";
+import SelectorHome from "./SelectorHome";
+import SelectorADD2 from "./SelectorADD2";
+import SelectorDD35 from "./SelectorDD35";
 
 export default class App extends Component {
     render() {
@@ -19,9 +19,9 @@ export default class App extends Component {
                         <li><NavLink to="/dd35">D&D 3.5</NavLink></li>
                     </ul>
                     <div className="selectorContent">
-                        <Route exact path="/" component={HomeSelector} />
-                        <Route path="/add2" component={ADD2Selector} />
-                        <Route path="/dd35" component={DD35Selector} />
+                        <Route exact path="/" component={SelectorHome} />
+                        <Route path="/add2" component={SelectorADD2} />
+                        <Route path="/dd35" component={SelectorDD35} />
                     </div>
 
                 </div>

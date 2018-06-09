@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-class DD35Selector extends Component {
+class SelectorDD35 extends Component {
     render() {
         return (
             <div>
@@ -9,4 +9,4 @@ class DD35Selector extends Component {
         );
     }
 }
-export default DD35Selector;
+export default SelectorDD35;

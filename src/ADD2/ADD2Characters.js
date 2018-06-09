@@ -43,7 +43,6 @@ export default class ADD2Characters extends Component {
             for(let i = 0; i < this.state.characterData.length; i++) {
                 if(this.state.characterData[i].id === id) {
                     this.setState({selected: this.state.characterData[i]});
-                    return; // is this really needed??
                 }
             }
         }
@@ -51,7 +50,6 @@ export default class ADD2Characters extends Component {
             for(let i = 0; i < this.state.characterData.length; i++) {
                 if(this.state.characterData[i].id === id && this.state.selected.id !== id) {
                     this.setState({selected: this.state.characterData[i]});
-                    return; // Same
                 }
             }
         }

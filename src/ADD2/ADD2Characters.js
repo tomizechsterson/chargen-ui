@@ -3,7 +3,7 @@ import ADD2CharacterTable from './ADD2CharacterTable';
 import ADD2CharacterDetails from './ADD2CharacterDetails';
 
 const testData = [
-    {id: 1, name: 'Biff', playedBy: 'someone', completionStep: 2, str: 18, dex: 14, con: 9, int: 16, wis: 11, chr: 12},
+    {id: 1, name: 'Big McLargeHuge', playedBy: 'someone', completionStep: 2, str: 18, dex: 14, con: 9, int: 16, wis: 11, chr: 12},
     {id: 2, name: 'Gristle', playedBy: 'someone else', completionStep: 1, str: 0, dex: 0, con: 0, int: 0, wis: 0, chr: 0},
     {id: 3, name: 'Crunch', playedBy: 'person', completionStep: 1, str: 0, dex: 0, con: 0, int: 0, wis: 0, chr: 0},
     {id: 4, name: 'Rip', playedBy: 'another person', completionStep: 2, str: 12, dex: 12, con: 10, int: 6, wis: 18, chr: 15},
@@ -62,21 +62,19 @@ export default class ADD2Characters extends Component {
     }
 
     render() {
-        const topLevelStyle = {
+        const topLevelColumnsStyle = {
             columnCount: 2,
-            columnRuleStyle: 'solid'
+            columnRuleStyle: 'solid',
+            columnFill: 'balance',
+            breakAfter: 'column'
         };
 
         return (
-            <div style={topLevelStyle}>
+            <div style={topLevelColumnsStyle}>
                 <ADD2CharacterTable characters={this.state.characterData}
                                     onCharacterSelect={this.handleSelect} />
                 <div>
-                    <ADD2CharacterDetails/>
-                    <ADD2CharacterDetails/>
-                    <ADD2CharacterDetails/>
-                    <ADD2CharacterDetails/>
-                    <ADD2CharacterDetails/>
+                    <ADD2CharacterDetails selectedChar={this.state.selected}/>
                 </div>
             </div>
         );

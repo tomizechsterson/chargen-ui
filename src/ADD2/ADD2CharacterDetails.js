@@ -1,11 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-export default class ADD2CharacterDetails extends Component {
-    render() {
-        return (
-            <div>
-                <p>Selected Character Details</p>
-            </div>
-        );
-    }
-}
+const ADD2CharacterDetails = (props) => {
+    const {selectedChar} = props;
+    const isOneSelected = Boolean(selectedChar);
+
+    return (
+        <div>
+            {isOneSelected && <p>{selectedChar.name}</p>}
+            {!isOneSelected && <p>No character selected</p>}
+        </div>
+    );
+};
+export default ADD2CharacterDetails;

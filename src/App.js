@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Route, NavLink, HashRouter} from "react-router-dom";
 import './App.css';
 import SelectorHome from "./SelectorHome";
 import SelectorADD2 from "./SelectorADD2";
 import SelectorDD35 from "./SelectorDD35";
 
-const App = () => {
+export default class App extends Component {
+    render() {
         return (
             <HashRouter>
                 <div className="App">
@@ -25,5 +26,5 @@ const App = () => {
                 </div>
             </HashRouter>
         );
-};
-export default App;
+    }
+}

@@ -23,7 +23,6 @@ export default class App extends Component {
                         <Route path="/add2" component={SelectorADD2} />
                         <Route path="/dd35" component={SelectorDD35} />
                     </div>
-
                 </div>
             </HashRouter>
         );

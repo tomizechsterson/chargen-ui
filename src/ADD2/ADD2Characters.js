@@ -21,7 +21,6 @@ export default class ADD2Characters extends Component {
         };
 
         this.handleSelect = this.handleSelect.bind(this);
-        this.loadCharsFromServer = this.loadCharsFromServer.bind(this);
     }
 
     loadCharsFromServer() {
@@ -56,17 +55,8 @@ export default class ADD2Characters extends Component {
         }
     }
 
-    componentWillMount() {
-        console.log('componentWillMount');
-    }
-
     componentDidMount() {
-        console.log('componentDidMount');
         this.loadCharsFromServer();
-    }
-
-    componentWillUnmount() {
-        console.log('componentWillUnmount');
     }
 
     render() {

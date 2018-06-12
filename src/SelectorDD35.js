@@ -1,12 +1,10 @@
-import React, {Component} from "react";
+import React from 'react';
 
-class SelectorDD35 extends Component {
-    render() {
-        return (
-            <div>
-                <p>D&D 3.5 characters</p>
-            </div>
-        );
-    }
-}
+const SelectorDD35 = () => {
+    return (
+        <div>
+            <p>D&D 3.5 characters</p>
+        </div>
+    );
+};
 export default SelectorDD35;

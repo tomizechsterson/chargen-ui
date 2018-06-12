@@ -21,6 +21,7 @@ export default class ADD2Characters extends Component {
         };
 
         this.handleSelect = this.handleSelect.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     loadCharsFromServer() {
@@ -55,6 +56,21 @@ export default class ADD2Characters extends Component {
         }
     }
 
+    handleDelete(id) {
+        const index = this.state.characterData.findIndex(function(o) {return o.id === id;});
+        this.state.characterData.splice(index, 1);
+        this.setState({selected: null});
+
+        if(!useTestData) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('delete', 'http://localhost:42000/api/add2character/' + id, true);
+            xhr.onload = function() {
+                this.loadCharsFromServer();
+            }.bind(this);
+            xhr.send();
+        }
+    }
+
     componentDidMount() {
         this.loadCharsFromServer();
     }
@@ -72,7 +88,8 @@ export default class ADD2Characters extends Component {
                 <ADD2CharacterTable characters={this.state.characterData}
                                     onCharacterSelect={this.handleSelect} />
                 <div>
-                    <ADD2CharacterDetails selectedChar={this.state.selected}/>
+                    <ADD2CharacterDetails selectedChar={this.state.selected}
+                                          onDelete={this.handleDelete} />
                 </div>
             </div>
         );

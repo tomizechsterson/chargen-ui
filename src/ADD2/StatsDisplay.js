@@ -13,4 +13,4 @@ const StatsDisplay = (props) => {
         </p>
     );
 };
-export default StatsDisplay
+export default StatsDisplay;

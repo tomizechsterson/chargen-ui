@@ -6,10 +6,10 @@ const ADD2CharacterTable = (props) => {
     const completeStep = 2;
     const entries = props.characters;
     const rowItems = entries.map(function(item) {
-        return <tr key={item.id} onClick={() => props.onCharacterSelect(item.id)}>
+        return <tr key={item.id} onClick={() => props.onSelect(item.id)}>
             <td>{item.name}</td>
-            <td>{item.playedBy}</td>
             <td>{item.completionStep === completeStep ? 'Yes' : 'No'}</td>
+            <td><button onClick={() => props.onDelete(item.id)} >Delete</button></td>
         </tr>
     });
 
@@ -18,8 +18,8 @@ const ADD2CharacterTable = (props) => {
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Played By</th>
                 <th>Completed?</th>
+                <th>Delete?</th>
             </tr>
             </thead>
             <tbody>

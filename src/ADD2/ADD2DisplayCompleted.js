@@ -7,7 +7,6 @@ const ADD2DisplayCompleted = (props) => {
             <div>
                 <h3>{props.selectedCharacter.name}</h3>
                 <p>Played by: {props.selectedCharacter.playedBy}</p>
-                <button onClick={() => props.onDelete(props.selectedCharacter.id)}>Delete</button>
             </div>
         </div>
     );

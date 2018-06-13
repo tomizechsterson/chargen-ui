@@ -173,7 +173,6 @@ export default class ADD2Characters extends Component {
             for (let i = 0; i < this.state.characterData.length; i++) {
                 if (this.state.characterData[i].id === id) {
                     this.setState({selected: this.state.characterData[i]});
-                    console.log(this.state.characterData[i]);
                 }
             }
         }
@@ -181,7 +180,6 @@ export default class ADD2Characters extends Component {
             for (let i = 0; i < this.state.characterData.length; i++) {
                 if (this.state.characterData[i].id === id && this.state.selected.id !== id) {
                     this.setState({selected: this.state.characterData[i]});
-                    console.log(this.state.characterData[i]);
                 }
             }
         }
@@ -219,10 +217,10 @@ export default class ADD2Characters extends Component {
         return (
             <div style={topLevelColumnsStyle}>
                 <ADD2CharacterTable characters={this.state.characterData}
-                                    onCharacterSelect={this.handleSelect}/>
+                                    onSelect={this.handleSelect}
+                                    onDelete={this.handleDelete} />
                 <div>
-                    <ADD2CharacterDetails selectedChar={this.state.selected}
-                                          onDelete={this.handleDelete}/>
+                    <ADD2CharacterDetails selectedChar={this.state.selected} />
                 </div>
             </div>
         );

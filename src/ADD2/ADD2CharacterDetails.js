@@ -9,7 +9,7 @@ const ADD2CharacterDetails = (props) => {
     return (
         <div>
             {isOneSelected && selectedChar.completionStep === completeStep &&
-            <ADD2DisplayCompleted selectedCharacter={selectedChar} onDelete={props.onDelete}/>}
+            <ADD2DisplayCompleted selectedCharacter={selectedChar} />}
             {isOneSelected && selectedChar.completionStep < completeStep && <div>Creation component</div>}
             {!isOneSelected && <p>No character selected</p>}
         </div>

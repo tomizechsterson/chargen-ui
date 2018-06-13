@@ -189,16 +189,25 @@ export default class ADD2Characters extends Component {
         const index = this.state.characterData.findIndex(function (o) {
             return o.id === id;
         });
-        this.state.characterData.splice(index, 1);
-        this.setState({selected: null});
 
-        if (!useTestData) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('delete', 'http://localhost:42000/api/add2character/' + id, true);
-            xhr.onload = function () {
-                this.loadCharsFromServer();
-            }.bind(this);
-            xhr.send();
+        const charToDelete = this.state.characterData[index];
+
+        if(window.confirm('Are you sure you want to delete ' + charToDelete.name + ', the ' + charToDelete.race + ' ' + charToDelete.className + '?')) {
+            this.state.characterData.splice(index, 1);
+
+            if(charToDelete.id === this.state.selected.id)
+                this.setState({selected: null});
+            else
+                this.setState({selected: this.state.selected});
+
+            if (!useTestData) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('delete', 'http://localhost:42000/api/add2character/' + id, true);
+                xhr.onload = function () {
+                    this.loadCharsFromServer();
+                }.bind(this);
+                xhr.send();
+            }
         }
     }
 

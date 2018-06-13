@@ -1,4 +1,5 @@
 import React from 'react';
+import ADD2DisplayCompleted from "./ADD2DisplayCompleted";
 
 const ADD2CharacterDetails = (props) => {
     const {selectedChar} = props;
@@ -7,9 +8,8 @@ const ADD2CharacterDetails = (props) => {
 
     return (
         <div>
-            {isOneSelected && selectedChar.completionStep === completeStep && <div>
-                <button type="button" onClick={() => props.onDelete(selectedChar.id)}>Delete</button>
-                <p>{selectedChar.name}</p></div>}
+            {isOneSelected && selectedChar.completionStep === completeStep &&
+            <ADD2DisplayCompleted selectedCharacter={selectedChar} onDelete={props.onDelete}/>}
             {isOneSelected && selectedChar.completionStep < completeStep && <div>Creation component</div>}
             {!isOneSelected && <p>No character selected</p>}
         </div>

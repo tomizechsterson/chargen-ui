@@ -1,5 +1,6 @@
 import React from 'react';
 import StatsDisplay from "./StatsDisplay";
+import VitalsDisplay from "./VitalsDisplay";
 
 const ADD2DisplayCompleted = (props) => {
     const {selectedChar} = props;
@@ -9,8 +10,7 @@ const ADD2DisplayCompleted = (props) => {
             <div>
                 <h4>{selectedChar.name}</h4>
                 <p>Played by: {selectedChar.playedBy}</p>
-                <p>Race: {selectedChar.race} Gender: {selectedChar.gender} Class: {selectedChar.className}</p>
-                <p>Age: {selectedChar.age} Height: {selectedChar.height} Weight: {selectedChar.weight}</p>
+                <VitalsDisplay selectedChar={selectedChar}/>
                 <StatsDisplay selectedChar={selectedChar}/>
             </div>
         </div>

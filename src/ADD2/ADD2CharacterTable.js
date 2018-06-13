@@ -11,7 +11,6 @@ const ADD2CharacterTable = (props) => {
             <td>{item.race}</td>
             <td>{item.className}</td>
             <td>{item.completionStep === completeStep ? 'Yes' : 'No'}</td>
-            <td><button onClick={() => props.onDelete(item.id)} >Delete</button></td>
         </tr>
     });
 
@@ -23,7 +22,6 @@ const ADD2CharacterTable = (props) => {
                 <th>Race</th>
                 <th>Class</th>
                 <th>Completed?</th>
-                <th>Delete?</th>
             </tr>
             </thead>
             <tbody>

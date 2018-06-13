@@ -229,7 +229,8 @@ export default class ADD2Characters extends Component {
                                     onSelect={this.handleSelect}
                                     onDelete={this.handleDelete} />
                 <div>
-                    <ADD2CharacterDetails selectedChar={this.state.selected} />
+                    <ADD2CharacterDetails selectedChar={this.state.selected}
+                                          onDelete={this.handleDelete} />
                 </div>
             </div>
         );

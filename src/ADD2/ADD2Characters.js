@@ -152,6 +152,7 @@ export default class ADD2Characters extends Component {
 
         this.handleSelect = this.handleSelect.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     loadCharsFromServer() {
@@ -211,6 +212,10 @@ export default class ADD2Characters extends Component {
         }
     }
 
+    handleUpdate(character) {
+        alert('updating character ' + character.name);
+    }
+
     componentDidMount() {
         this.loadCharsFromServer();
     }
@@ -226,11 +231,11 @@ export default class ADD2Characters extends Component {
         return (
             <div style={topLevelColumnsStyle}>
                 <ADD2CharacterTable characters={this.state.characterData}
-                                    onSelect={this.handleSelect}
-                                    onDelete={this.handleDelete} />
+                                    onSelect={this.handleSelect} />
                 <div>
                     <ADD2CharacterDetails selectedChar={this.state.selected}
-                                          onDelete={this.handleDelete} />
+                                          onDelete={this.handleDelete}
+                                          onUpdate={this.handleUpdate} />
                 </div>
             </div>
         );

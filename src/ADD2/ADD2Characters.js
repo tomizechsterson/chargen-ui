@@ -147,7 +147,8 @@ export default class ADD2Characters extends Component {
         super(props);
         this.state = {
             characterData: [],
-            selected: null
+            selected: null,
+            newCharName: ''
         };
 
         this.handleSelect = this.handleSelect.bind(this);
@@ -216,6 +217,27 @@ export default class ADD2Characters extends Component {
         alert('updating character ' + character.name);
     }
 
+    handleCreate() {
+        if(this.state.newCharName.trim() !== '') {
+            let newId = 0;
+            const characters = this.state.characterData;
+            if(characters.length === 0)
+                newId = 1;
+            else
+                newId = characters[characters.length - 1].id + 1;
+
+            const char = {id: newId, name: this.state.newCharName, race: 'none', className: 'none'};
+            const newChars = characters.concat([char]);
+            this.setState({characterData: newChars, newCharName: ''});
+        }
+        else
+            this.setState({newCharName: ''});
+    }
+
+    handleNewNameChange(e) {
+        this.setState({newCharName: e.target.value});
+    }
+
     componentDidMount() {
         this.loadCharsFromServer();
     }
@@ -230,8 +252,12 @@ export default class ADD2Characters extends Component {
 
         return (
             <div style={topLevelColumnsStyle}>
-                <ADD2CharacterTable characters={this.state.characterData}
-                                    onSelect={this.handleSelect} />
+                <div>
+                    <button onClick={() => this.handleCreate()}>Create</button>
+                    <input type="text" maxLength="32" placeholder="character name" value={this.state.newCharName} onChange={(e) => this.handleNewNameChange(e)}/>
+                    <ADD2CharacterTable characters={this.state.characterData}
+                                        onSelect={this.handleSelect} />
+                </div>
                 <div>
                     <ADD2CharacterDetails selectedChar={this.state.selected}
                                           onDelete={this.handleDelete}

@@ -140,7 +140,7 @@ const testData = [
     }
 ];
 
-const useTestData = true;
+const useTestData = false;
 
 export default class ADD2Characters extends Component {
     constructor(props) {
@@ -168,6 +168,22 @@ export default class ADD2Characters extends Component {
             }.bind(this);
             xhr.send();
         }
+    }
+
+    appendFormData(character) {
+        const formData = new FormData();
+        formData.append('name', character.name);
+        formData.append('playedBy', character.playedBy);
+        formData.append('str', character.str);
+        formData.append('dex', character.dex);
+        formData.append('con', character.con);
+        formData.append('int', character.int);
+        formData.append('wis', character.wis);
+        formData.append('chr', character.chr);
+        formData.append('race', character.race);
+        formData.append('className', character.className);
+        formData.append('completionStep', character.completionStep);
+        return formData;
     }
 
     handleSelect(id) {
@@ -214,7 +230,7 @@ export default class ADD2Characters extends Component {
     }
 
     handleUpdate(character) {
-        alert('updating character ' + character.name);
+        console.log('updating character ' + character.name);
     }
 
     handleCreate() {
@@ -229,6 +245,18 @@ export default class ADD2Characters extends Component {
             const char = {id: newId, name: this.state.newCharName, race: 'none', className: 'none'};
             const newChars = characters.concat([char]);
             this.setState({characterData: newChars, newCharName: ''});
+
+            if(!useTestData) {
+                const formData = this.appendFormData(char);
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('post', 'http://localhost:42000/api/add2character/new', true);
+                xhr.onload = function() {
+                    this.loadCharsFromServer();
+                }.bind(this);
+                xhr.setRequestHeader('content-type', 'application/json');
+                xhr.send(formData);
+            }
         }
         else
             this.setState({newCharName: ''});

@@ -170,22 +170,6 @@ export default class ADD2Characters extends Component {
         }
     }
 
-    appendFormData(character) {
-        const formData = new FormData();
-        formData.append('name', character.name);
-        formData.append('playedBy', character.playedBy);
-        formData.append('str', character.str);
-        formData.append('dex', character.dex);
-        formData.append('con', character.con);
-        formData.append('int', character.int);
-        formData.append('wis', character.wis);
-        formData.append('chr', character.chr);
-        formData.append('race', character.race);
-        formData.append('className', character.className);
-        formData.append('completionStep', character.completionStep);
-        return formData;
-    }
-
     handleSelect(id) {
         if (this.state.selected === null) {
             for (let i = 0; i < this.state.characterData.length; i++) {
@@ -247,15 +231,13 @@ export default class ADD2Characters extends Component {
             this.setState({characterData: newChars, newCharName: ''});
 
             if(!useTestData) {
-                const formData = this.appendFormData(char);
-
                 const xhr = new XMLHttpRequest();
                 xhr.open('post', 'http://localhost:42000/api/add2character/new', true);
                 xhr.onload = function() {
                     this.loadCharsFromServer();
                 }.bind(this);
                 xhr.setRequestHeader('content-type', 'application/json');
-                xhr.send(formData);
+                xhr.send(JSON.stringify(char));
             }
         }
         else

@@ -6,7 +6,6 @@ const ADD2CharacterCreation = (props) => {
         <div>
             <h2>Character Creation</h2>
             <h3>{selectedChar.name}</h3>
-            <p>Played by: {selectedChar.playedBy}</p>
         </div>
     );
 };

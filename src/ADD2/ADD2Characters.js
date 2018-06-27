@@ -6,7 +6,6 @@ const testData = [
     {
         id: 1,
         name: 'Big McLargeHuge',
-        playedBy: 'someone',
         completionStep: 2,
         str: 18,
         dex: 14,
@@ -33,7 +32,6 @@ const testData = [
     {
         id: 2,
         name: 'Gristle',
-        playedBy: 'someone else',
         completionStep: 1,
         str: 0,
         dex: 0,
@@ -60,7 +58,6 @@ const testData = [
     {
         id: 3,
         name: 'Crunch',
-        playedBy: 'person',
         completionStep: 1,
         str: 0,
         dex: 0,
@@ -87,7 +84,6 @@ const testData = [
     {
         id: 4,
         name: 'Rip',
-        playedBy: 'another person',
         completionStep: 2,
         str: 12,
         dex: 12,
@@ -114,7 +110,6 @@ const testData = [
     {
         id: 5,
         name: 'Swift',
-        playedBy: 'Generic McRandom',
         completionStep: 2,
         str: 12,
         dex: 12,

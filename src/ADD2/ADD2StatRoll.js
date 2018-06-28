@@ -8,10 +8,16 @@ export default class ADD2StatRoll extends Component {
         this.state = {rollRule: 'rollOnce'};
 
         this.handleRollRuleChange = this.handleRollRuleChange.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     handleRollRuleChange(e) {
         this.setState({rollRule: e.target.value});
+    }
+
+    handleUpdate() {
+        this.props.selectedChar.completionStep++;
+        this.props.onUpdate(this.props.selectedChar);
     }
 
     render() {
@@ -28,7 +34,7 @@ export default class ADD2StatRoll extends Component {
                     <option value='add7Dice'>Add 7 Dice to 8</option>
                 </select>
                 {this.state.rollRule === 'rollOnce' &&
-                <RollOnce selectedChar={selectedChar} onCharacterUpdate={this.props.onCharacterUpdate} />}
+                <RollOnce selectedChar={selectedChar} />}
                 {this.state.rollRule === 'rollTwice' &&
                 <p>Roll each stat twice and pick the higher one</p>}
                 {this.state.rollRule === 'assignment' &&
@@ -39,6 +45,7 @@ export default class ADD2StatRoll extends Component {
                 <p>Roll 4 dice and discard the lowers roll</p>}
                 {this.state.rollRule === 'add7Dice' &&
                 <p>Start at 8 and add 7 dice</p>}
+                <input type='button' onClick={this.handleUpdate} value='Save Stats' />
             </div>
         );
     }

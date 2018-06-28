@@ -9,7 +9,7 @@ const ADD2CharacterCreation = (props) => {
             <h3>{selectedChar.name}</h3>
             {selectedChar.completionStep < 2 &&
             <ADD2StatRoll selectedChar={selectedChar}
-                          onCharacterUpdate={props.onCharacterUpdate} />
+                          onUpdate={props.onUpdate} />
             }
         </div>
     );

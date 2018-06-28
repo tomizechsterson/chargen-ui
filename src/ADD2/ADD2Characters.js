@@ -135,7 +135,7 @@ const testData = [
     }
 ];
 
-const useTestData = false;
+const useTestData = true;
 
 export default class ADD2Characters extends Component {
     constructor(props) {
@@ -209,7 +209,22 @@ export default class ADD2Characters extends Component {
     }
 
     handleUpdate(character) {
-        console.log('updating character ' + character.name);
+//        console.log('updating character\n' + JSON.stringify(character));
+
+        const chars = this.state.characterData;
+        const i = chars.findIndex(function(o) {return o.id === character.id});
+        chars[i] = character;
+        this.setState({characterData: chars});
+
+        if(!useTestData) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('put', 'http://localhost:42000/api/add2character/' + character.id, true);
+            xhr.onload = function() {
+                this.loadCharsFromServer();
+            }.bind(this);
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.send(JSON.stringify(character));
+        }
     }
 
     handleCreate() {

@@ -209,8 +209,6 @@ export default class ADD2Characters extends Component {
     }
 
     handleUpdate(character) {
-        console.log('updating character\n' + JSON.stringify(character));
-
         const chars = this.state.characterData;
         const i = chars.findIndex(function(o) {return o.id === character.id});
         chars[i] = character;

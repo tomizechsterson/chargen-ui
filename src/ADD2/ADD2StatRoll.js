@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import RollOnce from '../StatRollRules/RollOnce';
+import RollTwice from '../StatRollRules/RollTwice';
 import RollFour from '../StatRollRules/RollFour';
 
 export default class ADD2StatRoll extends Component {
@@ -31,7 +32,7 @@ export default class ADD2StatRoll extends Component {
                 {this.state.rollRule === 'rollOnce' &&
                 <RollOnce selectedChar={selectedChar} onUpdate={this.props.onUpdate} />}
                 {this.state.rollRule === 'rollTwice' &&
-                <p>Roll each stat twice and pick the higher one</p>}
+                <RollTwice selectedChar={selectedChar} onUpdate={this.props.onUpdate} />}
                 {this.state.rollRule === 'assignment' &&
                 <p>Assign 6 rolls to stats</p>}
                 {this.state.rollRule === 'assignment2x' &&

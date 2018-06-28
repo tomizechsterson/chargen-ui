@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import RollOnceDisplay from './RollOnceDisplay';
 
 export default class RollOnce extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {str: 0, dex: 0, con: 0, int: 0, wis: 0, chr: 0};
+        this.state = {selectedChar: {}, rolls: []};
 
         this.rollStats = this.rollStats.bind(this);
     }
@@ -16,26 +17,21 @@ export default class RollOnce extends Component {
         xhr.onload = function() {
             const data = JSON.parse(xhr.responseText);
             selectedChar.str = data[0].reduce((a, b) => a + b, 0);
-            console.log(data);
-        };
+            selectedChar.dex = data[1].reduce((a, b) => a + b, 0);
+            selectedChar.con = data[2].reduce((a, b) => a + b, 0);
+            selectedChar.int = data[3].reduce((a, b) => a + b, 0);
+            selectedChar.wis = data[4].reduce((a, b) => a + b, 0);
+            selectedChar.chr = data[5].reduce((a, b) => a + b, 0);
+            this.setState({rolls: data, selectedChar: selectedChar});
+        }.bind(this);
         xhr.send();
-
-        this.setState({str: selectedChar.str});
     }
 
     render() {
-        const {selectedChar} = this.props;
         return (
             <div>
                 <input type='button' onClick={this.rollStats} value='Roll Stats' /><br/>
-                <p>
-                    STR: {this.state.str} <br/>
-                    DEX: {selectedChar.dex} <br/>
-                    CON: {selectedChar.con} <br/>
-                    INT: {selectedChar.int} <br/>
-                    WIS: {selectedChar.wis} <br/>
-                    CHR: {selectedChar.chr} <br/>
-                </p>
+                <RollOnceDisplay selectedChar={this.state.selectedChar} rolls={this.state.rolls} />
             </div>
         );
     }

@@ -8,6 +8,7 @@ export default class RollOnce extends Component {
         this.state = {selectedChar: {}, rolls: []};
 
         this.rollStats = this.rollStats.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     rollStats() {
@@ -27,11 +28,22 @@ export default class RollOnce extends Component {
         xhr.send();
     }
 
+    handleUpdate() {
+        if(this.state.rolls.length === 0) {
+            alert('must roll stats to save');
+        }
+        else {
+            this.props.selectedChar.completionStep++;
+            this.props.onUpdate(this.props.selectedChar);
+        }
+    }
+
     render() {
         return (
             <div>
                 <input type='button' onClick={this.rollStats} value='Roll Stats' /><br/>
                 <RollOnceDisplay selectedChar={this.state.selectedChar} rolls={this.state.rolls} />
+                <input type='button' onClick={this.handleUpdate} value='Save Stats' />
             </div>
         );
     }

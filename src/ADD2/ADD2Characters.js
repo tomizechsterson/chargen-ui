@@ -84,28 +84,28 @@ const testData = [
     {
         id: 4,
         name: 'Rip',
-        completionStep: 2,
-        str: 12,
-        dex: 12,
-        con: 10,
-        int: 6,
-        wis: 18,
-        chr: 15,
-        race: 'Dwarf',
-        gender: 'M',
-        height: 45,
-        weight: 150,
-        age: 60,
-        className: 'Cleric',
-        alignment: 'Chaotic Good',
-        paralyze: 10,
-        rod: 14,
-        petrification: 13,
-        breath: 16,
-        spell: 15,
-        hp: 8,
-        moveRate: 6,
-        funds: 150
+        completionStep: 1,
+        str: 0,
+        dex: 0,
+        con: 0,
+        int: 0,
+        wis: 0,
+        chr: 0,
+        race: 'none',
+        gender: 'n',
+        height: 0,
+        weight: 0,
+        age: 0,
+        className: 'none',
+        alignment: 'none',
+        paralyze: 0,
+        rod: 0,
+        petrification: 0,
+        breath: 0,
+        spell: 0,
+        hp: 0,
+        moveRate: 0,
+        funds: 0
     },
     {
         id: 5,
@@ -209,7 +209,7 @@ export default class ADD2Characters extends Component {
     }
 
     handleUpdate(character) {
-//        console.log('updating character\n' + JSON.stringify(character));
+        console.log('updating character\n' + JSON.stringify(character));
 
         const chars = this.state.characterData;
         const i = chars.findIndex(function(o) {return o.id === character.id});

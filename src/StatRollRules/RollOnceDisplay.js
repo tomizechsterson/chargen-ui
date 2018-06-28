@@ -13,18 +13,14 @@ const RollOnceDisplay = (props) => {
     let wisRolls = '';
     let chrRolls = '';
 
-    if(props.rolls[0] !== undefined)
+    if(props.rolls.length > 0) {
         strRolls = props.rolls[0].join(' + ');
-    if(props.rolls[1] !== undefined)
         dexRolls = props.rolls[1].join(' + ');
-    if(props.rolls[2] !== undefined)
         conRolls = props.rolls[2].join(' + ');
-    if(props.rolls[3] !== undefined)
         intRolls = props.rolls[3].join(' + ');
-    if(props.rolls[4] !== undefined)
         wisRolls = props.rolls[4].join(' + ');
-    if(props.rolls[5] !== undefined)
         chrRolls = props.rolls[5].join(' + ');
+    }
 
     return (
         <p>

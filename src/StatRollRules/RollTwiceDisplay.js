@@ -6,7 +6,7 @@ const RollTwiceDisplay = (props) => {
         color: '#999'
     };
 
-    let formatRollText = (roll) => {
+    let formattedRollText = (roll) => {
         return '(' + roll.reduce((a, b) => a + b, 0) + ':  ' + roll.join(' + ') + ')';
     };
 
@@ -18,17 +18,17 @@ const RollTwiceDisplay = (props) => {
     let chrRolls = '';
 
     if(props.rolls.length > 0) {
-        strRolls = formatRollText(props.rolls[0]) + ', ' + formatRollText(props.rolls[1]);
-        dexRolls = formatRollText(props.rolls[2]) + ', ' + formatRollText(props.rolls[3]);
-        conRolls = formatRollText(props.rolls[4]) + ', ' + formatRollText(props.rolls[5]);
-        intRolls = formatRollText(props.rolls[6]) + ', ' + formatRollText(props.rolls[7]);
-        wisRolls = formatRollText(props.rolls[8]) + ', ' + formatRollText(props.rolls[9]);
-        chrRolls = formatRollText(props.rolls[10]) + ', ' + formatRollText(props.rolls[11]);
+        strRolls = formattedRollText(props.rolls[0]) + ', ' + formattedRollText(props.rolls[1]);
+        dexRolls = formattedRollText(props.rolls[2]) + ', ' + formattedRollText(props.rolls[3]);
+        conRolls = formattedRollText(props.rolls[4]) + ', ' + formattedRollText(props.rolls[5]);
+        intRolls = formattedRollText(props.rolls[6]) + ', ' + formattedRollText(props.rolls[7]);
+        wisRolls = formattedRollText(props.rolls[8]) + ', ' + formattedRollText(props.rolls[9]);
+        chrRolls = formattedRollText(props.rolls[10]) + ', ' + formattedRollText(props.rolls[11]);
     }
 
     return (
         <p>
-            STR: {selectedChar.str} <span style={rollsStyle}>{strRolls}</span> <br/>
+            STR: {selectedChar.str} <span style={rollsStyle}>{strRolls}</span><br/>
             DEX: {selectedChar.dex} <span style={rollsStyle}>{dexRolls}</span><br/>
             CON: {selectedChar.con} <span style={rollsStyle}>{conRolls}</span><br/>
             INT: {selectedChar.int} <span style={rollsStyle}>{intRolls}</span><br/>

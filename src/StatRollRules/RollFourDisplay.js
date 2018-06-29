@@ -24,7 +24,7 @@ const RollFourDisplay = (props) => {
 
     return (
         <p>
-            STR: {selectedChar.str} <span style={rollsStyle}>({strRolls})</span> <br/>
+            STR: {selectedChar.str} <span style={rollsStyle}>({strRolls})</span><br/>
             DEX: {selectedChar.dex} <span style={rollsStyle}>({dexRolls})</span><br/>
             CON: {selectedChar.con} <span style={rollsStyle}>({conRolls})</span><br/>
             INT: {selectedChar.int} <span style={rollsStyle}>({intRolls})</span><br/>

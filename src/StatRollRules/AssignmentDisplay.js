@@ -10,42 +10,42 @@ export default class AssignmentDisplay extends Component {
         this.handleSelectRoll = this.handleSelectRoll.bind(this);
     }
 
-    assignStat(stat, roll) {
-        if(stat === 'STR')
-            this.props.selectedChar.str = roll;
-        else if(stat === 'DEX')
-            this.props.selectedChar.dex = roll;
-        else if(stat === 'CON')
-            this.props.selectedChar.con = roll;
-        else if(stat === 'INT')
-            this.props.selectedChar.int = roll;
-        else if(stat === 'WIS')
-            this.props.selectedChar.wis = roll;
-        else if(stat === 'CHR')
-            this.props.selectedChar.chr = roll;
-    }
-
     handleSelectStat(stat) {
         if(this.state.selectedStat === stat)
             this.setState({selectedStat: ''});
-        else {
-            if(this.state.selectedRoll !== '') {
-                console.log('assigning ' + this.state.selectedRoll + ' to stat ' + stat);
-                this.assignStat(stat, this.state.selectedRoll);
-            }
-            else
-                this.setState({selectedStat: stat});
-        }
+        else
+            this.setState({selectedStat: stat});
     }
 
     handleSelectRoll(roll) {
-        this.setState({selectedRoll: roll});
+        if(this.state.selectedRoll === roll)
+            this.setState({selectedRoll: ''});
+        else
+            this.setState({selectedRoll: roll});
+    }
+
+    handleAssign() {
+        if(this.state.selectedStat === 'STR')
+            this.props.selectedChar.str = this.state.selectedRoll;
+        else if(this.state.selectedStat === 'DEX')
+            this.props.selectedChar.dex = this.state.selectedRoll;
+        else if(this.state.selectedStat === 'CON')
+            this.props.selectedChar.con = this.state.selectedRoll;
+        else if(this.state.selectedStat === 'INT')
+            this.props.selectedChar.int = this.state.selectedRoll;
+        else if(this.state.selectedStat === 'WIS')
+            this.props.selectedChar.wis = this.state.selectedRoll;
+        else if(this.state.selectedStat === 'CHR')
+            this.props.selectedChar.chr = this.state.selectedRoll;
     }
 
     render() {
         const {selectedChar} = this.props;
         const rollsStyle = {
             color: '#999'
+        };
+        let assignButtonStyle = {
+            display: this.state.selectedStat && this.state.selectedRoll ? 'inline' : 'none'
         };
 
         let strRolls = '', dexRolls = '', conRolls = '', intRolls = '', wisRolls = '', chrRolls = '';
@@ -75,6 +75,7 @@ export default class AssignmentDisplay extends Component {
                 <input type='button' onClick={() => this.handleSelectStat('INT')} value='INT' /> {selectedChar.int} {intTotal !== '' && <input type='button' onClick={() => this.handleSelectRoll(intTotal)} value={intTotal} />} <span style={rollsStyle}>{intRolls}</span><br/>
                 <input type='button' onClick={() => this.handleSelectStat('WIS')} value='WIS' /> {selectedChar.wis} {wisTotal !== '' && <input type='button' onClick={() => this.handleSelectRoll(wisTotal)} value={wisTotal} />} <span style={rollsStyle}>{wisRolls}</span><br/>
                 <input type='button' onClick={() => this.handleSelectStat('CHR')} value='CHR' /> {selectedChar.chr} {chrTotal !== '' && <input type='button' onClick={() => this.handleSelectRoll(chrTotal)} value={chrTotal} />} <span style={rollsStyle}>{chrRolls}</span><br/>
+                <input type='button' onClick={() => this.handleAssign()} value='Assign Stat' style={assignButtonStyle} />
             </div>
         );
     }

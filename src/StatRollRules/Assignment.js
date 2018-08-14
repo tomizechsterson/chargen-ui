@@ -12,11 +12,14 @@ export default class Assignment extends Component {
     }
 
     rollStats() {
+        let currentChar = {...this.state.selectedChar};
+        currentChar.str = currentChar.dex = currentChar.con =
+            currentChar.int = currentChar.wis = currentChar.chr = undefined;
         const xhr = new XMLHttpRequest();
         xhr.open('get', 'http://localhost:42000/api/ADD2Character/rollstats/assignment', true);
         xhr.onload = function() {
             const data = JSON.parse(xhr.responseText);
-            this.setState({rolls: data});
+            this.setState({rolls: data, selectedChar: currentChar});
         }.bind(this);
         xhr.send();
     }

@@ -26,11 +26,17 @@ export default class Assignment extends Component {
 
     handleUpdate() {
         const {selectedChar} = this.state;
-        if(selectedChar.str === 0 || selectedChar.dex === 0 || selectedChar.con === 0
-            || selectedChar.int === 0 || selectedChar.wis === 0 || selectedChar.chr === 0) {
+        if(!selectedChar.str || !selectedChar.dex || !selectedChar.con
+            || !selectedChar.int || !selectedChar.wis || !selectedChar.chr) {
             alert('must assign stats to save');
         }
         else {
+            this.props.selectedChar.str = selectedChar.str;
+            this.props.selectedChar.dex = selectedChar.dex;
+            this.props.selectedChar.con = selectedChar.con;
+            this.props.selectedChar.int = selectedChar.int;
+            this.props.selectedChar.wis = selectedChar.wis;
+            this.props.selectedChar.chr = selectedChar.chr;
             this.props.selectedChar.completionStep++;
             this.props.onUpdate(this.props.selectedChar);
         }

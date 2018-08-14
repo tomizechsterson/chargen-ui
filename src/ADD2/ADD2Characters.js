@@ -166,7 +166,7 @@ export default class ADD2Characters extends Component {
     }
 
     handleSelect(id) {
-        if (this.state.selected === null) {
+        if (!this.state.selected) {
             for (let i = 0; i < this.state.characterData.length; i++) {
                 if (this.state.characterData[i].id === id) {
                     this.setState({selected: this.state.characterData[i]});
@@ -226,7 +226,7 @@ export default class ADD2Characters extends Component {
     }
 
     handleCreate() {
-        if(this.state.newCharName.trim() !== '') {
+        if(this.state.newCharName.trim()) {
             let newId = 0;
             const characters = this.state.characterData;
             if(characters.length === 0)

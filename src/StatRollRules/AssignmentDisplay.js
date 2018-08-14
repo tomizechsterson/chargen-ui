@@ -5,9 +5,6 @@ export default class AssignmentDisplay extends Component {
         super(props);
 
         this.state = {selectedStat: '', selectedRoll: ''};
-
-        this.handleSelectStat = this.handleSelectStat.bind(this);
-        this.handleSelectRoll = this.handleSelectRoll.bind(this);
     }
 
     handleSelectStat(stat) {
@@ -37,6 +34,25 @@ export default class AssignmentDisplay extends Component {
             this.props.selectedChar.wis = this.state.selectedRoll;
         else if(this.state.selectedStat === 'CHR')
             this.props.selectedChar.chr = this.state.selectedRoll;
+
+        this.setState({selectedStat: '', selectedRoll: ''});
+    }
+
+    clearStat() {
+        if(this.state.selectedStat === 'STR')
+            this.props.selectedChar.str = undefined;
+        else if(this.state.selectedStat === 'DEX')
+            this.props.selectedChar.dex = undefined;
+        else if(this.state.selectedStat === 'CON')
+            this.props.selectedChar.con = undefined;
+        else if(this.state.selectedStat === 'INT')
+            this.props.selectedChar.int = undefined;
+        else if(this.state.selectedStat === 'WIS')
+            this.props.selectedChar.wis = undefined;
+        else if(this.state.selectedStat === 'CHR')
+            this.props.selectedChar.chr = undefined;
+
+        this.setState({selectedStat: ''});
     }
 
     render() {
@@ -44,8 +60,11 @@ export default class AssignmentDisplay extends Component {
         const rollsStyle = {
             color: '#999'
         };
-        let assignButtonStyle = {
+        const assignButtonStyle = {
             display: this.state.selectedStat && this.state.selectedRoll ? 'inline' : 'none'
+        };
+        const clearButtonStyle = {
+            display: this.state.selectedStat ? 'inline' : 'none'
         };
 
         let strRolls = '', dexRolls = '', conRolls = '', intRolls = '', wisRolls = '', chrRolls = '';
@@ -76,6 +95,7 @@ export default class AssignmentDisplay extends Component {
                 <input type='button' onClick={() => this.handleSelectStat('WIS')} value='WIS' /> {selectedChar.wis} {wisTotal !== '' && <input type='button' onClick={() => this.handleSelectRoll(wisTotal)} value={wisTotal} />} <span style={rollsStyle}>{wisRolls}</span><br/>
                 <input type='button' onClick={() => this.handleSelectStat('CHR')} value='CHR' /> {selectedChar.chr} {chrTotal !== '' && <input type='button' onClick={() => this.handleSelectRoll(chrTotal)} value={chrTotal} />} <span style={rollsStyle}>{chrRolls}</span><br/>
                 <input type='button' onClick={() => this.handleAssign()} value='Assign Stat' style={assignButtonStyle} />
+                <input type='button' onClick={() => this.clearStat()} value='Clear Stat' style={clearButtonStyle} />
             </div>
         );
     }

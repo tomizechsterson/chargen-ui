@@ -55,6 +55,16 @@ export default class AssignmentDisplay extends Component {
         this.setState({selectedStat: ''});
     }
 
+    clearAssignments() {
+        this.props.selectedChar.str = undefined;
+        this.props.selectedChar.dex = undefined;
+        this.props.selectedChar.con = undefined;
+        this.props.selectedChar.int = undefined;
+        this.props.selectedChar.wis = undefined;
+        this.props.selectedChar.chr = undefined;
+        this.setState({selectedStat: '', selectedRoll: ''});
+    }
+
     render() {
         const {selectedChar} = this.props;
         const rollsStyle = {
@@ -65,6 +75,9 @@ export default class AssignmentDisplay extends Component {
         };
         const clearButtonStyle = {
             display: this.state.selectedStat ? 'inline' : 'none'
+        };
+        const clearAssignmentsButtonStyle = {
+            display: selectedChar.str || selectedChar.dex || selectedChar.con || selectedChar.int || selectedChar.wis || selectedChar.chr ? 'inline' : 'none'
         };
 
         let strRolls = '', dexRolls = '', conRolls = '', intRolls = '', wisRolls = '', chrRolls = '';
@@ -96,6 +109,7 @@ export default class AssignmentDisplay extends Component {
                 <input type='button' onClick={() => this.handleSelectStat('CHR')} value='CHR' /> {selectedChar.chr} {chrTotal !== '' && <input type='button' onClick={() => this.handleSelectRoll(chrTotal)} value={chrTotal} />} <span style={rollsStyle}>{chrRolls}</span><br/>
                 <input type='button' onClick={() => this.handleAssign()} value='Assign Stat' style={assignButtonStyle} />
                 <input type='button' onClick={() => this.clearStat()} value='Clear Stat' style={clearButtonStyle} />
+                <input type='button' onClick={() => this.clearAssignments()} value='Clear Assignments' style={clearAssignmentsButtonStyle} />
             </div>
         );
     }

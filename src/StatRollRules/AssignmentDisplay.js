@@ -105,7 +105,7 @@ export default class AssignmentDisplay extends Component {
 
         return (
             <div>
-                Selected stat: {this.state.selectedStat}, Selected Roll: {this.state.selectedRoll} <br/>
+                Selected Stat: {this.state.selectedStat}, Selected Roll: {this.state.selectedRoll} <br/>
 
                 <input type='button' onClick={() => this.handleSelectStat('STR')} value='STR' /> {selectedChar.str}
                 {strTotal && <input type='button' onClick={() => this.handleSelectRoll(strTotal)} value={strTotal} />}

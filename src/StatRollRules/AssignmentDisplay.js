@@ -89,16 +89,16 @@ export default class AssignmentDisplay extends Component {
 
         if(this.props.rolls.length > 0) {
             strRolls = ' (' + this.props.rolls[0].join(' + ') + ')';
-            strTotal = this.props.rolls[0].reduce((a, b) => a + b, 0);
             dexRolls = ' (' + this.props.rolls[1].join(' + ') + ')';
-            dexTotal = this.props.rolls[1].reduce((a, b) => a + b, 0);
             conRolls = ' (' + this.props.rolls[2].join(' + ') + ')';
-            conTotal = this.props.rolls[2].reduce((a, b) => a + b, 0);
             intRolls = ' (' + this.props.rolls[3].join(' + ') + ')';
-            intTotal = this.props.rolls[3].reduce((a, b) => a + b, 0);
             wisRolls = ' (' + this.props.rolls[4].join(' + ') + ')';
-            wisTotal = this.props.rolls[4].reduce((a, b) => a + b, 0);
             chrRolls = ' (' + this.props.rolls[5].join(' + ') + ')';
+            strTotal = this.props.rolls[0].reduce((a, b) => a + b, 0);
+            dexTotal = this.props.rolls[1].reduce((a, b) => a + b, 0);
+            conTotal = this.props.rolls[2].reduce((a, b) => a + b, 0);
+            intTotal = this.props.rolls[3].reduce((a, b) => a + b, 0);
+            wisTotal = this.props.rolls[4].reduce((a, b) => a + b, 0);
             chrTotal = this.props.rolls[5].reduce((a, b) => a + b, 0);
         }
 

@@ -55,7 +55,7 @@ export default class AssignmentDisplay extends Component {
         this.setState({selectedStat: ''});
     }
 
-    clearAssignments() {
+    resetAssignments() {
         this.props.selectedChar.str = undefined;
         this.props.selectedChar.dex = undefined;
         this.props.selectedChar.con = undefined;
@@ -70,6 +70,10 @@ export default class AssignmentDisplay extends Component {
     }
 
     disableClearButton() {
+        return !this.state.selectedStat;
+    }
+
+    disableResetButton() {
         const {selectedChar} = this.props;
         return !selectedChar.str && !selectedChar.dex && !selectedChar.con && !selectedChar.int && !selectedChar.wis && !selectedChar.chr;
     }
@@ -101,15 +105,28 @@ export default class AssignmentDisplay extends Component {
         return (
             <div>
                 Selected stat: {this.state.selectedStat}, Selected Roll: {this.state.selectedRoll} <br/>
-                <input type='button' onClick={() => this.handleSelectStat('STR')} value='STR' /> {selectedChar.str} {strTotal && <input type='button' onClick={() => this.handleSelectRoll(strTotal)} value={strTotal} />} <span style={rollsStyle}>{strRolls}</span><br/>
-                <input type='button' onClick={() => this.handleSelectStat('DEX')} value='DEX' /> {selectedChar.dex} {dexTotal && <input type='button' onClick={() => this.handleSelectRoll(dexTotal)} value={dexTotal} />} <span style={rollsStyle}>{dexRolls}</span><br/>
-                <input type='button' onClick={() => this.handleSelectStat('CON')} value='CON' /> {selectedChar.con} {conTotal && <input type='button' onClick={() => this.handleSelectRoll(conTotal)} value={conTotal} />} <span style={rollsStyle}>{conRolls}</span><br/>
-                <input type='button' onClick={() => this.handleSelectStat('INT')} value='INT' /> {selectedChar.int} {intTotal && <input type='button' onClick={() => this.handleSelectRoll(intTotal)} value={intTotal} />} <span style={rollsStyle}>{intRolls}</span><br/>
-                <input type='button' onClick={() => this.handleSelectStat('WIS')} value='WIS' /> {selectedChar.wis} {wisTotal && <input type='button' onClick={() => this.handleSelectRoll(wisTotal)} value={wisTotal} />} <span style={rollsStyle}>{wisRolls}</span><br/>
-                <input type='button' onClick={() => this.handleSelectStat('CHR')} value='CHR' /> {selectedChar.chr} {chrTotal && <input type='button' onClick={() => this.handleSelectRoll(chrTotal)} value={chrTotal} />} <span style={rollsStyle}>{chrRolls}</span><br/>
+
+                <input type='button' onClick={() => this.handleSelectStat('STR')} value='STR' /> {selectedChar.str}
+                {strTotal && <input type='button' onClick={() => this.handleSelectRoll(strTotal)} value={strTotal} />}
+                <span style={rollsStyle}>{strRolls}</span><br/>
+                <input type='button' onClick={() => this.handleSelectStat('DEX')} value='DEX' /> {selectedChar.dex}
+                {dexTotal && <input type='button' onClick={() => this.handleSelectRoll(dexTotal)} value={dexTotal} />}
+                <span style={rollsStyle}>{dexRolls}</span><br/>
+                <input type='button' onClick={() => this.handleSelectStat('CON')} value='CON' /> {selectedChar.con}
+                {conTotal && <input type='button' onClick={() => this.handleSelectRoll(conTotal)} value={conTotal} />}
+                <span style={rollsStyle}>{conRolls}</span><br/>
+                <input type='button' onClick={() => this.handleSelectStat('INT')} value='INT' /> {selectedChar.int}
+                {intTotal && <input type='button' onClick={() => this.handleSelectRoll(intTotal)} value={intTotal} />}
+                <span style={rollsStyle}>{intRolls}</span><br/>
+                <input type='button' onClick={() => this.handleSelectStat('WIS')} value='WIS' /> {selectedChar.wis}
+                {wisTotal && <input type='button' onClick={() => this.handleSelectRoll(wisTotal)} value={wisTotal} />}
+                <span style={rollsStyle}>{wisRolls}</span><br/>
+                <input type='button' onClick={() => this.handleSelectStat('CHR')} value='CHR' /> {selectedChar.chr}
+                {chrTotal && <input type='button' onClick={() => this.handleSelectRoll(chrTotal)} value={chrTotal} />}
+                <span style={rollsStyle}>{chrRolls}</span><br/>
                 <input type='button' onClick={() => this.handleAssign()} value='Assign' disabled={this.disableAssignButton()} />
-                <input type='button' onClick={() => this.clearStat()} value='Clear' disabled={!this.state.selectedStat} />
-                <input type='button' onClick={() => this.clearAssignments()} value='Reset' disabled={this.disableClearButton()} />
+                <input type='button' onClick={() => this.clearStat()} value='Clear' disabled={this.disableClearButton()} />
+                <input type='button' onClick={() => this.resetAssignments()} value='Reset' disabled={this.disableResetButton()} />
             </div>
         );
     }

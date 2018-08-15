@@ -15,11 +15,18 @@ export default class Assignment extends Component {
         let currentChar = {...this.state.selectedChar};
         currentChar.str = currentChar.dex = currentChar.con =
             currentChar.int = currentChar.wis = currentChar.chr = undefined;
+        let statRolls = [];
         const xhr = new XMLHttpRequest();
         xhr.open('get', 'http://localhost:42000/api/ADD2Character/rollstats/assignment', true);
         xhr.onload = function() {
             const data = JSON.parse(xhr.responseText);
-            this.setState({rolls: data, selectedChar: currentChar});
+            statRolls.push({id: 0, assigned: false, text: ' (' + data[0].join(' + ') + ')', value: data[0].reduce((a, b) => a + b, 0)});
+            statRolls.push({id: 1, assigned: false, text: ' (' + data[1].join(' + ') + ')', value: data[1].reduce((a, b) => a + b, 0)});
+            statRolls.push({id: 2, assigned: false, text: ' (' + data[2].join(' + ') + ')', value: data[2].reduce((a, b) => a + b, 0)});
+            statRolls.push({id: 3, assigned: false, text: ' (' + data[3].join(' + ') + ')', value: data[3].reduce((a, b) => a + b, 0)});
+            statRolls.push({id: 4, assigned: false, text: ' (' + data[4].join(' + ') + ')', value: data[4].reduce((a, b) => a + b, 0)});
+            statRolls.push({id: 5, assigned: false, text: ' (' + data[5].join(' + ') + ')', value: data[5].reduce((a, b) => a + b, 0)});
+            this.setState({rolls: statRolls, selectedChar: currentChar});
         }.bind(this);
         xhr.send();
     }

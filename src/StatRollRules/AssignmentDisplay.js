@@ -4,7 +4,7 @@ export default class AssignmentDisplay extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {selectedStat: '', selectedRoll: ''};
+        this.state = {selectedStat: '', selectedRoll: undefined};
     }
 
     handleSelectStat(stat) {
@@ -15,54 +15,68 @@ export default class AssignmentDisplay extends Component {
     }
 
     handleSelectRoll(roll) {
-        if(this.state.selectedRoll === roll)
-            this.setState({selectedRoll: ''});
+        if(this.state.selectedRoll && this.state.selectedRoll.id === roll.id)
+            this.setState({selectedRoll: undefined});
         else
             this.setState({selectedRoll: roll});
     }
 
     handleAssign() {
         if(this.state.selectedStat === 'STR')
-            this.props.selectedChar.str = this.state.selectedRoll;
+            this.props.selectedChar.str = this.state.selectedRoll.value;
         else if(this.state.selectedStat === 'DEX')
-            this.props.selectedChar.dex = this.state.selectedRoll;
+            this.props.selectedChar.dex = this.state.selectedRoll.value;
         else if(this.state.selectedStat === 'CON')
-            this.props.selectedChar.con = this.state.selectedRoll;
+            this.props.selectedChar.con = this.state.selectedRoll.value;
         else if(this.state.selectedStat === 'INT')
-            this.props.selectedChar.int = this.state.selectedRoll;
+            this.props.selectedChar.int = this.state.selectedRoll.value;
         else if(this.state.selectedStat === 'WIS')
-            this.props.selectedChar.wis = this.state.selectedRoll;
+            this.props.selectedChar.wis = this.state.selectedRoll.value;
         else if(this.state.selectedStat === 'CHR')
-            this.props.selectedChar.chr = this.state.selectedRoll;
+            this.props.selectedChar.chr = this.state.selectedRoll.value;
 
-        this.setState({selectedStat: '', selectedRoll: ''});
+        const id = this.state.selectedRoll.id;
+        this.props.rolls.find(function(obj) {return obj.id === id}).assigned = true;
+        this.setState({selectedStat: '', selectedRoll: undefined});
     }
 
     clearStat() {
-        if(this.state.selectedStat === 'STR')
+        if(this.state.selectedStat === 'STR') {
             this.props.selectedChar.str = undefined;
-        else if(this.state.selectedStat === 'DEX')
+            this.props.rolls[0].assigned = false;
+        }
+        else if(this.state.selectedStat === 'DEX') {
             this.props.selectedChar.dex = undefined;
-        else if(this.state.selectedStat === 'CON')
+            this.props.rolls[1].assigned = false;
+        }
+        else if(this.state.selectedStat === 'CON') {
             this.props.selectedChar.con = undefined;
-        else if(this.state.selectedStat === 'INT')
+            this.props.rolls[2].assigned = false;
+        }
+        else if(this.state.selectedStat === 'INT') {
             this.props.selectedChar.int = undefined;
-        else if(this.state.selectedStat === 'WIS')
+            this.props.rolls[3].assigned = false;
+        }
+        else if(this.state.selectedStat === 'WIS') {
             this.props.selectedChar.wis = undefined;
-        else if(this.state.selectedStat === 'CHR')
+            this.props.rolls[4].assigned = false;
+        }
+        else if(this.state.selectedStat === 'CHR') {
             this.props.selectedChar.chr = undefined;
+            this.props.rolls[5].assigned = false;
+        }
 
         this.setState({selectedStat: ''});
     }
 
     resetAssignments() {
-        this.props.selectedChar.str = undefined;
-        this.props.selectedChar.dex = undefined;
-        this.props.selectedChar.con = undefined;
-        this.props.selectedChar.int = undefined;
-        this.props.selectedChar.wis = undefined;
-        this.props.selectedChar.chr = undefined;
-        this.setState({selectedStat: '', selectedRoll: ''});
+        this.props.selectedChar.str = undefined; this.props.rolls[0].assigned = false;
+        this.props.selectedChar.dex = undefined; this.props.rolls[1].assigned = false;
+        this.props.selectedChar.con = undefined; this.props.rolls[2].assigned = false;
+        this.props.selectedChar.int = undefined; this.props.rolls[3].assigned = false;
+        this.props.selectedChar.wis = undefined; this.props.rolls[4].assigned = false;
+        this.props.selectedChar.chr = undefined; this.props.rolls[5].assigned = false;
+        this.setState({selectedStat: '', selectedRoll: undefined});
     }
 
     disableAssignButton() {
@@ -75,7 +89,8 @@ export default class AssignmentDisplay extends Component {
 
     disableResetButton() {
         const {selectedChar} = this.props;
-        return !selectedChar.str && !selectedChar.dex && !selectedChar.con && !selectedChar.int && !selectedChar.wis && !selectedChar.chr;
+        return !selectedChar.str && !selectedChar.dex && !selectedChar.con
+            && !selectedChar.int && !selectedChar.wis && !selectedChar.chr;
     }
 
     render() {
@@ -85,46 +100,43 @@ export default class AssignmentDisplay extends Component {
             color: '#999'
         };
 
-        let strRolls = '', dexRolls = '', conRolls = '', intRolls = '', wisRolls = '', chrRolls = '';
-        let strTotal = '', dexTotal = '', conTotal = '', intTotal = '', wisTotal = '', chrTotal = '';
+        let strRoll = undefined, dexRoll = undefined, conRoll = undefined,
+            intRoll = undefined, wisRoll = undefined, chrRoll = undefined;
+        let selectedRollText = '';
+        if(this.state.selectedRoll)
+            selectedRollText = this.state.selectedRoll.value;
 
         if(this.props.rolls.length > 0) {
-            strRolls = ' (' + rolls[0].join(' + ') + ')';
-            dexRolls = ' (' + rolls[1].join(' + ') + ')';
-            conRolls = ' (' + rolls[2].join(' + ') + ')';
-            intRolls = ' (' + rolls[3].join(' + ') + ')';
-            wisRolls = ' (' + rolls[4].join(' + ') + ')';
-            chrRolls = ' (' + rolls[5].join(' + ') + ')';
-            strTotal = rolls[0].reduce((a, b) => a + b, 0);
-            dexTotal = rolls[1].reduce((a, b) => a + b, 0);
-            conTotal = rolls[2].reduce((a, b) => a + b, 0);
-            intTotal = rolls[3].reduce((a, b) => a + b, 0);
-            wisTotal = rolls[4].reduce((a, b) => a + b, 0);
-            chrTotal = rolls[5].reduce((a, b) => a + b, 0);
+            strRoll = rolls[0];
+            dexRoll = rolls[1];
+            conRoll = rolls[2];
+            intRoll = rolls[3];
+            wisRoll = rolls[4];
+            chrRoll = rolls[5];
         }
 
         return (
             <div>
-                Selected Stat: {this.state.selectedStat}, Selected Roll: {this.state.selectedRoll} <br/>
+                Selected Stat: {this.state.selectedStat}, Selected Roll: {selectedRollText} <br/>
 
                 <input type='button' onClick={() => this.handleSelectStat('STR')} value='STR' /> {selectedChar.str}
-                {strTotal && <input type='button' onClick={() => this.handleSelectRoll(strTotal)} value={strTotal} />}
-                <span style={rollsStyle}>{strRolls}</span><br/>
+                {strRoll && <input type='button' onClick={() => this.handleSelectRoll(strRoll)} value={strRoll.value} disabled={strRoll.assigned} />}
+                {strRoll && <span style={rollsStyle}>{strRoll.text}</span>}<br/>
                 <input type='button' onClick={() => this.handleSelectStat('DEX')} value='DEX' /> {selectedChar.dex}
-                {dexTotal && <input type='button' onClick={() => this.handleSelectRoll(dexTotal)} value={dexTotal} />}
-                <span style={rollsStyle}>{dexRolls}</span><br/>
+                {dexRoll && <input type='button' onClick={() => this.handleSelectRoll(dexRoll)} value={dexRoll.value} disabled={dexRoll.assigned} />}
+                {dexRoll && <span style={rollsStyle}>{dexRoll.text}</span>}<br/>
                 <input type='button' onClick={() => this.handleSelectStat('CON')} value='CON' /> {selectedChar.con}
-                {conTotal && <input type='button' onClick={() => this.handleSelectRoll(conTotal)} value={conTotal} />}
-                <span style={rollsStyle}>{conRolls}</span><br/>
+                {conRoll && <input type='button' onClick={() => this.handleSelectRoll(conRoll)} value={conRoll.value} disabled={conRoll.assigned} />}
+                {conRoll && <span style={rollsStyle}>{conRoll.text}</span>}<br/>
                 <input type='button' onClick={() => this.handleSelectStat('INT')} value='INT' /> {selectedChar.int}
-                {intTotal && <input type='button' onClick={() => this.handleSelectRoll(intTotal)} value={intTotal} />}
-                <span style={rollsStyle}>{intRolls}</span><br/>
+                {intRoll && <input type='button' onClick={() => this.handleSelectRoll(intRoll)} value={intRoll.value} disabled={intRoll.assigned} />}
+                {intRoll && <span style={rollsStyle}>{intRoll.text}</span>}<br/>
                 <input type='button' onClick={() => this.handleSelectStat('WIS')} value='WIS' /> {selectedChar.wis}
-                {wisTotal && <input type='button' onClick={() => this.handleSelectRoll(wisTotal)} value={wisTotal} />}
-                <span style={rollsStyle}>{wisRolls}</span><br/>
+                {wisRoll && <input type='button' onClick={() => this.handleSelectRoll(wisRoll)} value={wisRoll.value} disabled={wisRoll.assigned} />}
+                {wisRoll && <span style={rollsStyle}>{wisRoll.text}</span>}<br/>
                 <input type='button' onClick={() => this.handleSelectStat('CHR')} value='CHR' /> {selectedChar.chr}
-                {chrTotal && <input type='button' onClick={() => this.handleSelectRoll(chrTotal)} value={chrTotal} />}
-                <span style={rollsStyle}>{chrRolls}</span><br/>
+                {chrRoll && <input type='button' onClick={() => this.handleSelectRoll(chrRoll)} value={chrRoll.value} disabled={chrRoll.assigned} />}
+                {chrRoll && <span style={rollsStyle}>{chrRoll.text}</span>}<br/>
                 <input type='button' onClick={() => this.handleAssign()} value='Assign' disabled={this.disableAssignButton()} />
                 <input type='button' onClick={() => this.clearStat()} value='Clear' disabled={this.disableClearButton()} />
                 <input type='button' onClick={() => this.resetAssignments()} value='Reset' disabled={this.disableResetButton()} />

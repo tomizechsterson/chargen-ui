@@ -40,35 +40,6 @@ export default class AssignmentDisplay extends Component {
         this.setState({selectedStat: '', selectedRoll: undefined});
     }
 
-    clearStat() {
-        if(this.state.selectedStat === 'STR') {
-            this.props.selectedChar.str = undefined;
-            this.props.rolls[0].assigned = false;
-        }
-        else if(this.state.selectedStat === 'DEX') {
-            this.props.selectedChar.dex = undefined;
-            this.props.rolls[1].assigned = false;
-        }
-        else if(this.state.selectedStat === 'CON') {
-            this.props.selectedChar.con = undefined;
-            this.props.rolls[2].assigned = false;
-        }
-        else if(this.state.selectedStat === 'INT') {
-            this.props.selectedChar.int = undefined;
-            this.props.rolls[3].assigned = false;
-        }
-        else if(this.state.selectedStat === 'WIS') {
-            this.props.selectedChar.wis = undefined;
-            this.props.rolls[4].assigned = false;
-        }
-        else if(this.state.selectedStat === 'CHR') {
-            this.props.selectedChar.chr = undefined;
-            this.props.rolls[5].assigned = false;
-        }
-
-        this.setState({selectedStat: ''});
-    }
-
     resetAssignments() {
         this.props.selectedChar.str = undefined; this.props.rolls[0].assigned = false;
         this.props.selectedChar.dex = undefined; this.props.rolls[1].assigned = false;
@@ -81,10 +52,6 @@ export default class AssignmentDisplay extends Component {
 
     disableAssignButton() {
         return !this.state.selectedStat || !this.state.selectedRoll;
-    }
-
-    disableClearButton() {
-        return !this.state.selectedStat;
     }
 
     disableResetButton() {
@@ -138,7 +105,6 @@ export default class AssignmentDisplay extends Component {
                 {chrRoll && <input type='button' onClick={() => this.handleSelectRoll(chrRoll)} value={chrRoll.value} disabled={chrRoll.assigned} />}
                 {chrRoll && <span style={rollsStyle}>{chrRoll.text}</span>}<br/>
                 <input type='button' onClick={() => this.handleAssign()} value='Assign' disabled={this.disableAssignButton()} />
-                <input type='button' onClick={() => this.clearStat()} value='Clear' disabled={this.disableClearButton()} />
                 <input type='button' onClick={() => this.resetAssignments()} value='Reset' disabled={this.disableResetButton()} />
             </div>
         );

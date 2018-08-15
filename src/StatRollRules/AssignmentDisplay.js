@@ -36,7 +36,7 @@ export default class AssignmentDisplay extends Component {
             this.props.selectedChar.chr = this.state.selectedRoll.value;
 
         const id = this.state.selectedRoll.id;
-        this.props.rolls.find(function(obj) {return obj.id === id}).assigned = true;
+        this.props.rolls.find(roll => roll.id === id).assigned = true;
         this.setState({selectedStat: '', selectedRoll: undefined});
     }
 

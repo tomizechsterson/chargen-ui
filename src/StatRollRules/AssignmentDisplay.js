@@ -80,6 +80,7 @@ export default class AssignmentDisplay extends Component {
 
     render() {
         const {selectedChar} = this.props;
+        const {rolls} = this.props;
         const rollsStyle = {
             color: '#999'
         };
@@ -88,18 +89,18 @@ export default class AssignmentDisplay extends Component {
         let strTotal = '', dexTotal = '', conTotal = '', intTotal = '', wisTotal = '', chrTotal = '';
 
         if(this.props.rolls.length > 0) {
-            strRolls = ' (' + this.props.rolls[0].join(' + ') + ')';
-            dexRolls = ' (' + this.props.rolls[1].join(' + ') + ')';
-            conRolls = ' (' + this.props.rolls[2].join(' + ') + ')';
-            intRolls = ' (' + this.props.rolls[3].join(' + ') + ')';
-            wisRolls = ' (' + this.props.rolls[4].join(' + ') + ')';
-            chrRolls = ' (' + this.props.rolls[5].join(' + ') + ')';
-            strTotal = this.props.rolls[0].reduce((a, b) => a + b, 0);
-            dexTotal = this.props.rolls[1].reduce((a, b) => a + b, 0);
-            conTotal = this.props.rolls[2].reduce((a, b) => a + b, 0);
-            intTotal = this.props.rolls[3].reduce((a, b) => a + b, 0);
-            wisTotal = this.props.rolls[4].reduce((a, b) => a + b, 0);
-            chrTotal = this.props.rolls[5].reduce((a, b) => a + b, 0);
+            strRolls = ' (' + rolls[0].join(' + ') + ')';
+            dexRolls = ' (' + rolls[1].join(' + ') + ')';
+            conRolls = ' (' + rolls[2].join(' + ') + ')';
+            intRolls = ' (' + rolls[3].join(' + ') + ')';
+            wisRolls = ' (' + rolls[4].join(' + ') + ')';
+            chrRolls = ' (' + rolls[5].join(' + ') + ')';
+            strTotal = rolls[0].reduce((a, b) => a + b, 0);
+            dexTotal = rolls[1].reduce((a, b) => a + b, 0);
+            conTotal = rolls[2].reduce((a, b) => a + b, 0);
+            intTotal = rolls[3].reduce((a, b) => a + b, 0);
+            wisTotal = rolls[4].reduce((a, b) => a + b, 0);
+            chrTotal = rolls[5].reduce((a, b) => a + b, 0);
         }
 
         return (

@@ -28,7 +28,7 @@ export default class Assignment extends Component {
         const {selectedChar} = this.state;
         if(!selectedChar.str || !selectedChar.dex || !selectedChar.con
             || !selectedChar.int || !selectedChar.wis || !selectedChar.chr) {
-            alert('must assign stats to save');
+            alert('must assign all stats to save');
         }
         else {
             this.props.selectedChar.str = selectedChar.str;

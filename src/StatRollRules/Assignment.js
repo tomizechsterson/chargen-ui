@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import AssignmentDisplay from './AssignmentDisplay';
 import Assignment2xDisplay from './Assignment2xDisplay';
 
-export default class GeneralAssignment extends Component {
+export default class Assignment extends Component {
     constructor(props) {
         super(props);
 

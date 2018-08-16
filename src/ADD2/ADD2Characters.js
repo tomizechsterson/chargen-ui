@@ -298,7 +298,7 @@ export default class ADD2Characters extends Component {
             <div style={topLevelColumnsStyle}>
                 <div>
                     <button onClick={() => this.handleCreate()}>Create</button>
-                    <input type="text" maxLength="32" placeholder="character name" value={newCharName} onChange={(e) => this.handleNewNameChange(e)}/>
+                    <input type='text' maxLength='32' placeholder='character name' value={newCharName} onChange={(e) => this.handleNewNameChange(e)}/>
                     <ADD2CharacterTable characters={characterData}
                                         onSelect={this.handleSelect} />
                 </div>

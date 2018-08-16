@@ -1,5 +1,5 @@
-import React from "react";
-import ADD2Characters from "./ADD2/ADD2Characters";
+import React from 'react';
+import ADD2Characters from './ADD2/ADD2Characters';
 
 const SelectorADD2 = () => {
     return (

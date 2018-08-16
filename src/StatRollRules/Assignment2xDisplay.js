@@ -45,12 +45,13 @@ export default class Assignment2xDisplay extends Component {
     }
 
     resetAssignments() {
-        this.props.selectedChar.str = undefined; this.props.rolls[0].assigned = false;
-        this.props.selectedChar.dex = undefined; this.props.rolls[1].assigned = false;
-        this.props.selectedChar.con = undefined; this.props.rolls[2].assigned = false;
-        this.props.selectedChar.int = undefined; this.props.rolls[3].assigned = false;
-        this.props.selectedChar.wis = undefined; this.props.rolls[4].assigned = false;
-        this.props.selectedChar.chr = undefined; this.props.rolls[5].assigned = false;
+        let {selectedChar, rolls} = this.props;
+        selectedChar.str = undefined; rolls[0].assigned = false; rolls[1].assigned = false;
+        selectedChar.dex = undefined; rolls[2].assigned = false; rolls[3].assigned = false;
+        selectedChar.con = undefined; rolls[4].assigned = false; rolls[5].assigned = false;
+        selectedChar.int = undefined; rolls[6].assigned = false; rolls[7].assigned = false;
+        selectedChar.wis = undefined; rolls[8].assigned = false; rolls[9].assigned = false;
+        selectedChar.chr = undefined; rolls[10].assigned = false; rolls[11].assigned = false;
         this.setState({selectedStat: '', selectedRoll: undefined});
     }
 
@@ -65,8 +66,7 @@ export default class Assignment2xDisplay extends Component {
     }
 
     render() {
-        const {selectedChar} = this.props;
-        const {rolls} = this.props;
+        const {selectedChar, rolls} = this.props;
         const rollsStyle = {
             color: '#999'
         };

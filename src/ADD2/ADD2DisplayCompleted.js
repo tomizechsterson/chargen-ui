@@ -1,7 +1,7 @@
 import React from 'react';
-import StatsDisplay from "../GeneralDisplays/StatsDisplay";
-import VitalsDisplay from "../GeneralDisplays/VitalsDisplay";
-import SavingThrowsDisplay from "../GeneralDisplays/SavingThrowsDisplay";
+import StatsDisplay from '../GeneralDisplays/StatsDisplay';
+import VitalsDisplay from '../GeneralDisplays/VitalsDisplay';
+import SavingThrowsDisplay from '../GeneralDisplays/SavingThrowsDisplay';
 
 const ADD2DisplayCompleted = (props) => {
     const {selectedChar} = props;

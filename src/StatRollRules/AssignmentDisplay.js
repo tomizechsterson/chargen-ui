@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
+import AssignmentControl from './AssignmentControl';
 
 export default class AssignmentDisplay extends Component {
     constructor(props) {
         super(props);
 
         this.state = {selectedStat: '', selectedRoll: undefined};
+
+        this.handleSelectStat = this.handleSelectStat.bind(this);
+        this.handleSelectRoll = this.handleSelectRoll.bind(this);
     }
 
     handleSelectStat(stat) {
@@ -82,24 +86,19 @@ export default class AssignmentDisplay extends Component {
             <div>
                 Selected Stat: {this.state.selectedStat}, Selected Roll: {selectedRollText} <br/>
 
-                <input type='button' onClick={() => this.handleSelectStat('STR')} value='STR' /> {selectedChar.str}
-                {strRoll && <input type='button' onClick={() => this.handleSelectRoll(strRoll)} value={strRoll.value} disabled={strRoll.assigned} />}
-                {strRoll && <span style={rollsStyle}>{strRoll.text}</span>}<br/>
-                <input type='button' onClick={() => this.handleSelectStat('DEX')} value='DEX' /> {selectedChar.dex}
-                {dexRoll && <input type='button' onClick={() => this.handleSelectRoll(dexRoll)} value={dexRoll.value} disabled={dexRoll.assigned} />}
-                {dexRoll && <span style={rollsStyle}>{dexRoll.text}</span>}<br/>
-                <input type='button' onClick={() => this.handleSelectStat('CON')} value='CON' /> {selectedChar.con}
-                {conRoll && <input type='button' onClick={() => this.handleSelectRoll(conRoll)} value={conRoll.value} disabled={conRoll.assigned} />}
-                {conRoll && <span style={rollsStyle}>{conRoll.text}</span>}<br/>
-                <input type='button' onClick={() => this.handleSelectStat('INT')} value='INT' /> {selectedChar.int}
-                {intRoll && <input type='button' onClick={() => this.handleSelectRoll(intRoll)} value={intRoll.value} disabled={intRoll.assigned} />}
-                {intRoll && <span style={rollsStyle}>{intRoll.text}</span>}<br/>
-                <input type='button' onClick={() => this.handleSelectStat('WIS')} value='WIS' /> {selectedChar.wis}
-                {wisRoll && <input type='button' onClick={() => this.handleSelectRoll(wisRoll)} value={wisRoll.value} disabled={wisRoll.assigned} />}
-                {wisRoll && <span style={rollsStyle}>{wisRoll.text}</span>}<br/>
-                <input type='button' onClick={() => this.handleSelectStat('CHR')} value='CHR' /> {selectedChar.chr}
-                {chrRoll && <input type='button' onClick={() => this.handleSelectRoll(chrRoll)} value={chrRoll.value} disabled={chrRoll.assigned} />}
-                {chrRoll && <span style={rollsStyle}>{chrRoll.text}</span>}<br/>
+                <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
+                                   stat={'STR'} charStat={selectedChar.str} roll={strRoll} rollStyle={rollsStyle} />
+                <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
+                                   stat={'DEX'} charStat={selectedChar.dex} roll={dexRoll} rollStyle={rollsStyle} />
+                <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
+                                   stat={'CON'} charStat={selectedChar.con} roll={conRoll} rollStyle={rollsStyle} />
+                <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
+                                   stat={'INT'} charStat={selectedChar.int} roll={intRoll} rollStyle={rollsStyle} />
+                <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
+                                   stat={'WIS'} charStat={selectedChar.wis} roll={wisRoll} rollStyle={rollsStyle} />
+                <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
+                                   stat={'CHR'} charStat={selectedChar.chr} roll={chrRoll} rollStyle={rollsStyle} />
+
                 <input type='button' onClick={() => this.handleAssign()} value='Assign' disabled={this.disableAssignButton()} />
                 <input type='button' onClick={() => this.resetAssignments()} value='Reset' disabled={this.disableResetButton()} />
             </div>

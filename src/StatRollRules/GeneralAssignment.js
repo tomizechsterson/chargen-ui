@@ -50,13 +50,15 @@ export default class GeneralAssignment extends Component {
     }
 
     render() {
-        const pText = this.props.double ? 'Roll 12 and assign 6 to stats' : 'Assign 6 rolls to stats';
+        const {double} = this.props;
+        const {selectedChar, rolls} = this.state;
+        const pText = double ? 'Roll 12 and assign 6 to stats' : 'Assign 6 rolls to stats';
         return (
             <div>
                 <input type='button' onClick={this.rollStats} value='Roll Stats' /><br/>
                 <p>{pText}</p>
-                {this.props.double && <Assignment2xDisplay selectedChar={this.state.selectedChar} rolls={this.state.rolls} />}
-                {!this.props.double && <AssignmentDisplay selectedChar={this.state.selectedChar} rolls={this.state.rolls} />}
+                {double && <Assignment2xDisplay selectedChar={selectedChar} rolls={rolls} />}
+                {!double && <AssignmentDisplay selectedChar={selectedChar} rolls={rolls} />}
                 <input type='button' onClick={this.handleUpdate} value='Save Stats' />
             </div>
         );

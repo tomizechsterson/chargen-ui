@@ -26,21 +26,24 @@ export default class Assignment2xDisplay extends Component {
     }
 
     handleAssign() {
-        if(this.state.selectedStat === 'STR')
-            this.props.selectedChar.str = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'DEX')
-            this.props.selectedChar.dex = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'CON')
-            this.props.selectedChar.con = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'INT')
-            this.props.selectedChar.int = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'WIS')
-            this.props.selectedChar.wis = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'CHR')
-            this.props.selectedChar.chr = this.state.selectedRoll.value;
+        const {selectedStat, selectedRoll} = this.state;
+        const {selectedChar, rolls} = this.props;
 
-        const id = this.state.selectedRoll.id;
-        this.props.rolls.find(roll => roll.id === id).assigned = true;
+        if(selectedStat === 'STR')
+            selectedChar.str = selectedRoll.value;
+        else if(selectedStat === 'DEX')
+            selectedChar.dex = selectedRoll.value;
+        else if(selectedStat === 'CON')
+            selectedChar.con = selectedRoll.value;
+        else if(selectedStat === 'INT')
+            selectedChar.int = selectedRoll.value;
+        else if(selectedStat === 'WIS')
+            selectedChar.wis = selectedRoll.value;
+        else if(selectedStat === 'CHR')
+            selectedChar.chr = selectedRoll.value;
+
+        const id = selectedRoll.id;
+        rolls.find(roll => roll.id === id).assigned = true;
         this.setState({selectedStat: '', selectedRoll: undefined});
     }
 
@@ -67,6 +70,7 @@ export default class Assignment2xDisplay extends Component {
 
     render() {
         const {selectedChar, rolls} = this.props;
+        const {selectedRoll, selectedStat} = this.state;
         const rollsStyle = {
             color: '#999'
         };
@@ -75,10 +79,10 @@ export default class Assignment2xDisplay extends Component {
             roll4 = undefined, roll5 = undefined, roll6 = undefined, roll7 = undefined,
             roll8 = undefined, roll9 = undefined, roll10 = undefined, roll11 = undefined;
         let selectedRollText = '';
-        if(this.state.selectedRoll)
-            selectedRollText = this.state.selectedRoll.value;
+        if(selectedRoll)
+            selectedRollText = selectedRoll.value;
 
-        if(this.props.rolls.length > 0) {
+        if(rolls.length > 0) {
             roll0 = rolls[0]; roll1 = rolls[1]; roll2 = rolls[2]; roll3 = rolls[3];
             roll4 = rolls[4]; roll5 = rolls[5]; roll6 = rolls[6]; roll7 = rolls[7];
             roll8 = rolls[8]; roll9 = rolls[9]; roll10 = rolls[10]; roll11 = rolls[11];
@@ -86,7 +90,7 @@ export default class Assignment2xDisplay extends Component {
 
         return (
             <div>
-                Selected Stat: {this.state.selectedStat}, Selected Roll: {selectedRollText} <br/>
+                Selected Stat: {selectedStat}, Selected Roll: {selectedRollText} <br/>
 
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
                                    stat={'STR'} charStat={selectedChar.str} rolls={[roll0, roll1]} rollStyle={rollsStyle} />

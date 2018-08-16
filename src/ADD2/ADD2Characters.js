@@ -31,7 +31,7 @@ const testData = [
     },
     {
         id: 2,
-        name: 'Gristle',
+        name: 'Gristle McThornbody',
         completionStep: 1,
         str: 0,
         dex: 0,
@@ -57,7 +57,7 @@ const testData = [
     },
     {
         id: 3,
-        name: 'Crunch',
+        name: 'Crunch Bonemeal',
         completionStep: 1,
         str: 0,
         dex: 0,
@@ -83,7 +83,7 @@ const testData = [
     },
     {
         id: 4,
-        name: 'Rip',
+        name: 'Rip Steakface',
         completionStep: 1,
         str: 0,
         dex: 0,
@@ -109,7 +109,7 @@ const testData = [
     },
     {
         id: 5,
-        name: 'Swift',
+        name: 'Swift McRunfast',
         completionStep: 2,
         str: 12,
         dex: 12,

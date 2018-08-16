@@ -48,7 +48,7 @@ export default class Assignment2xDisplay extends Component {
     }
 
     resetAssignments() {
-        let {selectedChar, rolls} = this.props;
+        const {selectedChar, rolls} = this.props;
         selectedChar.str = undefined; rolls[0].assigned = false; rolls[1].assigned = false;
         selectedChar.dex = undefined; rolls[2].assigned = false; rolls[3].assigned = false;
         selectedChar.con = undefined; rolls[4].assigned = false; rolls[5].assigned = false;
@@ -78,15 +78,15 @@ export default class Assignment2xDisplay extends Component {
         let roll0 = undefined, roll1 = undefined, roll2 = undefined, roll3 = undefined,
             roll4 = undefined, roll5 = undefined, roll6 = undefined, roll7 = undefined,
             roll8 = undefined, roll9 = undefined, roll10 = undefined, roll11 = undefined;
-        let selectedRollText = '';
-        if(selectedRoll)
-            selectedRollText = selectedRoll.value;
-
         if(rolls.length > 0) {
             roll0 = rolls[0]; roll1 = rolls[1]; roll2 = rolls[2]; roll3 = rolls[3];
             roll4 = rolls[4]; roll5 = rolls[5]; roll6 = rolls[6]; roll7 = rolls[7];
             roll8 = rolls[8]; roll9 = rolls[9]; roll10 = rolls[10]; roll11 = rolls[11];
         }
+
+        let selectedRollText = '';
+        if(selectedRoll)
+            selectedRollText = selectedRoll.value;
 
         return (
             <div>

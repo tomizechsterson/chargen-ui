@@ -26,31 +26,35 @@ export default class AssignmentDisplay extends Component {
     }
 
     handleAssign() {
-        if(this.state.selectedStat === 'STR')
-            this.props.selectedChar.str = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'DEX')
-            this.props.selectedChar.dex = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'CON')
-            this.props.selectedChar.con = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'INT')
-            this.props.selectedChar.int = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'WIS')
-            this.props.selectedChar.wis = this.state.selectedRoll.value;
-        else if(this.state.selectedStat === 'CHR')
-            this.props.selectedChar.chr = this.state.selectedRoll.value;
+        const {selectedChar, rolls} = this.props;
+        const {selectedStat, selectedRoll} = this.state;
 
-        const id = this.state.selectedRoll.id;
-        this.props.rolls.find(roll => roll.id === id).assigned = true;
+        if(selectedStat === 'STR')
+            selectedChar.str = selectedRoll.value;
+        else if(selectedStat === 'DEX')
+            selectedChar.dex = selectedRoll.value;
+        else if(selectedStat === 'CON')
+            selectedChar.con = selectedRoll.value;
+        else if(selectedStat === 'INT')
+            selectedChar.int = selectedRoll.value;
+        else if(selectedStat === 'WIS')
+            selectedChar.wis = selectedRoll.value;
+        else if(selectedStat === 'CHR')
+            selectedChar.chr = selectedRoll.value;
+
+        const id = selectedRoll.id;
+        rolls.find(roll => roll.id === id).assigned = true;
         this.setState({selectedStat: '', selectedRoll: undefined});
     }
 
     resetAssignments() {
-        this.props.selectedChar.str = undefined; this.props.rolls[0].assigned = false;
-        this.props.selectedChar.dex = undefined; this.props.rolls[1].assigned = false;
-        this.props.selectedChar.con = undefined; this.props.rolls[2].assigned = false;
-        this.props.selectedChar.int = undefined; this.props.rolls[3].assigned = false;
-        this.props.selectedChar.wis = undefined; this.props.rolls[4].assigned = false;
-        this.props.selectedChar.chr = undefined; this.props.rolls[5].assigned = false;
+        const {selectedChar, rolls} = this.props;
+        selectedChar.str = undefined; rolls[0].assigned = false;
+        selectedChar.dex = undefined; rolls[1].assigned = false;
+        selectedChar.con = undefined; rolls[2].assigned = false;
+        selectedChar.int = undefined; rolls[3].assigned = false;
+        selectedChar.wis = undefined; rolls[4].assigned = false;
+        selectedChar.chr = undefined; rolls[5].assigned = false;
         this.setState({selectedStat: '', selectedRoll: undefined});
     }
 
@@ -65,26 +69,26 @@ export default class AssignmentDisplay extends Component {
     }
 
     render() {
-        const {selectedChar} = this.props;
-        const {rolls} = this.props;
+        const {selectedChar, rolls} = this.props;
+        const {selectedRoll, selectedStat} = this.state;
         const rollsStyle = {
             color: '#999'
         };
 
         let strRoll = undefined, dexRoll = undefined, conRoll = undefined,
             intRoll = undefined, wisRoll = undefined, chrRoll = undefined;
-        let selectedRollText = '';
-        if(this.state.selectedRoll)
-            selectedRollText = this.state.selectedRoll.value;
-
-        if(this.props.rolls.length > 0) {
+        if(rolls.length > 0) {
             strRoll = rolls[0]; dexRoll = rolls[1]; conRoll = rolls[2];
             intRoll = rolls[3]; wisRoll = rolls[4]; chrRoll = rolls[5];
         }
 
+        let selectedRollText = '';
+        if(selectedRoll)
+            selectedRollText = selectedRoll.value;
+
         return (
             <div>
-                Selected Stat: {this.state.selectedStat}, Selected Roll: {selectedRollText} <br/>
+                Selected Stat: {selectedStat}, Selected Roll: {selectedRollText} <br/>
 
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
                                    stat={'STR'} charStat={selectedChar.str} rolls={[strRoll]} rollStyle={rollsStyle} />

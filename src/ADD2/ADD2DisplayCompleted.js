@@ -4,7 +4,7 @@ import VitalsDisplay from '../GeneralDisplays/VitalsDisplay';
 import SavingThrowsDisplay from '../GeneralDisplays/SavingThrowsDisplay';
 
 const ADD2DisplayCompleted = (props) => {
-    const {selectedChar} = props;
+    const {selectedChar, onDelete} = props;
     return (
         <div>
             <h2>Character Details</h2>
@@ -13,7 +13,7 @@ const ADD2DisplayCompleted = (props) => {
                 <VitalsDisplay selectedChar={selectedChar}/>
                 <StatsDisplay selectedChar={selectedChar}/>
                 <SavingThrowsDisplay selectedChar={selectedChar}/>
-                <button onClick={() => props.onDelete(selectedChar.id)} >Delete</button>
+                <button onClick={() => onDelete(selectedChar.id)} >Delete</button>
             </div>
         </div>
     );

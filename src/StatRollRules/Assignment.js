@@ -16,6 +16,7 @@ export default class Assignment extends Component {
         currentChar.str = currentChar.dex = currentChar.con =
             currentChar.int = currentChar.wis = currentChar.chr = undefined;
         let statRolls = [];
+
         const xhr = new XMLHttpRequest();
         xhr.open('get', 'http://localhost:42000/api/ADD2Character/rollstats/assignment', true);
         xhr.onload = function() {

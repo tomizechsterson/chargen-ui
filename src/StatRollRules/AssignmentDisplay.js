@@ -87,17 +87,17 @@ export default class AssignmentDisplay extends Component {
                 Selected Stat: {this.state.selectedStat}, Selected Roll: {selectedRollText} <br/>
 
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'STR'} charStat={selectedChar.str} roll={strRoll} rollStyle={rollsStyle} />
+                                   stat={'STR'} charStat={selectedChar.str} rolls={[strRoll]} rollStyle={rollsStyle} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'DEX'} charStat={selectedChar.dex} roll={dexRoll} rollStyle={rollsStyle} />
+                                   stat={'DEX'} charStat={selectedChar.dex} rolls={[dexRoll]} rollStyle={rollsStyle} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'CON'} charStat={selectedChar.con} roll={conRoll} rollStyle={rollsStyle} />
+                                   stat={'CON'} charStat={selectedChar.con} rolls={[conRoll]} rollStyle={rollsStyle} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'INT'} charStat={selectedChar.int} roll={intRoll} rollStyle={rollsStyle} />
+                                   stat={'INT'} charStat={selectedChar.int} rolls={[intRoll]} rollStyle={rollsStyle} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'WIS'} charStat={selectedChar.wis} roll={wisRoll} rollStyle={rollsStyle} />
+                                   stat={'WIS'} charStat={selectedChar.wis} rolls={[wisRoll]} rollStyle={rollsStyle} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'CHR'} charStat={selectedChar.chr} roll={chrRoll} rollStyle={rollsStyle} />
+                                   stat={'CHR'} charStat={selectedChar.chr} rolls={[chrRoll]} rollStyle={rollsStyle} />
 
                 <input type='button' onClick={() => this.handleAssign()} value='Assign' disabled={this.disableAssignButton()} />
                 <input type='button' onClick={() => this.resetAssignments()} value='Reset' disabled={this.disableResetButton()} />

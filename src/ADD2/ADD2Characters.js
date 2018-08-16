@@ -234,7 +234,29 @@ export default class ADD2Characters extends Component {
             else
                 newId = characters[characters.length - 1].id + 1;
 
-            const char = {id: newId, name: this.state.newCharName, race: 'none', className: 'none'};
+            const char = {id: newId, name: this.state.newCharName,
+                completionStep: 1,
+                str: 0,
+                dex: 0,
+                con: 0,
+                int: 0,
+                wis: 0,
+                chr: 0,
+                race: 'none',
+                gender: 'n',
+                height: 0,
+                weight: 0,
+                age: 0,
+                className: 'none',
+                alignment: 'none',
+                paralyze: 0,
+                rod: 0,
+                petrification: 0,
+                breath: 0,
+                spell: 0,
+                hp: 0,
+                moveRate: 0,
+                funds: 0};
             const newChars = characters.concat([char]);
             this.setState({characterData: newChars, newCharName: ''});
 

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import AssignmentDisplay from './AssignmentDisplay';
 import Assignment2xDisplay from './Assignment2xDisplay';
 
-export default class Assignment2x extends Component {
+export default class GeneralAssignment extends Component {
     constructor(props) {
         super(props);
 
@@ -16,9 +17,10 @@ export default class Assignment2x extends Component {
         currentChar.str = currentChar.dex = currentChar.con =
             currentChar.int = currentChar.wis = currentChar.chr = undefined;
         let statRolls = [];
+        const serviceMethod = this.props.double ? 'assignmentDouble' : 'assignment';
 
         const xhr = new XMLHttpRequest();
-        xhr.open('get', 'http://localhost:42000/api/ADD2Character/rollstats/assignmentdouble', true);
+        xhr.open('get', 'http://localhost:42000/api/ADD2Character/rollstats/' + serviceMethod, true);
         xhr.onload = function() {
             const data = JSON.parse(xhr.responseText);
             for(let i = 0; i < data.length; i++) {
@@ -48,11 +50,13 @@ export default class Assignment2x extends Component {
     }
 
     render() {
+        const pText = this.props.double ? 'Roll 12 and assign 6 to stats' : 'Assign 6 rolls to stats';
         return (
             <div>
                 <input type='button' onClick={this.rollStats} value='Roll Stats' /><br/>
-                <p>Roll 12 and assign 6 to stats</p>
-                <Assignment2xDisplay selectedChar={this.state.selectedChar} rolls={this.state.rolls} />
+                <p>{pText}</p>
+                {this.props.double && <Assignment2xDisplay selectedChar={this.state.selectedChar} rolls={this.state.rolls} />}
+                {!this.props.double && <AssignmentDisplay selectedChar={this.state.selectedChar} rolls={this.state.rolls} />}
                 <input type='button' onClick={this.handleUpdate} value='Save Stats' />
             </div>
         );

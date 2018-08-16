@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RollTwiceDisplay = (props) => {
-    const {selectedChar} = props;
+    const {selectedChar, rolls} = props;
     const rollsStyle = {
         color: '#999'
     };
@@ -17,13 +17,13 @@ const RollTwiceDisplay = (props) => {
     let wisRolls = '';
     let chrRolls = '';
 
-    if(props.rolls.length > 0) {
-        strRolls = formattedRollText(props.rolls[0]) + ', ' + formattedRollText(props.rolls[1]);
-        dexRolls = formattedRollText(props.rolls[2]) + ', ' + formattedRollText(props.rolls[3]);
-        conRolls = formattedRollText(props.rolls[4]) + ', ' + formattedRollText(props.rolls[5]);
-        intRolls = formattedRollText(props.rolls[6]) + ', ' + formattedRollText(props.rolls[7]);
-        wisRolls = formattedRollText(props.rolls[8]) + ', ' + formattedRollText(props.rolls[9]);
-        chrRolls = formattedRollText(props.rolls[10]) + ', ' + formattedRollText(props.rolls[11]);
+    if(rolls.length > 0) {
+        strRolls = formattedRollText(rolls[0]) + ', ' + formattedRollText(rolls[1]);
+        dexRolls = formattedRollText(rolls[2]) + ', ' + formattedRollText(rolls[3]);
+        conRolls = formattedRollText(rolls[4]) + ', ' + formattedRollText(rolls[5]);
+        intRolls = formattedRollText(rolls[6]) + ', ' + formattedRollText(rolls[7]);
+        wisRolls = formattedRollText(rolls[8]) + ', ' + formattedRollText(rolls[9]);
+        chrRolls = formattedRollText(rolls[10]) + ', ' + formattedRollText(rolls[11]);
     }
 
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RollOnceDisplay = (props) => {
-    const {selectedChar} = props;
+    const {selectedChar, rolls} = props;
     const rollsStyle = {
         color: '#999'
     };
@@ -13,13 +13,13 @@ const RollOnceDisplay = (props) => {
     let wisRolls = '';
     let chrRolls = '';
 
-    if(props.rolls.length > 0) {
-        strRolls = props.rolls[0].join(' + ');
-        dexRolls = props.rolls[1].join(' + ');
-        conRolls = props.rolls[2].join(' + ');
-        intRolls = props.rolls[3].join(' + ');
-        wisRolls = props.rolls[4].join(' + ');
-        chrRolls = props.rolls[5].join(' + ');
+    if(rolls.length > 0) {
+        strRolls = rolls[0].join(' + ');
+        dexRolls = rolls[1].join(' + ');
+        conRolls = rolls[2].join(' + ');
+        intRolls = rolls[3].join(' + ');
+        wisRolls = rolls[4].join(' + ');
+        chrRolls = rolls[5].join(' + ');
     }
 
     return (

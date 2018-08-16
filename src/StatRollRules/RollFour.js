@@ -21,7 +21,7 @@ export default class RollFour extends Component {
     }
 
     rollStats() {
-        let {selectedChar} = this.props;
+        const {selectedChar} = this.props;
         const xhr = new XMLHttpRequest();
         xhr.open('get', 'http://localhost:42000/api/ADD2Character/rollstats/rollfour', true);
         xhr.onload = function() {
@@ -38,12 +38,13 @@ export default class RollFour extends Component {
     }
 
     handleUpdate() {
+        const {selectedChar, onUpdate} = this.props;
         if(this.state.rolls.length === 0) {
             alert('must roll stats to save');
         }
         else {
-            this.props.selectedChar.completionStep++;
-            this.props.onUpdate(this.props.selectedChar);
+            selectedChar.completionStep++;
+            onUpdate(selectedChar);
         }
     }
 

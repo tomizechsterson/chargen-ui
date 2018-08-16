@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RollFourDisplay = (props) => {
-    const {selectedChar} = props;
+    const {selectedChar, rolls} = props;
     const rollsStyle = {
         color: '#999'
     };
@@ -13,13 +13,13 @@ const RollFourDisplay = (props) => {
     let wisRolls = '';
     let chrRolls = '';
 
-    if(props.rolls.length > 0) {
-        strRolls = props.rolls[0].sort(function(a, b) {return b - a}).join(' + ');
-        dexRolls = props.rolls[1].sort(function(a, b) {return b - a}).join(' + ');
-        conRolls = props.rolls[2].sort(function(a, b) {return b - a}).join(' + ');
-        intRolls = props.rolls[3].sort(function(a, b) {return b - a}).join(' + ');
-        wisRolls = props.rolls[4].sort(function(a, b) {return b - a}).join(' + ');
-        chrRolls = props.rolls[5].sort(function(a, b) {return b - a}).join(' + ');
+    if(rolls.length > 0) {
+        strRolls = rolls[0].sort(function(a, b) {return b - a}).join(' + ');
+        dexRolls = rolls[1].sort(function(a, b) {return b - a}).join(' + ');
+        conRolls = rolls[2].sort(function(a, b) {return b - a}).join(' + ');
+        intRolls = rolls[3].sort(function(a, b) {return b - a}).join(' + ');
+        wisRolls = rolls[4].sort(function(a, b) {return b - a}).join(' + ');
+        chrRolls = rolls[5].sort(function(a, b) {return b - a}).join(' + ');
     }
 
     return (

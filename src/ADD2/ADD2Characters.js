@@ -166,36 +166,38 @@ export default class ADD2Characters extends Component {
     }
 
     handleSelect(id) {
-        if (!this.state.selected) {
-            for (let i = 0; i < this.state.characterData.length; i++) {
-                if (this.state.characterData[i].id === id) {
-                    this.setState({selected: this.state.characterData[i]});
+        const {selected, characterData} = this.state;
+        if (!selected) {
+            for (let i = 0; i < characterData.length; i++) {
+                if (characterData[i].id === id) {
+                    this.setState({selected: characterData[i]});
                 }
             }
         }
         else {
-            for (let i = 0; i < this.state.characterData.length; i++) {
-                if (this.state.characterData[i].id === id && this.state.selected.id !== id) {
-                    this.setState({selected: this.state.characterData[i]});
+            for (let i = 0; i < characterData.length; i++) {
+                if (characterData[i].id === id && selected.id !== id) {
+                    this.setState({selected: characterData[i]});
                 }
             }
         }
     }
 
     handleDelete(id) {
-        const index = this.state.characterData.findIndex(function (o) {
+        const {characterData, selected} = this.state;
+        const index = characterData.findIndex(function (o) {
             return o.id === id;
         });
 
-        const charToDelete = this.state.characterData[index];
+        const charToDelete = characterData[index];
 
         if(window.confirm('Are you sure you want to delete ' + charToDelete.name + ', the ' + charToDelete.race + ' ' + charToDelete.className + '?')) {
-            this.state.characterData.splice(index, 1);
+            characterData.splice(index, 1);
 
-            if(charToDelete.id === this.state.selected.id)
+            if(charToDelete.id === selected.id)
                 this.setState({selected: null});
             else
-                this.setState({selected: this.state.selected});
+                this.setState({selected: selected});
 
             if (!useTestData) {
                 const xhr = new XMLHttpRequest();
@@ -226,15 +228,16 @@ export default class ADD2Characters extends Component {
     }
 
     handleCreate() {
-        if(this.state.newCharName.trim()) {
+        const {newCharName, characterData} = this.state;
+        if(newCharName.trim()) {
             let newId = 0;
-            const characters = this.state.characterData;
+            const characters = characterData;
             if(characters.length === 0)
                 newId = 1;
             else
                 newId = characters[characters.length - 1].id + 1;
 
-            const char = {id: newId, name: this.state.newCharName,
+            const char = {id: newId, name: newCharName,
                 completionStep: 1,
                 str: 0,
                 dex: 0,
@@ -283,6 +286,7 @@ export default class ADD2Characters extends Component {
     }
 
     render() {
+        const {newCharName, characterData, selected} = this.state;
         const topLevelColumnsStyle = {
             columnCount: 2,
             columnRuleStyle: 'solid',
@@ -294,12 +298,12 @@ export default class ADD2Characters extends Component {
             <div style={topLevelColumnsStyle}>
                 <div>
                     <button onClick={() => this.handleCreate()}>Create</button>
-                    <input type="text" maxLength="32" placeholder="character name" value={this.state.newCharName} onChange={(e) => this.handleNewNameChange(e)}/>
-                    <ADD2CharacterTable characters={this.state.characterData}
+                    <input type="text" maxLength="32" placeholder="character name" value={newCharName} onChange={(e) => this.handleNewNameChange(e)}/>
+                    <ADD2CharacterTable characters={characterData}
                                         onSelect={this.handleSelect} />
                 </div>
                 <div>
-                    <ADD2CharacterDetails selectedChar={this.state.selected}
+                    <ADD2CharacterDetails selectedChar={selected}
                                           onDelete={this.handleDelete}
                                           onUpdate={this.handleUpdate} />
                 </div>

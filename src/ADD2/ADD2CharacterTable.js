@@ -2,7 +2,6 @@ import React from 'react';
 import './ADD2CharacterTable.css';
 
 const ADD2CharacterTable = (props) => {
-
     const completeStep = 2;
     const entries = props.characters;
     const rowItems = entries.map(function(item) {

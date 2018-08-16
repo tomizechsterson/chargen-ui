@@ -74,12 +74,8 @@ export default class AssignmentDisplay extends Component {
             selectedRollText = this.state.selectedRoll.value;
 
         if(this.props.rolls.length > 0) {
-            strRoll = rolls[0];
-            dexRoll = rolls[1];
-            conRoll = rolls[2];
-            intRoll = rolls[3];
-            wisRoll = rolls[4];
-            chrRoll = rolls[5];
+            strRoll = rolls[0]; dexRoll = rolls[1]; conRoll = rolls[2];
+            intRoll = rolls[3]; wisRoll = rolls[4]; chrRoll = rolls[5];
         }
 
         return (

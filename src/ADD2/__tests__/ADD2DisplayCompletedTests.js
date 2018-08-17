@@ -1,6 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import ADD2DisplayCompleted from '../ADD2DisplayCompleted';
+import VitalsDisplay from "../../GeneralDisplays/VitalsDisplay";
 
 describe('ADD2DisplayCompleted Tests', () => {
     it('always renders at least one div', () => {
@@ -13,5 +14,8 @@ describe('ADD2DisplayCompleted Tests', () => {
         expect(component.find('h4').text()).toEqual('test');
     });
 
-    it('always renders ')
+    it('always renders a VitalsDisplay', () => {
+        const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
+        expect(component.find(VitalsDisplay).length).toBe(2);
+    });
 });

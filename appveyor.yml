@@ -11,6 +11,7 @@ test_script:
   - node --version
   - npm --version
   - npm run build
+  - npm test
 
 build: off
 

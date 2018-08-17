@@ -1,6 +1,5 @@
 import React from 'react';
-import {mount, configure} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import {mount} from 'enzyme';
 import ADD2CharacterCreation from '../ADD2CharacterCreation';
 import ADD2StatRoll from "../ADD2StatRoll";
 // https://medium.freecodecamp.org/the-right-way-to-test-react-components-548a4736ab22
@@ -13,10 +12,9 @@ describe('ADD2 Character Creation Tests', () => {
         }
         return mountedADD2CharacterCreation;
     };
-    configure({adapter: new Adapter()});
 
     beforeEach(() => {
-        props = {selectedChar: {name: '', completionStep: 0}};
+        props = {selectedChar: {completionStep: 0}};
         mountedADD2CharacterCreation = undefined;
     });
 

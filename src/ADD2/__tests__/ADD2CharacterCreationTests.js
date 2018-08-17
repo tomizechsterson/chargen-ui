@@ -6,18 +6,18 @@ import ADD2StatRoll from "../ADD2StatRoll";
 // https://medium.freecodecamp.org/the-right-way-to-test-react-components-548a4736ab22
 describe('ADD2 Character Creation Tests', () => {
     let props;
-    let mountedADD2CharacterCration;
+    let mountedADD2CharacterCreation;
     const characterCreation = () => {
-        if(!mountedADD2CharacterCration) {
-            mountedADD2CharacterCration = mount(<ADD2CharacterCreation {...props}/>);
+        if(!mountedADD2CharacterCreation) {
+            mountedADD2CharacterCreation = mount(<ADD2CharacterCreation {...props}/>);
         }
-        return mountedADD2CharacterCration;
+        return mountedADD2CharacterCreation;
     };
     configure({adapter: new Adapter()});
 
     beforeEach(() => {
         props = {selectedChar: {name: '', completionStep: 0}};
-        mountedADD2CharacterCration = undefined;
+        mountedADD2CharacterCreation = undefined;
     });
 
     it('always renders a div', () => {

@@ -30,4 +30,23 @@ describe('ADD2DisplayCompleted Tests', () => {
         const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
         expect(component.find(SavingThrowsDisplay).length).toBe(1);
     });
+
+    describe('when selectedChar is defined', () => {
+        let testChar = {};
+
+        it('sets the rendered `VitalsDisplay`s `selectedChar` prop to the same value as `testChar`', () => {
+            const vitalsDisplay = shallow(<ADD2DisplayCompleted selectedChar={testChar}/>).find(VitalsDisplay);
+            expect(vitalsDisplay.props().selectedChar).toBe(testChar);
+        });
+
+        it('sets the rendered `StatsDisplay`s `selectedChar` prop to the same value as `testChar`', () => {
+            const statsDisplay = shallow(<ADD2DisplayCompleted selectedChar={testChar}/>).find(StatsDisplay);
+            expect(statsDisplay.props().selectedChar).toBe(testChar);
+        });
+
+        it('sets the rendered `VitalsDisplay`s `selectedChar` prop to the same value as `testChar`', () => {
+            const savingThrowsDisplay = shallow(<ADD2DisplayCompleted selectedChar={testChar}/>).find(SavingThrowsDisplay);
+            expect(savingThrowsDisplay.props().selectedChar).toBe(testChar);
+        });
+    });
 });

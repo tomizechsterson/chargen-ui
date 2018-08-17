@@ -13,7 +13,7 @@ const ADD2DisplayCompleted = (props) => {
                 <VitalsDisplay selectedChar={selectedChar}/>
                 <StatsDisplay selectedChar={selectedChar}/>
                 <SavingThrowsDisplay selectedChar={selectedChar}/>
-                <button onClick={() => onDelete(selectedChar.id)} >Delete</button>
+                <button onClick={() => onDelete(selectedChar.id)}>Delete</button>
             </div>
         </div>
     );

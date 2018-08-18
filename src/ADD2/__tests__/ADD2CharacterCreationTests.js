@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from 'enzyme';
 import ADD2CharacterCreation from '../ADD2CharacterCreation';
 import ADD2StatRoll from "../ADD2StatRoll";
-// https://medium.freecodecamp.org/the-right-way-to-test-react-components-548a4736ab22
+
 describe('ADD2 Character Creation Tests', () => {
     let props;
     let mountedADD2CharacterCreation;

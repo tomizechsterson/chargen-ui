@@ -18,17 +18,17 @@ describe('ADD2DisplayCompleted Tests', () => {
 
     it('always renders a VitalsDisplay', () => {
         const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
-        expect(component.find(VitalsDisplay)).toBeDefined();
+        expect(component.find(VitalsDisplay)).toHaveLength(1);
     });
 
     it('always renders a StatsDisplay', () => {
         const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
-        expect(component.find(StatsDisplay)).toBeDefined();
+        expect(component.find(StatsDisplay)).toHaveLength(1);
     });
 
     it('always renders a SavingThrowsDisplay', () => {
         const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
-        expect(component.find(SavingThrowsDisplay)).toBeDefined();
+        expect(component.find(SavingThrowsDisplay)).toHaveLength(1);
     });
 
     it('always renders the delete button', () => {

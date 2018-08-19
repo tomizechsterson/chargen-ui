@@ -29,7 +29,7 @@ describe('ADD2CharacterCreation Tests', () => {
     });
 
     it('always renders an `ADD2StatRoll` (assuming completionStep is < 2', () => {
-        expect(characterCreation().find(ADD2StatRoll)).toBeDefined();
+        expect(characterCreation().find(ADD2StatRoll)).toHaveLength(1);
     });
 
     describe('when `onUpdate` is defined', () => {

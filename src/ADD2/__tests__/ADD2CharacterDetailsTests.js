@@ -7,7 +7,7 @@ import ADD2DisplayCompleted from "../ADD2DisplayCompleted";
 describe('ADD2CharacterDetails Tests', () => {
     it('always renders a div', () => {
         const component = shallow(<ADD2CharacterDetails/>);
-        expect(component.find('div')).toBeDefined();
+        expect(component.find('div')).toHaveLength(1);
     });
 
     describe('when `selectedChar` is defined', () => {

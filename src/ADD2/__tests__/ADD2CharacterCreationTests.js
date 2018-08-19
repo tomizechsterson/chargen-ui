@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import ADD2CharacterCreation from '../ADD2CharacterCreation';
 import ADD2StatRoll from "../ADD2StatRoll";
 
-describe('ADD2 Character Creation Tests', () => {
+describe('ADD2CharacterCreation Tests', () => {
     let props;
     let mountedADD2CharacterCreation;
     const characterCreation = () => {
@@ -33,33 +33,24 @@ describe('ADD2 Character Creation Tests', () => {
     });
 
     describe('when `onUpdate` is defined', () => {
-        beforeEach(() => {
-            props.onUpdate = jest.fn();
-        });
-
         it('sets the rendered `ADD2StatRoll`s `onUpdate` prop to the same value as `onUpdate`', () => {
+            props.onUpdate = jest.fn();
             const add2StatRoll = characterCreation().find(ADD2StatRoll);
             expect(add2StatRoll.props().onUpdate).toBe(props.onUpdate);
         });
     });
 
     describe('when `onUpdate` is undefined', () => {
-        beforeEach(() => {
-            props.onUpdate = undefined;
-        });
-
         it('sets the rendered `ADD2StatRoll`s `onUpdate` prop to undefined', () => {
+            props.onUpdate = undefined;
             const add2StatRoll = characterCreation().find(ADD2StatRoll);
             expect(add2StatRoll.props().onUpdate).not.toBeDefined();
         });
     });
 
     describe('when `selectedChar` is defined', () => {
-        beforeEach(() => {
-            props.selectedChar = {completionStep: 0};
-        });
-
         it('sets the rendered `ADD2StatRoll`s `selectedChar` prop to the same value as `selectedChar`', () => {
+            props.selectedChar = {completionStep: 0};
             const add2StatRoll = characterCreation().find(ADD2StatRoll);
             expect(add2StatRoll.props().selectedChar).toBe(props.selectedChar);
         });

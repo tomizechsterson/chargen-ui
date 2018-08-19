@@ -1,5 +1,5 @@
 import React from 'react';
-import {mount} from 'enzyme';
+import {shallow} from 'enzyme';
 import ADD2CharacterCreation from '../ADD2CharacterCreation';
 import ADD2StatRoll from "../ADD2StatRoll";
 
@@ -8,7 +8,7 @@ describe('ADD2 Character Creation Tests', () => {
     let mountedADD2CharacterCreation;
     const characterCreation = () => {
         if(!mountedADD2CharacterCreation) {
-            mountedADD2CharacterCreation = mount(<ADD2CharacterCreation {...props}/>);
+            mountedADD2CharacterCreation = shallow(<ADD2CharacterCreation {...props}/>);
         }
         return mountedADD2CharacterCreation;
     };
@@ -29,7 +29,7 @@ describe('ADD2 Character Creation Tests', () => {
     });
 
     it('always renders an `ADD2StatRoll` (assuming completionStep is < 2', () => {
-        expect(characterCreation().find(ADD2StatRoll).length).toBe(1);
+        expect(characterCreation().find(ADD2StatRoll)).toBeDefined();
     });
 
     describe('when `onUpdate` is defined', () => {

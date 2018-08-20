@@ -8,7 +8,7 @@ describe('RollOnceDisplay tests', () => {
         expect(component.find('p')).toHaveLength(1);
     });
 
-    describe('when `selectedChar` is has no stats and no rolls', () => {
+    describe('when `selectedChar` has no stats and no rolls', () => {
         it('renders no stat and empty parentheses for rolls', () => {
             const component = shallow(<RollOnceDisplay selectedChar={{}} rolls={[]}/>);
 

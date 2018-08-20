@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ADD2CharacterTable from './ADD2CharacterTable';
 import ADD2CharacterDetails from './ADD2CharacterDetails';
 
-const useTestData = true;
 const testData = [
     {
         id: 1,
@@ -151,7 +150,7 @@ export default class ADD2Characters extends Component {
     }
 
     loadCharsFromServer() {
-        if (useTestData)
+        if (this.props.useTestData)
             this.setState({characterData: testData});
         else {
             const xhr = new XMLHttpRequest();
@@ -198,7 +197,7 @@ export default class ADD2Characters extends Component {
             else
                 this.setState({selected: selected});
 
-            if (!useTestData) {
+            if (!this.props.useTestData) {
                 const xhr = new XMLHttpRequest();
                 xhr.open('delete', 'http://localhost:42000/api/add2character/' + id, true);
                 xhr.onload = function () {
@@ -215,7 +214,7 @@ export default class ADD2Characters extends Component {
         chars[i] = character;
         this.setState({characterData: chars});
 
-        if(!useTestData) {
+        if(!this.props.useTestData) {
             const xhr = new XMLHttpRequest();
             xhr.open('put', 'http://localhost:42000/api/add2character/' + character.id, true);
             xhr.onload = function() {
@@ -236,7 +235,7 @@ export default class ADD2Characters extends Component {
             else
                 newId = characters[characters.length - 1].id + 1;
 
-            const char = {id: newId, name: newCharName,
+            const newChar = {id: newId, name: newCharName,
                 completionStep: 1,
                 str: 0,
                 dex: 0,
@@ -259,17 +258,17 @@ export default class ADD2Characters extends Component {
                 hp: 0,
                 moveRate: 0,
                 funds: 0};
-            const newChars = characters.concat([char]);
-            this.setState({characterData: newChars, newCharName: ''});
+            const newCharList = characters.concat([newChar]);
+            this.setState({characterData: newCharList, newCharName: ''});
 
-            if(!useTestData) {
+            if(!this.props.useTestData) {
                 const xhr = new XMLHttpRequest();
                 xhr.open('post', 'http://localhost:42000/api/add2character/new', true);
                 xhr.onload = function() {
                     this.loadCharsFromServer();
                 }.bind(this);
                 xhr.setRequestHeader('content-type', 'application/json');
-                xhr.send(JSON.stringify(char));
+                xhr.send(JSON.stringify(newChar));
             }
         }
         else

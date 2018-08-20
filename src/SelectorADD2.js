@@ -4,7 +4,7 @@ import ADD2Characters from './ADD2/ADD2Characters';
 const SelectorADD2 = () => {
     return (
         <div>
-            <ADD2Characters/>
+            <ADD2Characters useTestData={true}/>
         </div>
     );
 };

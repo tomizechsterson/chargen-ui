@@ -29,43 +29,36 @@ describe('ADD2StatRoll', () => {
 
         it('changes state to selected roll rule', () => {
             dropDown.simulate('change', {target: {value: 'testRule'}});
-
             expect(component.state().rollRule).toBe('testRule');
         });
 
         it('renders only RollOnce component if selected', () => {
             dropDown.simulate('change', {target: {value: 'rollOnce'}});
-
             assertComponents(1, 0, 0, 0, 0);
         });
 
         it('renders only RollTwice component if selected', () => {
             dropDown.simulate('change', {target: {value: 'rollTwice'}});
-
             assertComponents(0, 1, 0, 0, 0);
         });
 
         it('renders only Assignment component if selected', () => {
             dropDown.simulate('change', {target: {value: 'assignment'}});
-
             assertComponents(0, 0, 1, 0, 0);
         });
 
         it('renders only Assignment component if 2x is selected', () => {
             dropDown.simulate('change', {target: {value: 'assignment2x'}});
-
             assertComponents(0, 0, 1, 0, 0);
         });
 
         it('renders only RollFour component if selected', () => {
             dropDown.simulate('change', {target: {value: 'roll4'}});
-
             assertComponents(0, 0, 0, 1, 0);
         });
 
         it('renders only Add7 component if selected', () => {
             dropDown.simulate('change', {target: {value: 'add7Dice'}});
-
             assertComponents(0, 0, 0, 0, 1);
         });
 

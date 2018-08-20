@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ADD2CharacterTable from './ADD2CharacterTable';
 import ADD2CharacterDetails from './ADD2CharacterDetails';
 
+const useTestData = true;
 const testData = [
     {
         id: 1,
@@ -134,8 +135,6 @@ const testData = [
         funds: 50
     }
 ];
-
-const useTestData = true;
 
 export default class ADD2Characters extends Component {
     constructor(props) {

@@ -11,8 +11,8 @@ describe('RollTwiceDisplay tests', () => {
     describe('when `selectedChar` has no stats and no rolls', () => {
         it('renders nothing beyond the stat label', () => {
             const component = shallow(<RollTwiceDisplay selectedChar={{}} rolls={[]}/>);
-
             const pTag = component.find('p');
+
             expect(pTag.text()).toContain('STR:  ');
             expect(pTag.text()).toContain('DEX:  ');
             expect(pTag.text()).toContain('CON:  ');
@@ -28,8 +28,8 @@ describe('RollTwiceDisplay tests', () => {
             const testRolls = [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3],
                 [2, 3, 3], [2, 2, 3], [2, 2, 2], [1, 2, 2], [1, 1, 2], [1, 1, 1]];
             const component = shallow(<RollTwiceDisplay selectedChar={testChar} rolls={testRolls}/>);
-
             const pTag = component.find('p');
+
             expect(pTag.text()).toContain('STR: 4 (3:  1 + 1 + 1), (4:  1 + 1 + 2)');
             expect(pTag.text()).toContain('DEX: 6 (5:  1 + 2 + 2), (6:  2 + 2 + 2)');
             expect(pTag.text()).toContain('CON: 8 (7:  2 + 2 + 3), (8:  2 + 3 + 3)');

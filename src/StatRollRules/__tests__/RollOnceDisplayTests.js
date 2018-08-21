@@ -11,8 +11,8 @@ describe('RollOnceDisplay tests', () => {
     describe('when `selectedChar` has no stats and no rolls', () => {
         it('renders no stat and empty parentheses for rolls', () => {
             const component = shallow(<RollOnceDisplay selectedChar={{}} rolls={[]}/>);
-
             const pTag = component.find('p');
+
             expect(pTag.text()).toContain('STR:  ()');
             expect(pTag.text()).toContain('DEX:  ()');
             expect(pTag.text()).toContain('CON:  ()');
@@ -27,8 +27,8 @@ describe('RollOnceDisplay tests', () => {
             const testChar = {str: 3, dex: 4, con: 5, int: 6, wis: 7, chr: 8};
             const testRolls = [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]];
             const component = shallow(<RollOnceDisplay selectedChar={testChar} rolls={testRolls}/>);
-
             const pTag = component.find('p');
+
             expect(pTag.text()).toContain('STR: 3 (1 + 1 + 1)');
             expect(pTag.text()).toContain('DEX: 4 (1 + 1 + 2)');
             expect(pTag.text()).toContain('CON: 5 (1 + 2 + 2)');

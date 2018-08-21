@@ -1,7 +1,10 @@
 import React from 'react';
 
 const AssignmentControl = (props) => {
-    const {stat, charStat, rolls, rollStyle} = props;
+    const {stat, charStat, rolls} = props;
+    const rollStyle = {
+        color: '#999'
+    };
     if(rolls.length === 1) {
         const roll = rolls[0];
         return (

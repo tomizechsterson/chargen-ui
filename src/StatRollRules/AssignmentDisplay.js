@@ -71,9 +71,6 @@ export default class AssignmentDisplay extends Component {
     render() {
         const {selectedChar, rolls} = this.props;
         const {selectedRoll, selectedStat} = this.state;
-        const rollsStyle = {
-            color: '#999'
-        };
 
         let strRoll = undefined, dexRoll = undefined, conRoll = undefined,
             intRoll = undefined, wisRoll = undefined, chrRoll = undefined;
@@ -91,17 +88,17 @@ export default class AssignmentDisplay extends Component {
                 Selected Stat: {selectedStat}, Selected Roll: {selectedRollText} <br/>
 
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'STR'} charStat={selectedChar.str} rolls={[strRoll]} rollStyle={rollsStyle} />
+                                   stat={'STR'} charStat={selectedChar.str} rolls={[strRoll]} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'DEX'} charStat={selectedChar.dex} rolls={[dexRoll]} rollStyle={rollsStyle} />
+                                   stat={'DEX'} charStat={selectedChar.dex} rolls={[dexRoll]} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'CON'} charStat={selectedChar.con} rolls={[conRoll]} rollStyle={rollsStyle} />
+                                   stat={'CON'} charStat={selectedChar.con} rolls={[conRoll]} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'INT'} charStat={selectedChar.int} rolls={[intRoll]} rollStyle={rollsStyle} />
+                                   stat={'INT'} charStat={selectedChar.int} rolls={[intRoll]} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'WIS'} charStat={selectedChar.wis} rolls={[wisRoll]} rollStyle={rollsStyle} />
+                                   stat={'WIS'} charStat={selectedChar.wis} rolls={[wisRoll]} />
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}
-                                   stat={'CHR'} charStat={selectedChar.chr} rolls={[chrRoll]} rollStyle={rollsStyle} />
+                                   stat={'CHR'} charStat={selectedChar.chr} rolls={[chrRoll]} />
 
                 <input type='button' onClick={() => this.handleAssign()} value='Assign' disabled={this.disableAssignButton()} />
                 <input type='button' onClick={() => this.resetAssignments()} value='Reset' disabled={this.disableResetButton()} />

@@ -108,12 +108,27 @@ describe('Assignment component tests', () => {
     });
 
     describe('Roll Stats button', () => {
-        it('resets the stats of the selectedChar in state', () => {
-            const xhr = sinon.useFakeXMLHttpRequest();
-            const requests = [];
+        let xhr, requests;
+        const assertRollObject = (roll, expectedId, shouldBeAssigned, expectedText, expectedValue) => {
+            expect(roll.id).toBe(expectedId);
+            expect(roll.assigned).toBe(shouldBeAssigned);
+            expect(roll.text).toBe(expectedText);
+            expect(roll.value).toBe(expectedValue);
+        };
+
+        beforeEach(() => {
+            xhr = sinon.useFakeXMLHttpRequest();
+            requests = [];
             xhr.onCreate = function(xhr) {
                 requests.push(xhr);
             }.bind(this);
+        });
+
+        afterEach(() => {
+            xhr.restore();
+        });
+
+        it('resets the stats of the selectedChar in state on response status 200', () => {
             const component = shallow(<Assignment/>);
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3}});
 
@@ -126,7 +141,44 @@ describe('Assignment component tests', () => {
             expect(component.state().selectedChar.int).toBeUndefined();
             expect(component.state().selectedChar.wis).toBeUndefined();
             expect(component.state().selectedChar.chr).toBeUndefined();
-            xhr.restore();
+        });
+
+        it('makes a request that ends with rollstats/assignment when double prop is false', () => {
+            const component = shallow(<Assignment double={false}/>);
+            component.setState({selectedChar: {}});
+
+            component.find('input').at(0).simulate('click');
+            requests[0].respond(200, {'Content-Type': 'text/json'}, '{}');
+
+            expect(requests[0].url).toEqual(expect.stringMatching(/rollstats\/assignment$/));
+        });
+
+        it('makes a request that ends with rollstats/assignmentDouble when double prop is true', () => {
+            const component = shallow(<Assignment double={true}/>);
+            component.setState({selectedChar: {}});
+
+            component.find('input').at(0).simulate('click');
+            requests[0].respond(200, {'Content-Type': 'text/json'}, '{}');
+
+            expect(requests[0].url).toEqual(expect.stringMatching(/rollstats\/assignmentDouble$/));
+        });
+
+        it('populates the expected roll objects with the response data with status 200', () => {
+            const component = shallow(<Assignment/>);
+            component.setState({selectedChar: {}});
+            const responseData = [[1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6]];
+            const responseJson = JSON.stringify(responseData);
+
+            component.find('input').at(0).simulate('click');
+            requests[0].respond(200, {'Content-Type': 'text/json'}, responseJson);
+            const rollObjects = component.state().rolls;
+
+            assertRollObject(rollObjects[0], 0, false, ' (1 + 1 + 1)', 3);
+            assertRollObject(rollObjects[1], 1, false, ' (1 + 1 + 2)', 4);
+            assertRollObject(rollObjects[2], 2, false, ' (1 + 1 + 3)', 5);
+            assertRollObject(rollObjects[3], 3, false, ' (1 + 1 + 4)', 6);
+            assertRollObject(rollObjects[4], 4, false, ' (1 + 1 + 5)', 7);
+            assertRollObject(rollObjects[5], 5, false, ' (1 + 1 + 6)', 8);
         });
     });
 });

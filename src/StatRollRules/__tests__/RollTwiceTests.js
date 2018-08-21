@@ -14,9 +14,8 @@ describe('RollTwice tests', () => {
             const updateFunc = jest.fn();
             const component = shallow(<RollTwice onUpdate={updateFunc}/>);
             component.setState({rolls: []});
-            const saveButton = component.find('input').at(1);
 
-            saveButton.simulate('click');
+            component.find('input').at(1).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
@@ -27,9 +26,8 @@ describe('RollTwice tests', () => {
             const component = shallow(<RollTwice selectedChar={testChar} onUpdate={updateFunc}/>);
             component.setState({rolls: [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3],
                     [2, 3, 3], [2, 2, 3], [2, 2, 2], [1, 2, 2], [1, 1, 2], [1, 1, 1]]});
-            const saveButton = component.find('input').at(1);
 
-            saveButton.simulate('click');
+            component.find('input').at(1).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(1);
             expect(component.instance().props.selectedChar.completionStep).toBe(1);
@@ -44,12 +42,11 @@ describe('RollTwice tests', () => {
                 requests.push(xhr);
             }.bind(this);
             const component = shallow(<RollTwice selectedChar={{id: 1}}/>);
-            const rollButton = component.find('input').at(0);
             const data = [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3],
                 [2, 3, 3], [2, 2, 3], [2, 2, 2], [1, 2, 2], [1, 1, 2], [1, 1, 1]];
             const dataJson = JSON.stringify(data);
 
-            rollButton.simulate('click');
+            component.find('input').at(0).simulate('click');
 
             requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
             expect(component.state().selectedChar.id).toBe(1);

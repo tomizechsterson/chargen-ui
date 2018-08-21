@@ -42,7 +42,7 @@ describe('RollOnce tests', () => {
             xhr.onCreate = function(xhr) {
                 requests.push(xhr);
             }.bind(this);
-            const component = shallow(<RollOnce selectedChar={{id: 1}} />);
+            const component = shallow(<RollOnce selectedChar={{id: 1}}/>);
             const rollButton = component.find('input').at(0);
             const data = [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]];
             const dataJson = JSON.stringify(data);

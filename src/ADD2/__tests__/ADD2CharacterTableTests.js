@@ -16,8 +16,7 @@ describe('ADD2CharacterTable', () => {
         });
 
         it('renders no rows if there is no data', () => {
-            const testData = [];
-            const component = shallow(<ADD2CharacterTable characters={testData}/>);
+            const component = shallow(<ADD2CharacterTable characters={[]}/>);
             expect(component.find('tbody tr')).toHaveLength(0);
         }); // TODO: Maybe consider rendering a <p> tag with a message instead
 

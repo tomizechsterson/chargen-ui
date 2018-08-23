@@ -19,7 +19,7 @@ describe('ADD2CharacterTable', () => {
             const testData = [];
             const component = shallow(<ADD2CharacterTable characters={testData}/>);
             expect(component.find('tbody tr')).toHaveLength(0);
-        }); // TODO: Maybe consider rendering a <p> tag with a message
+        }); // TODO: Maybe consider rendering a <p> tag with a message instead
 
         it('renders Yes or No depending on if the character is completed', () => {
             const testData = [{id: 1, completionStep: 2}, {id: 2, completionStep: 1}];

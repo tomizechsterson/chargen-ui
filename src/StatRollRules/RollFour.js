@@ -23,7 +23,7 @@ export default class RollFour extends Component {
     rollStats() {
         const {selectedChar} = this.props;
         const xhr = new XMLHttpRequest();
-        xhr.open('get', 'http://localhost:42000/api/ADD2Character/rollstats/rollfour', true);
+        xhr.open('get', 'https://add2ent.azurewebsites.net/api/ADD2Character/rollstats/rollfour', true);
         xhr.onload = function() {
             const data = JSON.parse(xhr.responseText);
             selectedChar.str = RollFour.addThreeLargest(data[0]);

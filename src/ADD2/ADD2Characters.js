@@ -17,7 +17,7 @@ export default class ADD2Characters extends Component {
     }
 
     loadCharsFromServer() {
-        console.log('NODE_ENV: ' + process.env.REACT_APP_ENV);
+        console.log('REACT_APP_ENV: ' + process.env.REACT_APP_ENV);
         if (this.props.useTestData)
             this.setState({characterData: this.props.testData});
         else {

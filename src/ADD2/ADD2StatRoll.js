@@ -3,6 +3,7 @@ import RollOnce from '../StatRollRules/RollOnce';
 import RollTwice from '../StatRollRules/RollTwice';
 import RollFour from '../StatRollRules/RollFour';
 import Assignment from '../StatRollRules/Assignment';
+import Urls from "../ApiUrls";
 
 export default class ADD2StatRoll extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ export default class ADD2StatRoll extends Component {
     render() {
         const {selectedChar, onUpdate} = this.props;
         const {rollRule} = this.state;
+        const apiUrl = Urls.ADD2Url();
         return(
             <div>
                 <label>Stat rolling rule:</label>
@@ -32,15 +34,15 @@ export default class ADD2StatRoll extends Component {
                     <option value='add7Dice'>Add 7 Dice to 8</option>
                 </select>
                 {rollRule === 'rollOnce' &&
-                <RollOnce selectedChar={selectedChar} onUpdate={onUpdate} />}
+                <RollOnce selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
                 {rollRule === 'rollTwice' &&
-                <RollTwice selectedChar={selectedChar} onUpdate={onUpdate} />}
+                <RollTwice selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
                 {rollRule === 'assignment' &&
-                <Assignment selectedChar={selectedChar} onUpdate={onUpdate} double={false} />}
+                <Assignment selectedChar={selectedChar} onUpdate={onUpdate} double={false} apiUrl={apiUrl} />}
                 {rollRule === 'assignment2x' &&
-                <Assignment selectedChar={selectedChar} onUpdate={onUpdate} double={true} />}
+                <Assignment selectedChar={selectedChar} onUpdate={onUpdate} double={true} apiUrl={apiUrl} />}
                 {rollRule === 'roll4' &&
-                <RollFour selectedChar={selectedChar} onUpdate={onUpdate} />}
+                <RollFour selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
                 {rollRule === 'add7Dice' &&
                 <p>Start at 8 and add 7 dice</p>}
             </div>

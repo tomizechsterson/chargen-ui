@@ -12,9 +12,9 @@ export default class RollOnce extends Component {
     }
 
     rollStats() {
-        const {selectedChar} = this.props;
+        const {selectedChar, apiUrl} = this.props;
         const xhr = new XMLHttpRequest();
-        xhr.open('get', 'https://add2ent.azurewebsites.net/api/ADD2Character/rollstats/rollonce', true);
+        xhr.open('get', apiUrl + 'rollstats/rollonce', true);
         xhr.onload = function() {
             const data = JSON.parse(xhr.responseText);
             selectedChar.str = data[0].reduce((a, b) => a + b, 0);

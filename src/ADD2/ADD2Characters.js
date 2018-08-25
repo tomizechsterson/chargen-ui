@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ADD2CharacterTable from './ADD2CharacterTable';
 import ADD2CharacterDetails from './ADD2CharacterDetails';
+import Urls from "../ApiUrls";
 
 export default class ADD2Characters extends Component {
     constructor(props) {
@@ -17,12 +18,11 @@ export default class ADD2Characters extends Component {
     }
 
     loadCharsFromServer() {
-        console.log('REACT_APP_ENV: ' + process.env.REACT_APP_ENV);
         if (this.props.useTestData)
             this.setState({characterData: this.props.testData});
         else {
             const xhr = new XMLHttpRequest();
-            xhr.open('get', 'http://localhost:42000/api/add2character', true);
+            xhr.open('get', Urls.ADD2Url(), true);
             xhr.onload = function () {
                 const responseData = JSON.parse(xhr.responseText);
                 this.setState({characterData: responseData});

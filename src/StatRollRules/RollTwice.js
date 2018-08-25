@@ -19,9 +19,9 @@ export default class RollTwice extends Component {
     }
 
     rollStats() {
-        const {selectedChar} = this.props;
+        const {selectedChar, apiUrl} = this.props;
         const xhr = new XMLHttpRequest();
-        xhr.open('get', 'https://add2ent.azurewebsites.net/api/ADD2Character/rollstats/rolltwice', true);
+        xhr.open('get', apiUrl + 'rollstats/rolltwice', true);
         xhr.onload = function() {
             const data = JSON.parse(xhr.responseText);
             selectedChar.str = RollTwice.getHigherRoll(data[0], data[1]);

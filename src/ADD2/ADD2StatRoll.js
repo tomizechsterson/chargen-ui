@@ -22,7 +22,6 @@ export default class ADD2StatRoll extends Component {
         const {selectedChar, onUpdate} = this.props;
         const {rollRule} = this.state;
         const apiUrl = Urls.ADD2Url();
-        console.log(apiUrl);
         return(
             <div>
                 <label>Stat rolling rule:</label>

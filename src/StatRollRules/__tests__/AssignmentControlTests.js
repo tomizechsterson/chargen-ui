@@ -3,20 +3,19 @@ import {shallow} from 'enzyme';
 import AssignmentControl from '../AssignmentControl';
 
 describe('AssignmentControl tests', () => {
-    const assertComponent = (component, expectedDivs, expectedInputs, expectedSpans) => {
+    const assertComponentRender = (testRolls, expectedDivs, expectedInputs, expectedSpans) => {
+        const component = shallow(<AssignmentControl rolls={testRolls}/>);
         expect(component.find('div')).toHaveLength(expectedDivs);
         expect(component.find('input')).toHaveLength(expectedInputs);
         expect(component.find('span')).toHaveLength(expectedSpans);
     };
 
     it('renders a top-level div with 2 buttons and 1 span if 1 roll provided', () => {
-        const component = shallow(<AssignmentControl rolls={[{}]}/>);
-        assertComponent(component, 1, 2, 1);
+        assertComponentRender([{}], 1, 2, 1);
     });
 
     it('renders a top-level div with 3 buttons and 2 spans if 2 rolls provided', () => {
-        const component = shallow(<AssignmentControl rolls={[{}, {}]}/>);
-        assertComponent(component, 1, 3, 2);
+        assertComponentRender([{}, {}], 1, 3, 2);
     });
 
     describe('Stat selection button', () => {

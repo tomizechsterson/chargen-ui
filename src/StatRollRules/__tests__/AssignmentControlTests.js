@@ -19,28 +19,50 @@ describe('AssignmentControl tests', () => {
         assertComponent(component, 1, 3, 2);
     });
 
-    describe('Stat selection button with one stat roll', () => {
-        it('calls the onSelectStat handler once with the expected value', () => {
+    describe('Stat selection button', () => {
+        it('calls the onSelectStat handler once with the expected value and one roll', () => {
+            onSelectCallAssert([{}]);
+        });
+
+        it('calls the onSelectStat handler once with the expected value and two rolls', () => {
+            onSelectCallAssert([{}, {}]);
+        });
+
+        it('has the expected value for the stat selection button and one roll', () => {
+            buttonValueAssert([{}]);
+        });
+
+        it('has the expected value for the stat selection button and two rolls', () => {
+            buttonValueAssert([{}, {}]);
+        });
+
+        it('displays the character stat value after the button with one roll', () => {
+            statValueAssert([{}]);
+        });
+
+        it('displays the character stat value after the button with two rolls', () => {
+            statValueAssert([{}, {}]);
+        });
+
+        const onSelectCallAssert = (testRolls) => {
             const selectStatFunc = jest.fn();
-            const component = shallow(<AssignmentControl stat={'TEST'} onSelectStat={selectStatFunc} rolls={[{}]}/>);
+            const component = shallow(<AssignmentControl stat={'TEST'} onSelectStat={selectStatFunc} rolls={testRolls}/>);
 
             component.find('input').at(0).simulate('click');
 
             expect(selectStatFunc).toHaveBeenCalledTimes(1);
             expect(selectStatFunc).toHaveBeenCalledWith('TEST');
-        });
+        };
 
-        it('has the expected value for the stat selection button', () => {
-            const component = shallow(<AssignmentControl stat={'TEST'} rolls={[{}]}/>);
-
+        const buttonValueAssert = (testRolls) => {
+            const component = shallow(<AssignmentControl stat={'TEST'} rolls={testRolls}/>);
             expect(component.find('input').at(0).html()).toContain('value="TEST"');
-        });
+        };
 
-        it('displays the character stat value after the button', () => {
-            const component = shallow(<AssignmentControl charStat={100} rolls={[{}]}/>);
-
+        const statValueAssert = (testRolls) => {
+            const component = shallow(<AssignmentControl charStat={100} rolls={testRolls}/>);
             expect(component.find('div').text()).toEqual(' 100');
-        });
+        };
     });
 
     describe('Roll selection button and roll text with one stat roll', () => {
@@ -80,31 +102,6 @@ describe('AssignmentControl tests', () => {
             const component= shallow(<AssignmentControl rolls={[testRoll]}/>);
 
             expect(component.find('span').text()).toBe('test text');
-        });
-    });
-
-    describe('Stat selection button with two stat rolls', () => {
-        const testRolls = [{}, {}];
-        it('calls the onSelectStat handler once with the expected value', () => {
-            const selectStatFunc = jest.fn();
-            const component = shallow(<AssignmentControl stat={'TEST'} onSelectStat={selectStatFunc} rolls={testRolls}/>);
-
-            component.find('input').at(0).simulate('click');
-
-            expect(selectStatFunc).toHaveBeenCalledTimes(1);
-            expect(selectStatFunc).toHaveBeenCalledWith('TEST');
-        });
-
-        it('has the expected value for the stat selection button', () => {
-            const component = shallow(<AssignmentControl stat={'TEST'} rolls={testRolls}/>);
-
-            expect(component.find('input').at(0).html()).toContain('value="TEST"');
-        });
-
-        it('displays the character stat value after the button', () => {
-            const component = shallow(<AssignmentControl charStat={100} rolls={testRolls}/>);
-
-            expect(component.find('div').text()).toEqual(' 100');
         });
     });
 

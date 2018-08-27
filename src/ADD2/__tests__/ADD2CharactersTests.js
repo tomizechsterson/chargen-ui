@@ -1,6 +1,7 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import {mount, shallow} from 'enzyme';
 import ADD2Characters from "../ADD2Characters";
+import ADD2CharacterTable from "../ADD2CharacterTable";
 
 describe('ADD2Characters tests', () => {
     it('always renders a top-level div', () => {
@@ -47,6 +48,29 @@ describe('ADD2Characters tests', () => {
             newCharNameInput.simulate('change', {target: {value: 'test2'}});
             createButton.simulate('click');
             expect(component.state().characterData[1].id).toBe(2);
+        });
+    });
+
+    describe('Selecting characters', () => {
+        it('selects the expected character when none are selected', () => {
+            const testChars = [{id: 1, name: 'test1'}];
+            const component = mount(<ADD2Characters useTestData={true} testData={testChars}/>);
+            component.find(ADD2CharacterTable).find('tbody tr').at(0).simulate('click');
+
+            expect(component.state().selected).not.toBeNull();
+            expect(component.state().selected.id).toBe(1);
+            expect(component.state().selected.name).toBe('test1');
+        });
+
+        it('changes the selection to the expected character', () => {
+            const testChars = [{id: 1, name: 'test1'}, {id: 2, name: 'test2'}];
+            const component = mount(<ADD2Characters useTestData={true} testData={testChars}/>);
+            component.find(ADD2CharacterTable).find('tbody tr').at(0).simulate('click');
+            component.find(ADD2CharacterTable).find('tbody tr').at(1).simulate('click');
+
+            expect(component.state().selected).not.toBeNull();
+            expect(component.state().selected.id).toBe(2);
+            expect(component.state().selected.name).toBe('test2');
         });
     });
 });

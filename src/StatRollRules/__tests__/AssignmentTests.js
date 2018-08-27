@@ -109,12 +109,6 @@ describe('Assignment component tests', () => {
 
     describe('Roll Stats button', () => {
         let xhr, requests;
-        const assertRollObject = (roll, expectedId, shouldBeAssigned, expectedText, expectedValue) => {
-            expect(roll.id).toBe(expectedId);
-            expect(roll.assigned).toBe(shouldBeAssigned);
-            expect(roll.text).toBe(expectedText);
-            expect(roll.value).toBe(expectedValue);
-        };
 
         beforeEach(() => {
             xhr = sinon.useFakeXMLHttpRequest();
@@ -180,5 +174,12 @@ describe('Assignment component tests', () => {
             assertRollObject(rollObjects[4], 4, false, ' (1 + 1 + 5)', 7);
             assertRollObject(rollObjects[5], 5, false, ' (1 + 1 + 6)', 8);
         });
+
+        const assertRollObject = (roll, expectedId, shouldBeAssigned, expectedText, expectedValue) => {
+            expect(roll.id).toBe(expectedId);
+            expect(roll.assigned).toBe(shouldBeAssigned);
+            expect(roll.text).toBe(expectedText);
+            expect(roll.value).toBe(expectedValue);
+        };
     });
 });

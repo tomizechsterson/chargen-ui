@@ -41,43 +41,43 @@ describe('Assignment component tests', () => {
             component = shallow(<Assignment onUpdate={updateFunc}/>);
         });
 
-        it('if str is not assigned onUpdate is not called', () => {
+        it('does not call onUpdate if str is not assigned', () => {
             component.setState({selectedChar: {str: undefined, dex: 3, con: 3, int: 3, wis: 3, chr: 3}});
             component.find('input').at(1).simulate('click');
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
-        it('if dex is not assigned onUpdate is not called', () => {
+        it('does not call onUpdate if dex is not assigned', () => {
             component.setState({selectedChar: {str: 3, dex: undefined, con: 3, int: 3, wis: 3, chr: 3}});
             component.find('input').at(1).simulate('click');
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
-        it('if con is not assigned onUpdate is not called', () => {
+        it('does not call onUpdate if con is not assigned', () => {
             component.setState({selectedChar: {str: 3, dex: 3, con: undefined, int: 3, wis: 3, chr: 3}});
             component.find('input').at(1).simulate('click');
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
-        it('if int is not assigned onUpdate is not called', () => {
+        it('does not call onUpdate if int is not assigned', () => {
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: undefined, wis: 3, chr: 3}});
             component.find('input').at(1).simulate('click');
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
-        it('if wis is not assigned onUpdate is not called', () => {
+        it('does not call onUpdate if wis is not assigned', () => {
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: 3, wis: undefined, chr: 3}});
             component.find('input').at(1).simulate('click');
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
-        it('if chr is not assigned onUpdate is not called', () => {
+        it('does not call onUpdate if chr is not assigned', () => {
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: undefined}});
             component.find('input').at(1).simulate('click');
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
-        it('if all stats are assigned, they are copied to selectedChar in props', () => {
+        it('copies stats to selectedChar in props if all stats are assigned', () => {
             component = shallow(<Assignment selectedChar={{}} onUpdate={updateFunc}/>);
             component.setState({selectedChar: {str: 3, dex: 4, con: 5, int: 6, wis: 7, chr: 8}});
             component.find('input').at(1).simulate('click');
@@ -90,7 +90,7 @@ describe('Assignment component tests', () => {
             expect(component.instance().props.selectedChar.chr).toBe(8);
         });
 
-        it('if all stats are assigned, completionStep is incremented', () => {
+        it('increments completionStep if all stats are assigned', () => {
             component = shallow(<Assignment selectedChar={{completionStep: 0}} onUpdate={updateFunc}/>);
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3}});
             component.find('input').at(1).simulate('click');
@@ -98,7 +98,7 @@ describe('Assignment component tests', () => {
             expect(component.instance().props.selectedChar.completionStep).toBe(1);
         });
 
-        it('if all stats are assigned, onUpdate is called', () => {
+        it('calls onUpdate if all stats are assigned', () => {
             component = shallow(<Assignment selectedChar={{}} onUpdate={updateFunc}/>);
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3}});
             component.find('input').at(1).simulate('click');

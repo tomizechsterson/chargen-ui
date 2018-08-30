@@ -10,7 +10,7 @@ describe('RollFour tests', () => {
     });
 
     describe('Save Stats button', () => {
-        it('if there are no rolls, onUpdate is not called', () => {
+        it('does not call onUpdate if there are no rolls', () => {
             const updateFunc = jest.fn();
             const component = shallow(<RollFour onUpdate={updateFunc}/>);
             component.setState({rolls: []});
@@ -20,7 +20,7 @@ describe('RollFour tests', () => {
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
-        it('if there are rolls, onUpdate is called once and completionStep is incremented', () => {
+        it('calls onUpdate once and increments completion step, if there are rolls', () => {
             const updateFunc = jest.fn();
             const testChar = {completionStep: 0};
             const component = shallow(<RollFour selectedChar={testChar} onUpdate={updateFunc}/>);

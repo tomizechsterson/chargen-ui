@@ -17,6 +17,11 @@ describe('Assignment component tests', () => {
         expect(component.find(Assignment2xDisplay)).toHaveLength(0);
     });
 
+    it('renders assignment description if double prop is false', () => {
+        const component = shallow(<Assignment double={false}/>);
+        expect(component.find('p').text()).toBe('Assign 6 rolls to stats');
+    });
+
     it('renders Assignment2xDisplay if double prop is true', () => {
         const component = shallow(<Assignment double={true}/>);
         expect(component.find(AssignmentDisplay)).toHaveLength(0);
@@ -26,11 +31,6 @@ describe('Assignment component tests', () => {
     it('renders assignment 2x description if double prop is true', () => {
         const component = shallow(<Assignment double={true}/>);
         expect(component.find('p').text()).toBe('Roll 12 and assign 6 to stats');
-    });
-
-    it('renders assignment description if double prop is false', () => {
-        const component = shallow(<Assignment double={false}/>);
-        expect(component.find('p').text()).toBe('Assign 6 rolls to stats');
     });
 
     describe('Save Stats button', () => {

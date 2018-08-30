@@ -62,8 +62,6 @@ export default class ADD2Characters extends Component {
 
             if(charToDelete.id === selected.id)
                 this.setState({selected: null});
-            else
-                this.setState({selected: selected});
 
             if (!this.props.useTestData) {
                 const xhr = new XMLHttpRequest();

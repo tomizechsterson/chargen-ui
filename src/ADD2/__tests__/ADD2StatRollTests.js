@@ -62,13 +62,13 @@ describe('ADD2StatRoll', () => {
         });
 
         describe('when one of the assignment rules is selected', () => {
-            it('false is passed as double prop to Assignment when single is selected', () => {
+            it('passes false as double prop to Assignment when single is selected', () => {
                 rollRuleDropDown.simulate('change', {target: {value: 'assignment'}});
                 const assignment = component.find(Assignment);
                 expect(assignment.props().double).toBeFalsy();
             });
 
-            it('true is passed as double prop to Assignment when 2x is selected', () => {
+            it('passes true as double prop to Assignment when 2x is selected', () => {
                 rollRuleDropDown.simulate('change', {target: {value: 'assignment2x'}});
                 const assignment = component.find(Assignment);
                 expect(assignment.props().double).toBeTruthy();

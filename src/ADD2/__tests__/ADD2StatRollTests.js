@@ -5,6 +5,7 @@ import RollOnce from "../../StatRollRules/RollOnce";
 import RollTwice from "../../StatRollRules/RollTwice";
 import Assignment from "../../StatRollRules/Assignment";
 import RollFour from "../../StatRollRules/RollFour";
+import Add7Dice from "../../StatRollRules/Add7Dice";
 
 describe('ADD2StatRoll', () => {
     it('always renders a top-level div', () => {
@@ -18,7 +19,7 @@ describe('ADD2StatRoll', () => {
             expect(component.find(RollTwice)).toHaveLength(rollTwice);
             expect(component.find(Assignment)).toHaveLength(assignment);
             expect(component.find(RollFour)).toHaveLength(rollFour);
-            expect(component.find('p')).toHaveLength(addSeven);
+            expect(component.find(Add7Dice)).toHaveLength(addSeven);
         };
 
         beforeEach(() => {

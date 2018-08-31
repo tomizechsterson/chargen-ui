@@ -3,6 +3,7 @@ import RollOnce from '../StatRollRules/RollOnce';
 import RollTwice from '../StatRollRules/RollTwice';
 import RollFour from '../StatRollRules/RollFour';
 import Assignment from '../StatRollRules/Assignment';
+import Add7Dice from "../StatRollRules/Add7Dice";
 import Urls from "../ApiUrls";
 
 export default class ADD2StatRoll extends Component {
@@ -44,7 +45,7 @@ export default class ADD2StatRoll extends Component {
                 {rollRule === 'roll4' &&
                 <RollFour selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
                 {rollRule === 'add7Dice' &&
-                <p>Start at 8 and add 7 dice</p>}
+                <Add7Dice selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
             </div>
         );
     }

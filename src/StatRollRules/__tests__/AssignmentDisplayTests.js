@@ -16,7 +16,7 @@ describe('AssignmentDisplay tests', () => {
     });
 
     it('renders selected stat and roll text', () => {
-        component.setState({selectedStat: 'test', selectedRoll: {value: '99'}});
+        component.setState({selectedStat: 'test', selectedRoll: {value: 99}});
         expect(component.find('div').text()).toContain('Selected Stat: test');
         expect(component.find('div').text()).toContain('Selected Roll: 99');
     });

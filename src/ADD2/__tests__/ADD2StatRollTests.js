@@ -14,16 +14,9 @@ describe('ADD2StatRoll', () => {
 
     describe('roll rule drop down', () => {
         let component, rollRuleDropDown;
-        const assertComponents = (rollOnce, rollTwice, assignment, rollFour, addSeven) => {
-            expect(component.find(RollOnce)).toHaveLength(rollOnce);
-            expect(component.find(RollTwice)).toHaveLength(rollTwice);
-            expect(component.find(Assignment)).toHaveLength(assignment);
-            expect(component.find(RollFour)).toHaveLength(rollFour);
-            expect(component.find(Add7Dice)).toHaveLength(addSeven);
-        };
 
         beforeEach(() => {
-            component = shallow(<ADD2StatRoll/>);
+            component = shallow(<ADD2StatRoll selectedChar={{}}/>);
             rollRuleDropDown = component.find('select');
         });
 
@@ -62,6 +55,14 @@ describe('ADD2StatRoll', () => {
             assertComponents(0, 0, 0, 0, 1);
         });
 
+        const assertComponents = (rollOnce, rollTwice, assignment, rollFour, addSeven) => {
+            expect(component.find(RollOnce)).toHaveLength(rollOnce);
+            expect(component.find(RollTwice)).toHaveLength(rollTwice);
+            expect(component.find(Assignment)).toHaveLength(assignment);
+            expect(component.find(RollFour)).toHaveLength(rollFour);
+            expect(component.find(Add7Dice)).toHaveLength(addSeven);
+        };
+
         describe('when one of the assignment rules is selected', () => {
             it('passes false as double prop to Assignment when single is selected', () => {
                 rollRuleDropDown.simulate('change', {target: {value: 'assignment'}});
@@ -73,6 +74,20 @@ describe('ADD2StatRoll', () => {
                 rollRuleDropDown.simulate('change', {target: {value: 'assignment2x'}});
                 const assignment = component.find(Assignment);
                 expect(assignment.props().double).toBeTruthy();
+            });
+        });
+
+        describe('when Add7Dice is selected', () => {
+            it('passes selectedChar with 8 in all its stats', () => {
+                rollRuleDropDown.simulate('change', {target: {value: 'add7Dice'}});
+                const add7 = component.find(Add7Dice);
+                const selected = add7.props().selectedChar;
+                expect(selected.str).toBe(8);
+                expect(selected.dex).toBe(8);
+                expect(selected.con).toBe(8);
+                expect(selected.int).toBe(8);
+                expect(selected.wis).toBe(8);
+                expect(selected.chr).toBe(8);
             });
         });
     });

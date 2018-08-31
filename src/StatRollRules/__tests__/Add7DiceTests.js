@@ -92,13 +92,13 @@ describe('Add7Dice tests', () => {
             requests[0].respond(200, {'Content-Type': 'text/json'}, responseJson);
             const rollObjects = component.state().rolls;
 
-            assertRollObject(rollObjects[0], 0, false, [1]);
-            assertRollObject(rollObjects[1], 1, false, [2]);
-            assertRollObject(rollObjects[2], 2, false, [3]);
-            assertRollObject(rollObjects[3], 3, false, [4]);
-            assertRollObject(rollObjects[4], 4, false, [5]);
-            assertRollObject(rollObjects[5], 5, false, [6]);
-            assertRollObject(rollObjects[6], 6, false, [1]);
+            assertRollObject(rollObjects[0], 0, false, 1);
+            assertRollObject(rollObjects[1], 1, false, 2);
+            assertRollObject(rollObjects[2], 2, false, 3);
+            assertRollObject(rollObjects[3], 3, false, 4);
+            assertRollObject(rollObjects[4], 4, false, 5);
+            assertRollObject(rollObjects[5], 5, false, 6);
+            assertRollObject(rollObjects[6], 6, false, 1);
         });
 
         const assertRollObject = (roll, expectedId, shouldBeAssigned, expectedValue) => {

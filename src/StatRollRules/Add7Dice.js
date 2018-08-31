@@ -22,7 +22,7 @@ export default class Add7Dice extends Component {
         xhr.onload = function() {
             const data = JSON.parse(xhr.responseText);
             for(let i = 0; i < data.length; i++) {
-                statRolls.push({id: i, assigned: false, value: data[i]});
+                statRolls.push({id: i, assigned: false, value: data[i][0]});
             }
             this.setState({rolls: statRolls, selectedChar: currentChar});
         }.bind(this);

@@ -19,6 +19,13 @@ export default class ADD2StatRoll extends Component {
         this.setState({rollRule: e.target.value});
     }
 
+    setSelectedCharStatsTo8() {
+        const {selectedChar} = this.props;
+        selectedChar.str = selectedChar.dex = selectedChar.con =
+            selectedChar.int = selectedChar.wis = selectedChar.chr = 8;
+        return selectedChar;
+    }
+
     render() {
         const {selectedChar, onUpdate} = this.props;
         const {rollRule} = this.state;
@@ -45,7 +52,7 @@ export default class ADD2StatRoll extends Component {
                 {rollRule === 'roll4' &&
                 <RollFour selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
                 {rollRule === 'add7Dice' &&
-                <Add7Dice selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
+                <Add7Dice selectedChar={this.setSelectedCharStatsTo8()} onUpdate={onUpdate} apiUrl={apiUrl} />}
             </div>
         );
     }

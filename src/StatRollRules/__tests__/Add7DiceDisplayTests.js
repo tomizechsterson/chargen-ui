@@ -117,13 +117,54 @@ describe('Add7DiceDisplay tests', () => {
             expect(component.find('button').at(6).html()).not.toContain('disabled=""');
         });
 
-        it('does not allow a stat to exceed 18', () => {
-            const testRolls = [{value: 5}, {value: 5}];
-            const component = shallow(<Add7DiceDisplay rolls={testRolls} selectedChar={{str: 15}}/>);
-            component.setState({selectedRoll: testRolls[0], selectedStat: 'STR'});
-            component.find('button').at(6).simulate('click');
+        describe('Does not allow stats to exceed 18', () => {
+            let component, testRolls;
+            beforeEach(() => {
+                testRolls = [{value: 4}];
+                component = shallow(<Add7DiceDisplay rolls={testRolls} selectedChar={{str: 15, dex: 15, con: 15, int: 15, wis: 15, chr: 15}}/>);
+            });
 
-//            expect(component.instance().props.selectedChar.str).toBe(15);
+            it('str', () => {
+                component.setState({selectedRoll: testRolls[0], selectedStat: 'STR'});
+                component.find('button').at(6).simulate('click');
+
+                expect(component.instance().props.selectedChar.str).toBe(15);
+            });
+
+            it('dex', () => {
+                component.setState({selectedRoll: testRolls[0], selectedStat: 'DEX'});
+                component.find('button').at(6).simulate('click');
+
+                expect(component.instance().props.selectedChar.dex).toBe(15);
+            });
+
+            it('con', () => {
+                component.setState({selectedRoll: testRolls[0], selectedStat: 'CON'});
+                component.find('button').at(6).simulate('click');
+
+                expect(component.instance().props.selectedChar.con).toBe(15);
+            });
+
+            it('int', () => {
+                component.setState({selectedRoll: testRolls[0], selectedStat: 'INT'});
+                component.find('button').at(6).simulate('click');
+
+                expect(component.instance().props.selectedChar.int).toBe(15);
+            });
+
+            it('wis', () => {
+                component.setState({selectedRoll: testRolls[0], selectedStat: 'WIS'});
+                component.find('button').at(6).simulate('click');
+
+                expect(component.instance().props.selectedChar.wis).toBe(15);
+            });
+
+            it('chr', () => {
+                component.setState({selectedRoll: testRolls[0], selectedStat: 'CHR'});
+                component.find('button').at(6).simulate('click');
+
+                expect(component.instance().props.selectedChar.chr).toBe(15);
+            });
         });
 
         describe('Adds to stat and clears selected roll', () => {

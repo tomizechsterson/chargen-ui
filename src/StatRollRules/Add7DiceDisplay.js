@@ -27,21 +27,28 @@ export default class Add7DiceDisplay extends Component {
     handleAssign() {
         const {selectedChar, rolls} = this.props;
         const {selectedStat, selectedRoll} = this.state;
+        let exceeds18 = false;
 
-        if(selectedStat === 'STR')
+        if(selectedStat === 'STR' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.str, selectedRoll.value))
             selectedChar.str += selectedRoll.value;
-        else if(selectedStat === 'DEX')
+        else if(selectedStat === 'DEX' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
             selectedChar.dex += selectedRoll.value;
-        else if(selectedStat === 'CON')
+        else if(selectedStat === 'CON' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
             selectedChar.con += selectedRoll.value;
-        else if(selectedStat === 'INT')
+        else if(selectedStat === 'INT' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
             selectedChar.int += selectedRoll.value;
-        else if(selectedStat === 'WIS')
+        else if(selectedStat === 'WIS' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
             selectedChar.wis += selectedRoll.value;
-        else if(selectedStat === 'CHR')
+        else if(selectedStat === 'CHR' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
             selectedChar.chr += selectedRoll.value;
+        else
+            exceeds18 = true;
 
-        rolls.find(roll => roll.id === selectedRoll.id).assigned = true;
+        if(exceeds18)
+            alert('Stat cannot exceed 18');
+        else
+            rolls.find(roll => roll.id === selectedRoll.id).assigned = true;
+
         this.setState({selectedRoll: undefined});
     }
 
@@ -61,6 +68,10 @@ export default class Add7DiceDisplay extends Component {
     disableResetButton() {
         const {rolls} = this.props;
         return rolls.every(roll => !roll.assigned);
+    }
+
+    static statWillExceedThreshold(charStat, selectedRollValue) {
+        return charStat + selectedRollValue > 18;
     }
 
     render() {

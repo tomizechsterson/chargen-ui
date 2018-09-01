@@ -5,7 +5,6 @@ import ADD2Characters from '../ADD2Characters';
 import ADD2CharacterTable from '../ADD2CharacterTable';
 import ADD2CharacterDetails from '../ADD2CharacterDetails';
 import ADD2CharacterCreation from '../ADD2CharacterCreation';
-import ADD2DisplayCompleted from "../ADD2DisplayCompleted";
 import ADD2StatRoll from '../ADD2StatRoll';
 import RollOnce from '../../StatRollRules/RollOnce';
 
@@ -167,8 +166,8 @@ describe('ADD2Characters tests', () => {
             expect(testData.length).toBe(5);
             expect(testData[0].id).toBe(1);
 
-            const displayCompleted = component.find(ADD2CharacterDetails).find(ADD2DisplayCompleted);
-            displayCompleted.find('button').simulate('click');
+            const charDetails = component.find(ADD2CharacterDetails);
+            charDetails.find('button').simulate('click');
 
             testData = component.instance().state.characterData;
             expect(testData.length).toBe(4);
@@ -189,8 +188,8 @@ describe('ADD2Characters tests', () => {
             expect(charData.length).toBe(5);
             expect(charData[0].id).toBe(1);
 
-            const displayCompleted = component.find(ADD2CharacterDetails).find(ADD2DisplayCompleted);
-            displayCompleted.find('button').simulate('click');
+            const charDetails = component.find(ADD2CharacterDetails);
+            charDetails.find('button').simulate('click');
 
             expect(requests[1].url).toEqual(expect.stringMatching(/\/add2character\/1$/));
             expect(requests[1].method).toEqual('delete');

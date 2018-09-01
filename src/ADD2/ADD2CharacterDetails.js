@@ -10,10 +10,11 @@ const ADD2CharacterDetails = (props) => {
     return (
         <div>
             {isOneSelected && selectedChar.completionStep === completeStep &&
-            <ADD2DisplayCompleted selectedChar={selectedChar} onDelete={onDelete} />}
+            <ADD2DisplayCompleted selectedChar={selectedChar} />}
             {isOneSelected && selectedChar.completionStep < completeStep &&
             <ADD2CharacterCreation selectedChar={selectedChar} onUpdate={onUpdate} />}
             {!isOneSelected && <p>No character selected</p>}
+            {isOneSelected && <button onClick={() => onDelete(selectedChar.id)}>Delete</button>}
         </div>
     );
 };

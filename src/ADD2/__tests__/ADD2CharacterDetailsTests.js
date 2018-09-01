@@ -34,7 +34,26 @@ describe('ADD2CharacterDetails Tests', () => {
 
             expect(component.find(ADD2DisplayCompleted)).toHaveLength(0);
             expect(component.find(ADD2CharacterCreation)).toHaveLength(0);
+            expect(component.find('button')).toHaveLength(0);
             expect(component.find('p')).toHaveLength(1);
+        });
+
+        it('renders the delete button', () => {
+            const component = shallow(<ADD2CharacterDetails selectedChar={{}}/>);
+            expect(component.find('button')).toBeDefined();
+            expect(component.find('button').text()).toEqual('Delete');
+        });
+    });
+
+    describe('delete button', () => {
+        it('calls delete with selected character id when clicked', () => {
+            const deleteFunc = jest.fn();
+            const component = shallow(<ADD2CharacterDetails onDelete={deleteFunc} selectedChar={{id: 1}}/>);
+            const button = component.find('button').first();
+
+            button.simulate('click');
+
+            expect(deleteFunc).toBeCalledWith(1);
         });
     });
 });

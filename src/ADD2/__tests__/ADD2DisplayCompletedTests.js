@@ -31,12 +31,6 @@ describe('ADD2DisplayCompleted Tests', () => {
         expect(component.find(SavingThrowsDisplay)).toHaveLength(1);
     });
 
-    it('always renders the delete button', () => {
-        const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
-        expect(component.find('button')).toBeDefined();
-        expect(component.find('button').text()).toEqual('Delete');
-    });
-
     describe('when selectedChar is defined', () => {
         let testChar = {};
 
@@ -53,18 +47,6 @@ describe('ADD2DisplayCompleted Tests', () => {
         it('sets the rendered `VitalsDisplay`s `selectedChar` prop to the same value as `testChar`', () => {
             const savingThrowsDisplay = shallow(<ADD2DisplayCompleted selectedChar={testChar}/>).find(SavingThrowsDisplay);
             expect(savingThrowsDisplay.props().selectedChar).toBe(testChar);
-        });
-    });
-
-    describe('delete button', () => {
-        it('calls delete with selected character id when clicked', () => {
-            const deleteFunc = jest.fn();
-            const component = shallow(<ADD2DisplayCompleted onDelete={deleteFunc} selectedChar={{id: 1}}/>);
-            const button = component.find('button').first();
-
-            button.simulate('click');
-
-            expect(deleteFunc).toBeCalledWith(1);
         });
     });
 });

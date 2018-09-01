@@ -13,20 +13,27 @@ const ADD2CharacterTable = (props) => {
         </tr>
     });
 
-    return (
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Race</th>
-                <th>Class</th>
-                <th>Completed?</th>
-            </tr>
-            </thead>
-            <tbody>
-            {rowItems}
-            </tbody>
-        </table>
-    );
+    if(rowItems.length > 0) {
+        return (
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Race</th>
+                    <th>Class</th>
+                    <th>Completed?</th>
+                </tr>
+                </thead>
+                <tbody>
+                {rowItems}
+                </tbody>
+            </table>
+        );
+    }
+    else {
+        return (
+            <p>No characters have been created. Enter a name in the field above and click Create to begin</p>
+        );
+    }
 };
 export default ADD2CharacterTable;

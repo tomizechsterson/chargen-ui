@@ -3,8 +3,8 @@ import {shallow} from 'enzyme';
 import ADD2CharacterTable from '../ADD2CharacterTable';
 
 describe('ADD2CharacterTable', () => {
-    it('always renders a table element', () => {
-        const component = shallow(<ADD2CharacterTable characters={[]}/>);
+    it('renders a table element if at least one character is in the collection', () => {
+        const component = shallow(<ADD2CharacterTable characters={[{id: 1}]}/>);
         expect(component.find('table')).toHaveLength(1);
     });
 
@@ -15,10 +15,11 @@ describe('ADD2CharacterTable', () => {
             expect(component.find('tbody tr')).toHaveLength(2);
         });
 
-        it('renders no rows if there is no data', () => {
+        it('renders a p tag if there is no data', () => {
             const component = shallow(<ADD2CharacterTable characters={[]}/>);
             expect(component.find('tbody tr')).toHaveLength(0);
-        }); // TODO: Maybe consider rendering a <p> tag with a message instead
+            expect(component.find('p')).toHaveLength(1);
+        });
 
         it('renders Yes or No depending on if the character is completed', () => {
             const testData = [{id: 1, completionStep: 2}, {id: 2, completionStep: 1}];

@@ -29,7 +29,7 @@ Be sure to have the latest versions of these installed:
 
 - Make a folder for the code and run `git clone https://github.com/tomizechsterson/chargen-ui`
   - This will pull down the latest version of the code and copy it into the `chargen-ui` folder
-- Navigate into this folder with your Git terminal of choice
+- Navigate into this folder with your terminal of choice
 - Run `npm install` to pull down all the dev dependencies
 - You will also need the services from the [CharGen](https://github.com/tomizechsterson/CharGen) project running on their default port in order for any features beyond creating and deleting characters to work (i.e. rolling stats, selecting race/class). Just follow the steps in that project's readme to get them downloaded and running.
  
@@ -39,7 +39,7 @@ At this point, you should have everything you need to fire up your IDE of choice
 
 Simply run `npm start` in your terminal of choice at the root of the project, and this will start up the development server and attempt to open your default browser to view the app.
 
-Note for Brave users: For some reason Brave has trouble with this, but you can just as easily surf to the localhost address manually to view the app in this browser.  
+**Note for Brave users:** For some reason Brave has trouble with this, but you can just as easily surf to the localhost address manually to view the app in this browser.
  
 ## Running the Tests
  

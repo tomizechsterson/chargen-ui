@@ -27,7 +27,7 @@ export default class ADD2StatRoll extends Component {
     }
 
     render() {
-        const {selectedChar, onUpdate} = this.props;
+        const {selectedChar, onUpdate, gateway} = this.props;
         const {rollRule} = this.state;
         const apiUrl = Urls.ADD2Url();
         return(
@@ -42,7 +42,7 @@ export default class ADD2StatRoll extends Component {
                     <option value='add7Dice'>Add 7 Dice to 8</option>
                 </select>
                 {rollRule === 'rollOnce' &&
-                <RollOnce selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
+                <RollOnce selectedChar={selectedChar} onUpdate={onUpdate} gateway={gateway} />}
                 {rollRule === 'rollTwice' &&
                 <RollTwice selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
                 {rollRule === 'assignment' &&

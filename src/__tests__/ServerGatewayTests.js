@@ -99,6 +99,25 @@ describe('ServerGateway tests', () => {
         expect(error).toHaveBeenCalledWith('test create error');
     });
 
+    it('returns expected rolls with rollOnce rule', () => {
+        const rollsJson = JSON.stringify(getTestRolls());
+
+        gateway.rollOnce(function(response) {
+            expect(response).toHaveLength(6);
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+    });
+
+    it('calls onError if rollOnce server call fails', () => {
+        const error = jest.fn();
+
+        gateway.rollOnce(null, error);
+        requests[0].respond(500, '', 'test rollOnce error');
+
+        expect(error).toHaveBeenCalledTimes(1);
+        expect(error).toHaveBeenCalledWith('test rollOnce error');
+    });
+
     const getTestData = () => {
         return [
             {
@@ -232,5 +251,9 @@ describe('ServerGateway tests', () => {
                 funds: 50
             }
         ];
+    };
+
+    const getTestRolls = () => {
+        return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]];
     };
 });

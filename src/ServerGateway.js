@@ -66,4 +66,20 @@ export default class ServerGateway {
         xhr.setRequestHeader('content-type', 'application/json');
         xhr.send(JSON.stringify(character));
     };
+
+    rollOnce = (onResp, onError) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', Urls.ADD2Url() + 'rollstats/rollonce', true);
+        xhr.onload = function() {
+            if(xhr.readyState === xhr.DONE) {
+                if(xhr.status === 200) {
+                    onResp(JSON.parse(xhr.responseText));
+                }
+                else {
+                    onError(xhr.responseText);
+                }
+            }
+        };
+        xhr.send();
+    };
 }

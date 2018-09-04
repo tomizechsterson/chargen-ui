@@ -163,7 +163,7 @@ export default class ADD2Characters extends Component {
                     <ADD2CharacterTable characters={characterData} onSelect={this.handleSelect} />
                 </div>
                 <div>
-                    <ADD2CharacterDetails selectedChar={selected}
+                    <ADD2CharacterDetails selectedChar={selected} gateway={this.props.serverGateway}
                                           onDelete={this.handleDelete} onUpdate={this.handleUpdate} />
                 </div>
             </div>

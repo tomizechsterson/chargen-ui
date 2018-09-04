@@ -12,20 +12,18 @@ export default class RollOnce extends Component {
     }
 
     rollStats() {
-        const {selectedChar, apiUrl} = this.props;
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', apiUrl + 'rollstats/rollonce', true);
-        xhr.onload = function() {
-            const data = JSON.parse(xhr.responseText);
-            selectedChar.str = data[0].reduce((a, b) => a + b, 0);
-            selectedChar.dex = data[1].reduce((a, b) => a + b, 0);
-            selectedChar.con = data[2].reduce((a, b) => a + b, 0);
-            selectedChar.int = data[3].reduce((a, b) => a + b, 0);
-            selectedChar.wis = data[4].reduce((a, b) => a + b, 0);
-            selectedChar.chr = data[5].reduce((a, b) => a + b, 0);
-            this.setState({rolls: data, selectedChar: selectedChar});
-        }.bind(this);
-        xhr.send();
+        const {selectedChar, gateway} = this.props;
+        gateway.rollOnce(function(response) {
+            selectedChar.str = response[0].reduce((a, b) => a + b, 0);
+            selectedChar.dex = response[1].reduce((a, b) => a + b, 0);
+            selectedChar.con = response[2].reduce((a, b) => a + b, 0);
+            selectedChar.int = response[3].reduce((a, b) => a + b, 0);
+            selectedChar.wis = response[4].reduce((a, b) => a + b, 0);
+            selectedChar.chr = response[5].reduce((a, b) => a + b, 0);
+            this.setState({rolls: response, selectedChar: selectedChar});
+        }.bind(this), function(error) {
+            console.error(error);
+        });
     }
 
     handleUpdate() {

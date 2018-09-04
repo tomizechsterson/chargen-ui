@@ -1,5 +1,6 @@
 import React from 'react';
 import ADD2Characters from './ADD2/ADD2Characters';
+import ServerGateway from './ServerGateway';
 
 const SelectorADD2 = () => {
     const internalTestData = [
@@ -136,7 +137,7 @@ const SelectorADD2 = () => {
     ];
     return (
         <div>
-            <ADD2Characters useTestData={true} testData={internalTestData}/>
+            <ADD2Characters useTestData={true} testData={internalTestData} serverGateway={new ServerGateway()}/>
         </div>
     );
 };

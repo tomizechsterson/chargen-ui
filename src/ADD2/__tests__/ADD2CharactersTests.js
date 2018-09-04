@@ -7,6 +7,7 @@ import ADD2CharacterDetails from '../ADD2CharacterDetails';
 import ADD2CharacterCreation from '../ADD2CharacterCreation';
 import ADD2StatRoll from '../ADD2StatRoll';
 import RollOnce from '../../StatRollRules/RollOnce';
+import ServerGateway from "../../ServerGateway";
 
 describe('ADD2Characters tests', () => {
     it('always renders a top-level div', () => {
@@ -14,13 +15,39 @@ describe('ADD2Characters tests', () => {
         expect(component.find('div').length).toBeGreaterThan(0);
     });
 
+    it('writes to console.error if getting characters from the service fails', () => {
+        const xhr = sinon.useFakeXMLHttpRequest();
+        const requests = [];
+        xhr.onCreate = function(xhr) {
+            requests.push(xhr);
+        }.bind(this);
+        const consoleError = jest.fn();
+        console.error = consoleError;
+        const component = shallow(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
+        requests[0].respond(500);
+
+        expect(consoleError).toHaveBeenCalledTimes(1);
+        expect(component.state().characterData).toHaveLength(0);
+    });
+
     describe('Creating a new character', () => {
-        let component, newCharNameInput, createButton;
+        let component, newCharNameInput, createButton, xhr, requests, consoleError;
 
         beforeEach(() => {
             component = shallow(<ADD2Characters useTestData={true} testData={[]}/>);
             newCharNameInput = component.find('input');
             createButton = component.find('button');
+            consoleError = jest.fn();
+            console.error = consoleError;
+            xhr = sinon.useFakeXMLHttpRequest();
+            requests = [];
+            xhr.onCreate = function(xhr) {
+                requests.push(xhr);
+            }.bind(this);
+        });
+
+        afterEach(() => {
+            xhr.restore();
         });
 
         it('state is updated when input changes', () => {
@@ -56,13 +83,8 @@ describe('ADD2Characters tests', () => {
         });
 
         it('calls the service with the expected character data', () => {
-            const xhr = sinon.useFakeXMLHttpRequest();
-            const requests = [];
-            xhr.onCreate = function(xhr) {
-                requests.push(xhr);
-            }.bind(this);
             const dataJson = JSON.stringify(getTestData());
-            component = mount(<ADD2Characters useTestData={false}/>);
+            component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
             requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
 
             component.find('input').simulate('change', {target: {value: 'testName'}});
@@ -71,6 +93,19 @@ describe('ADD2Characters tests', () => {
             expect(requests[1].url).toEqual(expect.stringMatching(/\/new$/));
             expect(requests[1].method).toEqual('post');
             expect(requests[1].requestBody).toContain('"name":"testName"');
+            expect(consoleError).toHaveBeenCalledTimes(0);
+        });
+
+        it('writes to console.error if creating new character fails', () => {
+            const dataJson = JSON.stringify(getTestData());
+            component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
+            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+
+            component.find('input').simulate('change', {target: {value: 'errorForSomeReason'}});
+            component.find('button').simulate('click');
+            requests[1].respond(500);
+
+            expect(consoleError).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -98,6 +133,22 @@ describe('ADD2Characters tests', () => {
     });
 
     describe('Updating characters', () => {
+        let xhr, requests, consoleError;
+
+        beforeEach(() => {
+            consoleError = jest.fn();
+            console.error = consoleError;
+            xhr = sinon.useFakeXMLHttpRequest();
+            requests = [];
+            xhr.onCreate = function(xhr) {
+                requests.push(xhr);
+            }.bind(this);
+        });
+
+        afterEach(() => {
+            xhr.restore();
+        });
+
         it('updates the expected character in the collection', () => {
             const testData = getTestData();
             const component = mount(<ADD2Characters useTestData={true} testData={testData}/>);
@@ -122,13 +173,8 @@ describe('ADD2Characters tests', () => {
         });
 
         it('calls the service with the expected character id and request body', () => {
-            const xhr = sinon.useFakeXMLHttpRequest();
-            const requests = [];
-            xhr.onCreate = function(xhr) {
-                requests.push(xhr);
-            }.bind(this);
             const dataJson = JSON.stringify(getTestData());
-            const component = mount(<ADD2Characters useTestData={false}/>);
+            const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
             requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
             const charData = component.state().characterData;
             component.setState({selected: charData[1]});
@@ -146,6 +192,23 @@ describe('ADD2Characters tests', () => {
             expect(requests[2].requestBody).toContain('"int":6');
             expect(requests[2].requestBody).toContain('"wis":7');
             expect(requests[2].requestBody).toContain('"chr":8');
+            expect(consoleError).toHaveBeenCalledTimes(0);
+        });
+
+        it('writes to console.error if update fails', () => {
+            const dataJson = JSON.stringify(getTestData());
+            const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
+            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            const charData = component.state().characterData;
+            component.setState({selected: charData[1]});
+
+            const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
+            rollOnce.find('input').at(0).simulate('click');
+            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(getTestRolls()));
+            rollOnce.find('input').at(1).simulate('click');
+            requests[2].respond(500);
+
+            expect(consoleError).toHaveBeenCalledTimes(1);
         });
 
         const getTestRolls = () => {
@@ -154,13 +217,26 @@ describe('ADD2Characters tests', () => {
     });
 
     describe('Deleting characters', () => {
+        let xhr, requests, consoleError;
+
         beforeEach(() => {
+            consoleError = jest.fn();
+            console.error = consoleError;
+            xhr = sinon.useFakeXMLHttpRequest();
+            requests = [];
+            xhr.onCreate = function(xhr) {
+                requests.push(xhr);
+            }.bind(this);
             window.confirm = jest.fn(() => true);
+        });
+
+        afterEach(() => {
+            xhr.restore();
         });
 
         it('removes the expected character from the collection', () => {
             let testData = getTestData();
-            const component = mount(<ADD2Characters useTestData={true} testData={testData}/>);
+            const component = mount(<ADD2Characters useTestData={true} testData={testData} serverGateway={new ServerGateway()}/>);
             component.setState({selected: testData[0]});
             testData = component.instance().state.characterData;
             expect(testData.length).toBe(5);
@@ -175,13 +251,8 @@ describe('ADD2Characters tests', () => {
         });
 
         it('calls the service with the expected id for deletion', () => {
-            const xhr = sinon.useFakeXMLHttpRequest();
-            const requests = [];
-            xhr.onCreate = function(xhr) {
-                requests.push(xhr);
-            }.bind(this);
             const dataJson = JSON.stringify(getTestData());
-            const component = mount(<ADD2Characters useTestData={false}/>);
+            const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
             requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
             let charData = component.state().characterData;
             component.setState({selected: charData[0]});
@@ -196,6 +267,21 @@ describe('ADD2Characters tests', () => {
             charData = component.instance().state.characterData;
             expect(charData.length).toBe(4);
             expect(charData[0].id).toBe(2);
+            expect(consoleError).toHaveBeenCalledTimes(0);
+        });
+
+        it('writes to console error if delete fails', () => {
+            const dataJson = JSON.stringify(getTestData());
+            const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
+            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            let charData = component.state().characterData;
+            component.setState({selected: charData[0]});
+
+            const charDetails = component.find(ADD2CharacterDetails);
+            charDetails.find('button').simulate('click');
+            requests[1].respond(500);
+
+            expect(consoleError).toHaveBeenCalledTimes(1);
         });
     });
 

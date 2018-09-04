@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ADD2CharacterTable from './ADD2CharacterTable';
 import ADD2CharacterDetails from './ADD2CharacterDetails';
-import Urls from "../ApiUrls";
 
 export default class ADD2Characters extends Component {
     constructor(props) {
@@ -18,16 +17,15 @@ export default class ADD2Characters extends Component {
     }
 
     loadCharsFromServer() {
-        if (this.props.useTestData)
-            this.setState({characterData: this.props.testData});
+        const {useTestData, testData, serverGateway} = this.props;
+        if (useTestData)
+            this.setState({characterData: testData});
         else {
-            const xhr = new XMLHttpRequest();
-            xhr.open('get', Urls.ADD2Url(), true);
-            xhr.onload = function () {
-                const responseData = JSON.parse(xhr.responseText);
-                this.setState({characterData: responseData});
-            }.bind(this);
-            xhr.send();
+            serverGateway.getChars(function(response) {
+                this.setState({characterData: response});
+            }.bind(this), function(error) {
+                console.error(error);
+            });
         }
     }
 
@@ -50,6 +48,7 @@ export default class ADD2Characters extends Component {
     }
 
     handleDelete(id) {
+        const {useTestData, serverGateway} = this.props;
         const {characterData, selected} = this.state;
         const index = characterData.findIndex(function (o) {
             return o.id === id;
@@ -63,35 +62,34 @@ export default class ADD2Characters extends Component {
             if(charToDelete.id === selected.id)
                 this.setState({selected: null});
 
-            if (!this.props.useTestData) {
-                const xhr = new XMLHttpRequest();
-                xhr.open('delete', Urls.ADD2Url() + id, true);
-                xhr.onload = function () {
+            if (!useTestData) {
+                serverGateway.deleteChar(id, function() {
                     this.loadCharsFromServer();
-                }.bind(this);
-                xhr.send();
+                }, function(error) {
+                    console.error(error);
+                });
             }
         }
     }
 
     handleUpdate(character) {
+        const {useTestData, serverGateway} = this.props;
         const chars = this.state.characterData;
         const i = chars.findIndex(function(o) {return o.id === character.id});
         chars[i] = character;
         this.setState({characterData: chars});
 
-        if(!this.props.useTestData) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('put', Urls.ADD2Url() + character.id, true);
-            xhr.onload = function() {
+        if(!useTestData) {
+            serverGateway.updateChar(character, function() {
                 this.loadCharsFromServer();
-            }.bind(this);
-            xhr.setRequestHeader('content-type', 'application/json');
-            xhr.send(JSON.stringify(character));
+            }, function(error) {
+                console.error(error);
+            });
         }
     }
 
     handleCreate() {
+        const {useTestData, serverGateway} = this.props;
         const {newCharName, characterData} = this.state;
         if(newCharName.trim()) {
             let newId = 0;
@@ -127,14 +125,12 @@ export default class ADD2Characters extends Component {
             const newCharList = characters.concat([newChar]);
             this.setState({characterData: newCharList, newCharName: ''});
 
-            if(!this.props.useTestData) {
-                const xhr = new XMLHttpRequest();
-                xhr.open('post', Urls.ADD2Url() + 'new', true);
-                xhr.onload = function() {
+            if(!useTestData) {
+                serverGateway.createChar(newChar, function() {
                     this.loadCharsFromServer();
-                }.bind(this);
-                xhr.setRequestHeader('content-type', 'application/json');
-                xhr.send(JSON.stringify(newChar));
+                }, function(error) {
+                    console.error(error);
+                });
             }
         }
         else

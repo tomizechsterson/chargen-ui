@@ -65,7 +65,7 @@ export default class ADD2Characters extends Component {
 
             if (!this.props.useTestData) {
                 const xhr = new XMLHttpRequest();
-                xhr.open('delete', 'http://localhost:42000/api/add2character/' + id, true);
+                xhr.open('delete', Urls.ADD2Url() + id, true);
                 xhr.onload = function () {
                     this.loadCharsFromServer();
                 }.bind(this);
@@ -82,7 +82,7 @@ export default class ADD2Characters extends Component {
 
         if(!this.props.useTestData) {
             const xhr = new XMLHttpRequest();
-            xhr.open('put', 'http://localhost:42000/api/add2character/' + character.id, true);
+            xhr.open('put', Urls.ADD2Url() + character.id, true);
             xhr.onload = function() {
                 this.loadCharsFromServer();
             }.bind(this);
@@ -129,7 +129,7 @@ export default class ADD2Characters extends Component {
 
             if(!this.props.useTestData) {
                 const xhr = new XMLHttpRequest();
-                xhr.open('post', 'http://localhost:42000/api/add2character/new', true);
+                xhr.open('post', Urls.ADD2Url() + 'new', true);
                 xhr.onload = function() {
                     this.loadCharsFromServer();
                 }.bind(this);

@@ -103,6 +103,16 @@ describe('Add7Dice tests', () => {
             assertRollObject(rollObjects[6], 6, false, 1);
         });
 
+        it('writes to console.error if add7 server call fails', () => {
+            const component = shallow(<Add7Dice gateway={new ServerGateway()}/>);
+
+            component.find('button').at(0).simulate('click');
+            requests[0].respond(500, '', 'test add7 error');
+
+            expect(consoleError).toHaveBeenCalledTimes(1);
+            expect(consoleError).toHaveBeenCalledWith('test add7 error');
+        });
+
         const assertRollObject = (roll, expectedId, shouldBeAssigned, expectedValue) => {
             expect(roll.id).toBe(expectedId);
             expect(roll.assigned).toBe(shouldBeAssigned);

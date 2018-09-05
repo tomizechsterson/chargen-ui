@@ -18,7 +18,7 @@ describe('ServerGateway tests', () => {
     });
 
     it('returns data from server with get call', () => {
-        const dataJson = JSON.stringify(getTestData());
+        const dataJson = JSON.stringify(getTestCharData());
 
         gateway.getChars(function(response) {
             expect(response).toHaveLength(5);
@@ -100,10 +100,11 @@ describe('ServerGateway tests', () => {
     });
 
     it('returns expected rolls with rollOnce rule', () => {
-        const rollsJson = JSON.stringify(getTestRolls());
+        const rollsJson = JSON.stringify(get6Rolls());
 
         gateway.rollOnce(function(response) {
             expect(response).toHaveLength(6);
+            expect(response).toEqual(get6Rolls());
         });
         requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
     });
@@ -118,7 +119,27 @@ describe('ServerGateway tests', () => {
         expect(error).toHaveBeenCalledWith('test rollOnce error');
     });
 
-    const getTestData = () => {
+    it('returns expected rolls with rollTwice rule', () => {
+        const rollsJson = JSON.stringify(get12Rolls());
+
+        gateway.rollTwice(function(response) {
+            expect(response).toHaveLength(12);
+            expect(response).toEqual(get12Rolls());
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+    });
+
+    it('calls onError if rollTwice server call fails', () => {
+        const error = jest.fn();
+
+        gateway.rollTwice(null, error);
+        requests[0].respond(500, '', 'test rollTwice error');
+
+        expect(error).toHaveBeenCalledTimes(1);
+        expect(error).toHaveBeenCalledWith('test rollTwice error');
+    });
+
+    const getTestCharData = () => {
         return [
             {
                 id: 1,
@@ -253,7 +274,12 @@ describe('ServerGateway tests', () => {
         ];
     };
 
-    const getTestRolls = () => {
+    const get6Rolls = () => {
         return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]];
+    };
+
+    const get12Rolls = () => {
+        return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3],
+            [3, 3, 3], [3, 3, 4], [3, 3, 5], [3, 3, 6], [3, 4, 3], [3, 4, 4]];
     };
 });

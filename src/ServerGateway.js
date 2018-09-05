@@ -5,14 +5,10 @@ export default class ServerGateway {
         const xhr = new XMLHttpRequest();
         xhr.open('get', Urls.ADD2Url(), true);
         xhr.onload = function() {
-            if(xhr.readyState === xhr.DONE) {
-                if(xhr.status === 200) {
-                    onResp(JSON.parse(xhr.responseText));
-                }
-                else {
-                    onError(xhr.responseText);
-                }
-            }
+            if(xhr.status === 200)
+                onResp(JSON.parse(xhr.responseText));
+            else
+                onError(xhr.responseText);
         };
         xhr.send();
     };
@@ -21,14 +17,10 @@ export default class ServerGateway {
         const xhr = new XMLHttpRequest();
         xhr.open('delete', Urls.ADD2Url() + id, true);
         xhr.onload = function() {
-            if(xhr.readyState === xhr.DONE) {
-                if(xhr.status === 200) {
-                    onResp();
-                }
-                else {
-                    onError(xhr.responseText);
-                }
-            }
+            if(xhr.status === 200)
+                onResp();
+            else
+                onError(xhr.responseText);
         };
         xhr.send();
     };
@@ -37,14 +29,10 @@ export default class ServerGateway {
         const xhr = new XMLHttpRequest();
         xhr.open('put', Urls.ADD2Url() + character.id, true);
         xhr.onload = function() {
-            if(xhr.readyState === xhr.DONE) {
-                if(xhr.status === 200) {
-                    onResp();
-                }
-                else {
-                    onError(xhr.responseText);
-                }
-            }
+            if(xhr.status === 200)
+                onResp();
+            else
+                onError(xhr.responseText);
         };
         xhr.setRequestHeader('content-type', 'application/json');
         xhr.send(JSON.stringify(character));
@@ -54,14 +42,10 @@ export default class ServerGateway {
         const xhr = new XMLHttpRequest();
         xhr.open('post', Urls.ADD2Url() + 'new', true);
         xhr.onload = function() {
-            if(xhr.readyState === xhr.DONE) {
-                if(xhr.status === 200) {
-                    onResp();
-                }
-                else {
-                    onError(xhr.responseText);
-                }
-            }
+            if(xhr.status === 200)
+                onResp();
+            else
+                onError(xhr.responseText);
         };
         xhr.setRequestHeader('content-type', 'application/json');
         xhr.send(JSON.stringify(character));
@@ -71,14 +55,22 @@ export default class ServerGateway {
         const xhr = new XMLHttpRequest();
         xhr.open('get', Urls.ADD2Url() + 'rollstats/rollonce', true);
         xhr.onload = function() {
-            if(xhr.readyState === xhr.DONE) {
-                if(xhr.status === 200) {
-                    onResp(JSON.parse(xhr.responseText));
-                }
-                else {
-                    onError(xhr.responseText);
-                }
-            }
+            if(xhr.status === 200)
+                onResp(JSON.parse(xhr.responseText));
+            else
+                onError(xhr.responseText);
+        };
+        xhr.send();
+    };
+
+    rollTwice = (onResp, onError) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', Urls.ADD2Url() + 'rollstats/rolltwice', true);
+        xhr.onload = function() {
+            if(xhr.status === 200)
+                onResp(JSON.parse(xhr.responseText));
+            else
+                onError(xhr.responseText);
         };
         xhr.send();
     };

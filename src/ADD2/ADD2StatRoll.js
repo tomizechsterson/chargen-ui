@@ -44,7 +44,7 @@ export default class ADD2StatRoll extends Component {
                 {rollRule === 'rollOnce' &&
                 <RollOnce selectedChar={selectedChar} onUpdate={onUpdate} gateway={gateway} />}
                 {rollRule === 'rollTwice' &&
-                <RollTwice selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
+                <RollTwice selectedChar={selectedChar} onUpdate={onUpdate} gateway={gateway} />}
                 {rollRule === 'assignment' &&
                 <Assignment selectedChar={selectedChar} onUpdate={onUpdate} double={false} apiUrl={apiUrl} />}
                 {rollRule === 'assignment2x' &&

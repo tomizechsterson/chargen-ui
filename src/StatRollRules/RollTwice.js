@@ -19,20 +19,18 @@ export default class RollTwice extends Component {
     }
 
     rollStats() {
-        const {selectedChar, apiUrl} = this.props;
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', apiUrl + 'rollstats/rolltwice', true);
-        xhr.onload = function() {
-            const data = JSON.parse(xhr.responseText);
-            selectedChar.str = RollTwice.getHigherRoll(data[0], data[1]);
-            selectedChar.dex = RollTwice.getHigherRoll(data[2], data[3]);
-            selectedChar.con = RollTwice.getHigherRoll(data[4], data[5]);
-            selectedChar.int = RollTwice.getHigherRoll(data[6], data[7]);
-            selectedChar.wis = RollTwice.getHigherRoll(data[8], data[9]);
-            selectedChar.chr = RollTwice.getHigherRoll(data[10], data[11]);
-            this.setState({rolls: data, selectedChar: selectedChar});
-        }.bind(this);
-        xhr.send();
+        const {selectedChar, gateway} = this.props;
+        gateway.rollTwice(function(response) {
+            selectedChar.str = RollTwice.getHigherRoll(response[0], response[1]);
+            selectedChar.dex = RollTwice.getHigherRoll(response[2], response[3]);
+            selectedChar.con = RollTwice.getHigherRoll(response[4], response[5]);
+            selectedChar.int = RollTwice.getHigherRoll(response[6], response[7]);
+            selectedChar.wis = RollTwice.getHigherRoll(response[8], response[9]);
+            selectedChar.chr = RollTwice.getHigherRoll(response[10], response[11]);
+            this.setState({rolls: response, selectedChar: selectedChar});
+        }.bind(this), function(error) {
+            console.error(error);
+        });
     }
 
     handleUpdate() {

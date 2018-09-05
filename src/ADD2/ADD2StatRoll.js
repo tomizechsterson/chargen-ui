@@ -4,7 +4,6 @@ import RollTwice from '../StatRollRules/RollTwice';
 import RollFour from '../StatRollRules/RollFour';
 import Assignment from '../StatRollRules/Assignment';
 import Add7Dice from "../StatRollRules/Add7Dice";
-import Urls from "../ApiUrls";
 
 export default class ADD2StatRoll extends Component {
     constructor(props) {
@@ -29,7 +28,6 @@ export default class ADD2StatRoll extends Component {
     render() {
         const {selectedChar, onUpdate, gateway} = this.props;
         const {rollRule} = this.state;
-        const apiUrl = Urls.ADD2Url();
         return(
             <div>
                 <label>Stat rolling rule:</label>
@@ -52,7 +50,7 @@ export default class ADD2StatRoll extends Component {
                 {rollRule === 'roll4' &&
                 <RollFour selectedChar={selectedChar} onUpdate={onUpdate} gateway={gateway} />}
                 {rollRule === 'add7Dice' &&
-                <Add7Dice selectedChar={this.setSelectedCharStatsTo8()} onUpdate={onUpdate} apiUrl={apiUrl} />}
+                <Add7Dice selectedChar={this.setSelectedCharStatsTo8()} onUpdate={onUpdate} gateway={gateway} />}
             </div>
         );
     }

@@ -176,6 +176,24 @@ describe('ServerGateway tests', () => {
         assertErrorCall(error, 'test rollFour error');
     });
 
+    it('returns expected results with Add7 rule', () => {
+        const rollsJson = JSON.stringify(get7Rolls());
+
+        gateway.add7Dice(function(response) {
+            assertRollData(response, 7, get7Rolls());
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+    });
+
+    it('calls onError if Add7 server call fails', () => {
+        const error = jest.fn();
+
+        gateway.add7Dice(null, error);
+        requests[0].respond(500, '', 'test add7Dice error');
+
+        assertErrorCall(error, 'test add7Dice error');
+    });
+
     const assertRollData = (response, length, data) => {
         expect(response).toHaveLength(length);
         expect(response).toEqual(data);
@@ -332,5 +350,9 @@ describe('ServerGateway tests', () => {
 
     const get6RollsWith4Dice = () => {
         return [[1, 1, 1, 1], [1, 1, 1, 2], [1, 1, 2, 2], [1, 2, 2, 2], [1, 2, 2, 3], [1, 2, 3, 3]];
+    };
+
+    const get7Rolls = () => {
+        return [[1], [2], [3], [4], [5], [6], [1]];
     };
 });

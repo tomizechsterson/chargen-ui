@@ -3,6 +3,7 @@ import {shallow} from 'enzyme';
 import sinon from 'sinon';
 import Add7Dice from '../Add7Dice';
 import Add7DiceDisplay from '../Add7DiceDisplay';
+import ServerGateway from "../../ServerGateway";
 
 describe('Add7Dice tests', () => {
     it('should render the top-level div and controls', () => {
@@ -54,9 +55,10 @@ describe('Add7Dice tests', () => {
     });
 
     describe('Roll Stats button', () => {
-        let xhr, requests;
-
+        let xhr, requests, consoleError;
         beforeEach(() => {
+            consoleError = jest.fn();
+            console.error = consoleError;
             xhr = sinon.useFakeXMLHttpRequest();
             requests = [];
             xhr.onCreate = function(xhr) {
@@ -68,7 +70,7 @@ describe('Add7Dice tests', () => {
         });
 
         it('resets the stats of selectedChar in state to 8', () => {
-            const component = shallow(<Add7Dice/>);
+            const component = shallow(<Add7Dice gateway={new ServerGateway()}/>);
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3}});
 
             component.find('button').at(0).simulate('click');
@@ -83,7 +85,7 @@ describe('Add7Dice tests', () => {
         });
 
         it('populates the expected roll objects with the response data', () => {
-            const component = shallow(<Add7Dice/>);
+            const component = shallow(<Add7Dice gateway={new ServerGateway()}/>);
             component.setState({selectedChar: {}});
             const responseData = [[1], [2], [3], [4], [5], [6], [1]];
             const responseJson = JSON.stringify(responseData);

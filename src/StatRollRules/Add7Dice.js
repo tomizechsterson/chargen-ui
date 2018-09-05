@@ -12,21 +12,20 @@ export default class Add7Dice extends Component {
     }
 
     rollStats() {
+        const {gateway} = this.props;
         let currentChar = {...this.state.selectedChar};
         currentChar.str = currentChar.dex = currentChar.con =
             currentChar.int = currentChar.wis = currentChar.chr = 8;
         let statRolls = [];
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', this.props.apiUrl + 'rollstats/AddSevenDice', true);
-        xhr.onload = function() {
-            const data = JSON.parse(xhr.responseText);
-            for(let i = 0; i < data.length; i++) {
-                statRolls.push({id: i, assigned: false, value: data[i][0]});
+        gateway.add7Dice(function(response) {
+            for(let i = 0; i < response.length; i++) {
+                statRolls.push({id: i, assigned: false, value: response[i][0]});
             }
             this.setState({rolls: statRolls, selectedChar: currentChar});
-        }.bind(this);
-        xhr.send();
+        }.bind(this), function(error) {
+            console.error(error);
+        });
     }
 
     handleUpdate() {

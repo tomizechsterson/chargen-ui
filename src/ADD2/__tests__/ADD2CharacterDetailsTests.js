@@ -29,19 +29,21 @@ describe('ADD2CharacterDetails Tests', () => {
             expect(component.find('p')).toHaveLength(0);
         });
 
-        it('and no character is selected, only a `p` tag is displayed', () => {
+        it('renders the delete button', () => {
+            const component = shallow(<ADD2CharacterDetails selectedChar={{}}/>);
+            expect(component.find('button')).toBeDefined();
+            expect(component.find('button').text()).toEqual('Delete');
+        });
+    });
+
+    describe('when `selectedChar` is undefined', () => {
+        it('only renders a `p` tag', () => {
             const component = shallow(<ADD2CharacterDetails/>);
 
             expect(component.find(ADD2DisplayCompleted)).toHaveLength(0);
             expect(component.find(ADD2CharacterCreation)).toHaveLength(0);
             expect(component.find('button')).toHaveLength(0);
             expect(component.find('p')).toHaveLength(1);
-        });
-
-        it('renders the delete button', () => {
-            const component = shallow(<ADD2CharacterDetails selectedChar={{}}/>);
-            expect(component.find('button')).toBeDefined();
-            expect(component.find('button').text()).toEqual('Delete');
         });
     });
 

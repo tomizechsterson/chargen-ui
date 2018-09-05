@@ -13,22 +13,21 @@ export default class Assignment extends Component {
     }
 
     rollStats() {
+        const {double, gateway} = this.props;
         let currentChar = {...this.state.selectedChar};
         currentChar.str = currentChar.dex = currentChar.con =
             currentChar.int = currentChar.wis = currentChar.chr = undefined;
         let statRolls = [];
-        const serviceMethod = this.props.double ? 'assignmentDouble' : 'assignment';
+        const serviceMethod = double ? 'assignmentDouble' : 'assignment';
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', this.props.apiUrl + 'rollstats/' + serviceMethod, true);
-        xhr.onload = function() {
-            const data = JSON.parse(xhr.responseText);
-            for(let i = 0; i < data.length; i++) {
-                statRolls.push({id: i, assigned: false, text: ' (' + data[i].join(' + ') + ')', value: data[i].reduce((a, b) => a + b, 0)});
+        gateway.assignment(serviceMethod, function(response) {
+            for(let i = 0; i < response.length; i++) {
+                statRolls.push({id: i, assigned: false, text: ' (' + response[i].join(' + ') + ')', value: response[i].reduce((a, b) => a + b, 0)});
             }
             this.setState({rolls: statRolls, selectedChar: currentChar});
-        }.bind(this);
-        xhr.send();
+        }.bind(this), function(error) {
+            console.error(error);
+        });
     }
 
     handleUpdate() {

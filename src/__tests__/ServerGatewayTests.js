@@ -139,6 +139,36 @@ describe('ServerGateway tests', () => {
         expect(error).toHaveBeenCalledWith('test rollTwice error');
     });
 
+    it('returns expected rolls with assignment rule', () => {
+        const rollsJson = JSON.stringify(get6Rolls());
+
+        gateway.assignment('assignment', function(response) {
+            expect(response).toHaveLength(6);
+            expect(response).toEqual(get6Rolls());
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+    });
+
+    it('returns expected rolls with assignmentDouble rule', () => {
+        const rollsJson = JSON.stringify(get12Rolls());
+
+        gateway.assignment('assignmentDouble', function(response) {
+            expect(response).toHaveLength(12);
+            expect(response).toEqual(get12Rolls());
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+    });
+
+    it('calls onError if the assignment server call fails', () => {
+        const error = jest.fn();
+
+        gateway.assignment('test', null, error);
+        requests[0].respond(500, '', 'test assignment error');
+
+        expect(error).toHaveBeenCalledTimes(1);
+        expect(error).toHaveBeenCalledWith('test assignment error');
+    });
+
     const getTestCharData = () => {
         return [
             {

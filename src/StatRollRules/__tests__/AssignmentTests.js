@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import Assignment from '../Assignment';
 import AssignmentDisplay from "../AssignmentDisplay";
 import Assignment2xDisplay from "../Assignment2xDisplay";
+import ServerGateway from "../../ServerGateway";
 
 describe('Assignment component tests', () => {
     it('renders a top-level div', () => {
@@ -108,22 +109,23 @@ describe('Assignment component tests', () => {
     });
 
     describe('Roll Stats button', () => {
-        let xhr, requests;
+        let xhr, requests, consoleError;
 
         beforeEach(() => {
+            consoleError = jest.fn();
+            console.error = consoleError;
             xhr = sinon.useFakeXMLHttpRequest();
             requests = [];
             xhr.onCreate = function(xhr) {
                 requests.push(xhr);
             }.bind(this);
         });
-
         afterEach(() => {
             xhr.restore();
         });
 
         it('resets the stats of the selectedChar in state on response status 200', () => {
-            const component = shallow(<Assignment/>);
+            const component = shallow(<Assignment gateway={new ServerGateway()}/>);
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3}});
 
             component.find('input').at(0).simulate('click');
@@ -138,7 +140,7 @@ describe('Assignment component tests', () => {
         });
 
         it('makes a request that ends with rollstats/assignment when double prop is false', () => {
-            const component = shallow(<Assignment double={false}/>);
+            const component = shallow(<Assignment double={false} gateway={new ServerGateway()}/>);
             component.setState({selectedChar: {}});
 
             component.find('input').at(0).simulate('click');
@@ -148,7 +150,7 @@ describe('Assignment component tests', () => {
         });
 
         it('makes a request that ends with rollstats/assignmentDouble when double prop is true', () => {
-            const component = shallow(<Assignment double={true}/>);
+            const component = shallow(<Assignment double={true} gateway={new ServerGateway()}/>);
             component.setState({selectedChar: {}});
 
             component.find('input').at(0).simulate('click');
@@ -158,7 +160,7 @@ describe('Assignment component tests', () => {
         });
 
         it('populates the expected roll objects with the response data with status 200', () => {
-            const component = shallow(<Assignment/>);
+            const component = shallow(<Assignment gateway={new ServerGateway()}/>);
             component.setState({selectedChar: {}});
             const responseData = [[1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6]];
             const responseJson = JSON.stringify(responseData);
@@ -173,6 +175,16 @@ describe('Assignment component tests', () => {
             assertRollObject(rollObjects[3], 3, false, ' (1 + 1 + 4)', 6);
             assertRollObject(rollObjects[4], 4, false, ' (1 + 1 + 5)', 7);
             assertRollObject(rollObjects[5], 5, false, ' (1 + 1 + 6)', 8);
+        });
+
+        it('writes to console.error if assignment server call fails', () => {
+            const component = shallow(<Assignment gateway={new ServerGateway()}/>);
+
+            component.find('input').at(0).simulate('click');
+            requests[0].respond(500, '', 'test assignment error');
+
+            expect(consoleError).toHaveBeenCalledTimes(1);
+            expect(consoleError).toHaveBeenCalledWith('test assignment error');
         });
 
         const assertRollObject = (roll, expectedId, shouldBeAssigned, expectedText, expectedValue) => {

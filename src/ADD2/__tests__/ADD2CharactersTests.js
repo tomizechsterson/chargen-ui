@@ -45,12 +45,12 @@ describe('ADD2Characters tests', () => {
                 requests.push(xhr);
             }.bind(this);
         });
-
         afterEach(() => {
             xhr.restore();
         });
 
         it('state is updated when input changes', () => {
+            expect(component.state().newCharName).toBe('');
             newCharNameInput.simulate('change', {target: {value: 'something'}});
             expect(component.state().newCharName).toBe('something');
         });
@@ -66,6 +66,7 @@ describe('ADD2Characters tests', () => {
             newCharNameInput.simulate('change', {target: {value: 'testName'}});
             createButton.simulate('click');
             expect(component.state().characterData).toHaveLength(1);
+            expect(component.state().characterData[0].name).toBe('testName');
         });
 
         it('gives the first character an id of 1', () => {
@@ -144,7 +145,6 @@ describe('ADD2Characters tests', () => {
                 requests.push(xhr);
             }.bind(this);
         });
-
         afterEach(() => {
             xhr.restore();
         });
@@ -153,12 +153,8 @@ describe('ADD2Characters tests', () => {
             const testData = getTestData();
             const component = mount(<ADD2Characters useTestData={true} testData={testData}/>);
             component.setState({selected: testData[1]});
-            testData[1].str = 3;
-            testData[1].dex = 3;
-            testData[1].con = 3;
-            testData[1].int = 3;
-            testData[1].wis = 3;
-            testData[1].chr = 3;
+            testData[1].str = testData[1].dex = testData[1].con =
+                testData[1].int = testData[1].wis = testData[1].chr = 3;
             component.setState({selected: testData[1]});
             const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
             rollOnce.find('input').at(1).simulate('click');
@@ -229,7 +225,6 @@ describe('ADD2Characters tests', () => {
             }.bind(this);
             window.confirm = jest.fn(() => true);
         });
-
         afterEach(() => {
             xhr.restore();
         });

@@ -1,36 +1,36 @@
 import Urls from "./ApiUrls";
 
 export default class ServerGateway {
-    getChars = (onResp, onError) => {
+    getChars = (onResponse, onError) => {
         const xhr = new XMLHttpRequest();
         xhr.open('get', Urls.ADD2Url(), true);
         xhr.onload = function() {
             if(xhr.status === 200)
-                onResp(JSON.parse(xhr.responseText));
+                onResponse(JSON.parse(xhr.responseText));
             else
                 onError(xhr.responseText);
         };
         xhr.send();
     };
 
-    deleteChar = (id, onResp, onError) => {
+    deleteChar = (id, onResponse, onError) => {
         const xhr = new XMLHttpRequest();
         xhr.open('delete', Urls.ADD2Url() + id, true);
         xhr.onload = function() {
             if(xhr.status === 200)
-                onResp();
+                onResponse();
             else
                 onError(xhr.responseText);
         };
         xhr.send();
     };
 
-    updateChar = (character, onResp, onError) => {
+    updateChar = (character, onResponse, onError) => {
         const xhr = new XMLHttpRequest();
         xhr.open('put', Urls.ADD2Url() + character.id, true);
         xhr.onload = function() {
             if(xhr.status === 200)
-                onResp();
+                onResponse();
             else
                 onError(xhr.responseText);
         };
@@ -38,12 +38,12 @@ export default class ServerGateway {
         xhr.send(JSON.stringify(character));
     };
 
-    createChar = (character, onResp, onError) => {
+    createChar = (character, onResponse, onError) => {
         const xhr = new XMLHttpRequest();
         xhr.open('post', Urls.ADD2Url() + 'new', true);
         xhr.onload = function() {
             if(xhr.status === 200)
-                onResp();
+                onResponse();
             else
                 onError(xhr.responseText);
         };
@@ -51,24 +51,24 @@ export default class ServerGateway {
         xhr.send(JSON.stringify(character));
     };
 
-    rollOnce = (onResp, onError) => {
+    rollOnce = (onResponse, onError) => {
         const xhr = new XMLHttpRequest();
         xhr.open('get', Urls.ADD2Url() + 'rollstats/rollonce', true);
         xhr.onload = function() {
             if(xhr.status === 200)
-                onResp(JSON.parse(xhr.responseText));
+                onResponse(JSON.parse(xhr.responseText));
             else
                 onError(xhr.responseText);
         };
         xhr.send();
     };
 
-    rollTwice = (onResp, onError) => {
+    rollTwice = (onResponse, onError) => {
         const xhr = new XMLHttpRequest();
         xhr.open('get', Urls.ADD2Url() + 'rollstats/rolltwice', true);
         xhr.onload = function() {
             if(xhr.status === 200)
-                onResp(JSON.parse(xhr.responseText));
+                onResponse(JSON.parse(xhr.responseText));
             else
                 onError(xhr.responseText);
         };

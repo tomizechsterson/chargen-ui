@@ -32,8 +32,7 @@ describe('ServerGateway tests', () => {
         gateway.getChars(null, error);
         requests[0].respond(500, '', 'test get error');
 
-        expect(error).toHaveBeenCalledTimes(1);
-        expect(error).toHaveBeenCalledWith('test get error');
+        assertErrorCall(error, 'test get error');
     });
 
     it('calls service with expected id for deletion', () => {
@@ -50,8 +49,7 @@ describe('ServerGateway tests', () => {
         gateway.deleteChar(1, null, error);
         requests[0].respond(500, '', 'test delete error');
 
-        expect(error).toHaveBeenCalledTimes(1);
-        expect(error).toHaveBeenCalledWith('test delete error');
+        assertErrorCall(error, 'test delete error');
     });
 
     it('calls update on service with expected id and request body', () => {
@@ -75,8 +73,7 @@ describe('ServerGateway tests', () => {
         gateway.deleteChar(1, null, error);
         requests[0].respond(500, '', 'test update error');
 
-        expect(error).toHaveBeenCalledTimes(1);
-        expect(error).toHaveBeenCalledWith('test update error');
+        assertErrorCall(error, 'test update error');
     });
 
     it('calls new on service with expected request body', () => {
@@ -95,16 +92,14 @@ describe('ServerGateway tests', () => {
         gateway.createChar(null, null, error);
         requests[0].respond(500, '', 'test create error');
 
-        expect(error).toHaveBeenCalledTimes(1);
-        expect(error).toHaveBeenCalledWith('test create error');
+        assertErrorCall(error, 'test create error');
     });
 
     it('returns expected rolls with rollOnce rule', () => {
         const rollsJson = JSON.stringify(get6Rolls());
 
         gateway.rollOnce(function(response) {
-            expect(response).toHaveLength(6);
-            expect(response).toEqual(get6Rolls());
+            assertRollData(response, 6, get6Rolls());
         });
         requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
     });
@@ -115,16 +110,14 @@ describe('ServerGateway tests', () => {
         gateway.rollOnce(null, error);
         requests[0].respond(500, '', 'test rollOnce error');
 
-        expect(error).toHaveBeenCalledTimes(1);
-        expect(error).toHaveBeenCalledWith('test rollOnce error');
+        assertErrorCall(error, 'test rollOnce error');
     });
 
     it('returns expected rolls with rollTwice rule', () => {
         const rollsJson = JSON.stringify(get12Rolls());
 
         gateway.rollTwice(function(response) {
-            expect(response).toHaveLength(12);
-            expect(response).toEqual(get12Rolls());
+            assertRollData(response, 12, get12Rolls());
         });
         requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
     });
@@ -135,16 +128,14 @@ describe('ServerGateway tests', () => {
         gateway.rollTwice(null, error);
         requests[0].respond(500, '', 'test rollTwice error');
 
-        expect(error).toHaveBeenCalledTimes(1);
-        expect(error).toHaveBeenCalledWith('test rollTwice error');
+        assertErrorCall(error, 'test rollTwice error');
     });
 
     it('returns expected rolls with assignment rule', () => {
         const rollsJson = JSON.stringify(get6Rolls());
 
         gateway.assignment('assignment', function(response) {
-            expect(response).toHaveLength(6);
-            expect(response).toEqual(get6Rolls());
+            assertRollData(response, 6, get6Rolls());
         });
         requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
     });
@@ -153,8 +144,7 @@ describe('ServerGateway tests', () => {
         const rollsJson = JSON.stringify(get12Rolls());
 
         gateway.assignment('assignmentDouble', function(response) {
-            expect(response).toHaveLength(12);
-            expect(response).toEqual(get12Rolls());
+            assertRollData(response, 12, get12Rolls());
         });
         requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
     });
@@ -165,9 +155,36 @@ describe('ServerGateway tests', () => {
         gateway.assignment('test', null, error);
         requests[0].respond(500, '', 'test assignment error');
 
-        expect(error).toHaveBeenCalledTimes(1);
-        expect(error).toHaveBeenCalledWith('test assignment error');
+        assertErrorCall(error, 'test assignment error');
     });
+
+    it('returns expected results with rollFour rule', () => {
+        const rollsJson = JSON.stringify(get6RollsWith4Dice());
+
+        gateway.rollFour(function(response) {
+            assertRollData(response, 6, get6RollsWith4Dice());
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+    });
+
+    it('calls onError if rollFour server call fails', () => {
+        const error = jest.fn();
+
+        gateway.rollFour(null, error);
+        requests[0].respond(500, '', 'test rollFour error');
+
+        assertErrorCall(error, 'test rollFour error');
+    });
+
+    const assertRollData = (response, length, data) => {
+        expect(response).toHaveLength(length);
+        expect(response).toEqual(data);
+    };
+
+    const assertErrorCall = (errorFunc, errorMsg) => {
+        expect(errorFunc).toHaveBeenCalledTimes(1);
+        expect(errorFunc).toHaveBeenCalledWith(errorMsg);
+    };
 
     const getTestCharData = () => {
         return [
@@ -311,5 +328,9 @@ describe('ServerGateway tests', () => {
     const get12Rolls = () => {
         return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3],
             [3, 3, 3], [3, 3, 4], [3, 3, 5], [3, 3, 6], [3, 4, 3], [3, 4, 4]];
+    };
+
+    const get6RollsWith4Dice = () => {
+        return [[1, 1, 1, 1], [1, 1, 1, 2], [1, 1, 2, 2], [1, 2, 2, 2], [1, 2, 2, 3], [1, 2, 3, 3]];
     };
 });

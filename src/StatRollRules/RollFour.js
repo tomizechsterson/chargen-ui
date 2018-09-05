@@ -21,20 +21,18 @@ export default class RollFour extends Component {
     }
 
     rollStats() {
-        const {selectedChar, apiUrl} = this.props;
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', apiUrl + 'rollstats/rollfour', true);
-        xhr.onload = function() {
-            const data = JSON.parse(xhr.responseText);
-            selectedChar.str = RollFour.addThreeLargest(data[0]);
-            selectedChar.dex = RollFour.addThreeLargest(data[1]);
-            selectedChar.con = RollFour.addThreeLargest(data[2]);
-            selectedChar.int = RollFour.addThreeLargest(data[3]);
-            selectedChar.wis = RollFour.addThreeLargest(data[4]);
-            selectedChar.chr = RollFour.addThreeLargest(data[5]);
-            this.setState({rolls: data, selectedChar: selectedChar});
-        }.bind(this);
-        xhr.send();
+        const {selectedChar, gateway} = this.props;
+        gateway.rollFour(function(response) {
+            selectedChar.str = RollFour.addThreeLargest(response[0]);
+            selectedChar.dex = RollFour.addThreeLargest(response[1]);
+            selectedChar.con = RollFour.addThreeLargest(response[2]);
+            selectedChar.int = RollFour.addThreeLargest(response[3]);
+            selectedChar.wis = RollFour.addThreeLargest(response[4]);
+            selectedChar.chr = RollFour.addThreeLargest(response[5]);
+            this.setState({rolls: response, selectedChar: selectedChar});
+        }.bind(this), function(error) {
+            console.error(error);
+        });
     }
 
     handleUpdate() {

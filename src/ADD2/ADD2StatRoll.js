@@ -50,7 +50,7 @@ export default class ADD2StatRoll extends Component {
                 {rollRule === 'assignment2x' &&
                 <Assignment selectedChar={selectedChar} onUpdate={onUpdate} double={true} gateway={gateway} />}
                 {rollRule === 'roll4' &&
-                <RollFour selectedChar={selectedChar} onUpdate={onUpdate} apiUrl={apiUrl} />}
+                <RollFour selectedChar={selectedChar} onUpdate={onUpdate} gateway={gateway} />}
                 {rollRule === 'add7Dice' &&
                 <Add7Dice selectedChar={this.setSelectedCharStatsTo8()} onUpdate={onUpdate} apiUrl={apiUrl} />}
             </div>

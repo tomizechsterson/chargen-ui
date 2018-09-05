@@ -23,9 +23,9 @@ describe('ADD2CharacterCreation Tests', () => {
         expect(divs.length).toBeGreaterThan(0);
     });
 
-    it('always renders an `h3` with the character name', () => {
-        props.selectedChar = {name: 'test', completionStep: 0};
-        expect(characterCreation().find('h3').text()).toEqual('test');
+    it('always renders the character name', () => {
+        props.selectedChar = {name: 'testName', completionStep: 0};
+        expect(characterCreation().text()).toContain('testName');
     });
 
     it('always renders an `ADD2StatRoll` (assuming completionStep is < 2', () => {

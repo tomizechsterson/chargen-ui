@@ -6,28 +6,29 @@ import StatsDisplay from "../../GeneralDisplays/StatsDisplay";
 import SavingThrowsDisplay from "../../GeneralDisplays/SavingThrowsDisplay";
 
 describe('ADD2DisplayCompleted Tests', () => {
+    let component;
+    beforeEach(() => {
+        component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
+    });
+
     it('always renders at least one div', () => {
-        const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
         expect(component.find('div').length).toBeGreaterThan(0);
     });
 
-    it('always renders an `h4` with the character name', () => {
+    it('always renders the character name', () => {
         const component = shallow(<ADD2DisplayCompleted selectedChar={{name: 'testName'}}/>);
-        expect(component.find('h4').text()).toEqual('testName');
+        expect(component.text()).toContain('testName');
     });
 
     it('always renders a VitalsDisplay', () => {
-        const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
         expect(component.find(VitalsDisplay)).toHaveLength(1);
     });
 
     it('always renders a StatsDisplay', () => {
-        const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
         expect(component.find(StatsDisplay)).toHaveLength(1);
     });
 
     it('always renders a SavingThrowsDisplay', () => {
-        const component = shallow(<ADD2DisplayCompleted selectedChar={{}}/>);
         expect(component.find(SavingThrowsDisplay)).toHaveLength(1);
     });
 

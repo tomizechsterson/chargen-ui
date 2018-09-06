@@ -15,11 +15,10 @@ test_script:
   - node --version
   - npm --version
   - npm test -- --coverage --coverageReporters=text-lcov > lcov.info
-  - node ./node_modules/coveralls/bin/coveralls.js < lcov.info
-  - npm run build
 
 after_test:
-
+  - node ./node_modules/coveralls/bin/coveralls.js < lcov.info
+  - npm run build
 
 build: off
 

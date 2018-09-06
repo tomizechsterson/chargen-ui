@@ -2,6 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import ADD2CharacterCreation from '../ADD2CharacterCreation';
 import ADD2StatRoll from "../ADD2StatRoll";
+import ADD2RaceSelection from "../ADD2RaceSelection";
 
 describe('ADD2CharacterCreation Tests', () => {
     let props;
@@ -28,8 +29,13 @@ describe('ADD2CharacterCreation Tests', () => {
         expect(characterCreation().text()).toContain('testName');
     });
 
-    it('always renders an `ADD2StatRoll` (assuming completionStep is < 2)', () => {
+    it('renders an `ADD2StatRoll` if completionStep is 1', () => {
         expect(characterCreation().find(ADD2StatRoll)).toHaveLength(1);
+    });
+
+    it('renders an `ADD2RaceSelection` if completionStep is 2', () => {
+        props.selectedChar = {completionStep: 2};
+        expect(characterCreation().find(ADD2RaceSelection)).toHaveLength(1);
     });
 
     describe('when `onUpdate` is defined', () => {

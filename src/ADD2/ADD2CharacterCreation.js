@@ -1,5 +1,6 @@
 import React from 'react';
 import ADD2StatRoll from './ADD2StatRoll';
+import ADD2RaceSelection from "./ADD2RaceSelection";
 
 const ADD2CharacterCreation = (props) => {
     const {selectedChar, onUpdate, gateway} = props;
@@ -11,7 +12,7 @@ const ADD2CharacterCreation = (props) => {
             <ADD2StatRoll selectedChar={selectedChar} gateway={gateway}
                           onUpdate={onUpdate} />}
             {selectedChar.completionStep === 2 &&
-                <p>stuff</p>}
+            <ADD2RaceSelection selectedChar={selectedChar} />}
         </div>
     );
 };

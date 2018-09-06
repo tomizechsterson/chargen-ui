@@ -14,7 +14,7 @@ describe('ADD2CharacterCreation Tests', () => {
     };
 
     beforeEach(() => {
-        props = {selectedChar: {completionStep: 0}};
+        props = {selectedChar: {completionStep: 1}};
         mountedADD2CharacterCreation = undefined;
     });
 
@@ -24,11 +24,11 @@ describe('ADD2CharacterCreation Tests', () => {
     });
 
     it('always renders the character name', () => {
-        props.selectedChar = {name: 'testName', completionStep: 0};
+        props.selectedChar = {name: 'testName', completionStep: 1};
         expect(characterCreation().text()).toContain('testName');
     });
 
-    it('always renders an `ADD2StatRoll` (assuming completionStep is < 2', () => {
+    it('always renders an `ADD2StatRoll` (assuming completionStep is < 2)', () => {
         expect(characterCreation().find(ADD2StatRoll)).toHaveLength(1);
     });
 
@@ -50,7 +50,7 @@ describe('ADD2CharacterCreation Tests', () => {
 
     describe('when `selectedChar` is defined', () => {
         it('sets the rendered `ADD2StatRoll`s `selectedChar` prop to the same value as `selectedChar`', () => {
-            props.selectedChar = {completionStep: 0};
+            props.selectedChar = {completionStep: 1};
             const add2StatRoll = characterCreation().find(ADD2StatRoll);
             expect(add2StatRoll.props().selectedChar).toBe(props.selectedChar);
         });

@@ -5,7 +5,7 @@ import ADD2CharacterCreation from './ADD2CharacterCreation';
 const ADD2CharacterDetails = (props) => {
     const {selectedChar, onDelete, onUpdate, gateway} = props;
     const isOneSelected = Boolean(selectedChar);
-    const completeStep = 2;
+    const completeStep = 3;
 
     return (
         <div>

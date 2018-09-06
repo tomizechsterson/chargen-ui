@@ -13,12 +13,11 @@ describe('SavingThrowsDisplay tests', () => {
             const testChar = {paralyze: 9, rod: 10, petrification: 11, breath: 12, spell: 13};
             const component = shallow(<SavingThrowsDisplay selectedChar={testChar}/>);
 
-            const pTag = component.find('p');
-            expect(pTag.text()).toContain('Paralyzation, Poison, Death Magic: 9');
-            expect(pTag.text()).toContain('Rod, Staff, Wand: 10');
-            expect(pTag.text()).toContain('Petrification, Polymorph: 11');
-            expect(pTag.text()).toContain('Breath Weapon: 12');
-            expect(pTag.text()).toContain('Spell: 13');
+            expect(component.text()).toContain('Paralyzation, Poison, Death Magic: 9');
+            expect(component.text()).toContain('Rod, Staff, Wand: 10');
+            expect(component.text()).toContain('Petrification, Polymorph: 11');
+            expect(component.text()).toContain('Breath Weapon: 12');
+            expect(component.text()).toContain('Spell: 13');
         });
     });
 });

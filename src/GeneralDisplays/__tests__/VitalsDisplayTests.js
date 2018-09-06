@@ -14,14 +14,13 @@ describe('VitalsDisplay tests', () => {
                 alignment: 'testAlignment', age: 1, height: 2, weight: 3};
             const component = shallow(<VitalsDisplay selectedChar={testChar}/>);
 
-            const pTag = component.find('p');
-            expect(pTag.text()).toContain('Race: testRace');
-            expect(pTag.text()).toContain('Gender: testGender');
-            expect(pTag.text()).toContain('Class: testClass');
-            expect(pTag.text()).toContain('Alignment: testAlignment');
-            expect(pTag.text()).toContain('Age: 1');
-            expect(pTag.text()).toContain('Height: 2');
-            expect(pTag.text()).toContain('Weight: 3');
+            expect(component.text()).toContain('Race: testRace');
+            expect(component.text()).toContain('Gender: testGender');
+            expect(component.text()).toContain('Class: testClass');
+            expect(component.text()).toContain('Alignment: testAlignment');
+            expect(component.text()).toContain('Age: 1');
+            expect(component.text()).toContain('Height: 2');
+            expect(component.text()).toContain('Weight: 3');
         });
     });
 });

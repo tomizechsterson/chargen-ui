@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 
 export default class ADD2RaceSelection extends Component {
-
-
     render() {
         const {selectedChar} = this.props;
         return (

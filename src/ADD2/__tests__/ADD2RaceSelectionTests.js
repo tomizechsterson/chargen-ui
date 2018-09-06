@@ -19,4 +19,6 @@ describe('ADD2RaceSelection tests', () => {
         expect(component.text()).toContain('WIS: 7');
         expect(component.text()).toContain('CHR: 8');
     });
+
+
 });

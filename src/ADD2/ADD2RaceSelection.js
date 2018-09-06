@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 
 export default class ADD2RaceSelection extends Component {
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
         const {selectedChar} = this.props;

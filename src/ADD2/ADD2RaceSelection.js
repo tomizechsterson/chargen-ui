@@ -10,7 +10,7 @@ export default class ADD2RaceSelection extends Component {
                 CON: {selectedChar.con} <br/>
                 INT: {selectedChar.int} <br/>
                 WIS: {selectedChar.wis} <br/>
-                CHR: {selectedChar.wis} <br/>
+                CHR: {selectedChar.chr} <br/>
             </div>
         );
     }

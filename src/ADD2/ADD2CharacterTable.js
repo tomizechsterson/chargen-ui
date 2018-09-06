@@ -2,7 +2,7 @@ import React from 'react';
 import './ADD2CharacterTable.css';
 
 const ADD2CharacterTable = (props) => {
-    const completeStep = 2;
+    const completeStep = 3;
     const entries = props.characters;
     const rowItems = entries.map(function(item) {
         return <tr key={item.id} onClick={() => props.onSelect(item.id)}>

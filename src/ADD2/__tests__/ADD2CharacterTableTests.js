@@ -22,11 +22,12 @@ describe('ADD2CharacterTable', () => {
         });
 
         it('renders Yes or No depending on if the character is completed', () => {
-            const testData = [{id: 1, completionStep: 2}, {id: 2, completionStep: 1}];
+            const testData = [{id: 1, completionStep: 3}, {id: 2, completionStep: 2}, {id: 3, completionStep: 1}];
             const component = shallow(<ADD2CharacterTable characters={testData}/>);
 
             expect(component.find('tbody tr').at(0).find('td').at(3).text()).toEqual('Yes');
             expect(component.find('tbody tr').at(1).find('td').at(3).text()).toEqual('No');
+            expect(component.find('tbody tr').at(2).find('td').at(3).text()).toEqual('No');
         });
 
         it('calls onSelect with the proper id when a row is clicked', () => {

@@ -6,14 +6,12 @@ cache:
 
 install:
   - npm install
-  - npm install --save-dev jest
   - npm install coveralls --save-dev
 
 test_script:
   - node --version
   - npm --version
-  - npm test
-  - jest --coverage --coverageReporters=text-lcov | coveralls
+  - npm test -- --coverage --coverageReporters=text-lcov | coveralls
   - npm run build
 
 build: off

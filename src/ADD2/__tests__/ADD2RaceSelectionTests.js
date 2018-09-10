@@ -30,31 +30,35 @@ describe('ADD2RaceSelection tests', () => {
         expect(component.find('button')).toHaveLength(1);
     });
 
-    it('changes state to selected race', () => {
-        const component = shallow(<ADD2RaceSelection selectedChar={{availableRaces: []}}/>);
-        const raceDropDown = component.find('select');
+    describe('Race Drop Down', () => {
+        it('changes state to selected race', () => {
+            const component = shallow(<ADD2RaceSelection selectedChar={{availableRaces: []}}/>);
+            const raceDropDown = component.find('select');
 
-        raceDropDown.simulate('change', {target: {value: 'test1'}});
-        expect(component.state().selectedRace).toBe('test1');
+            raceDropDown.simulate('change', {target: {value: 'test1'}});
+            expect(component.state().selectedRace).toBe('test1');
+        });
     });
 
-    it('does not call onUpdate if no race is selected', () => {
-        const updateFunc = jest.fn();
-        const component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{availableRaces: []}}/>);
+    describe('Save Button', () => {
+        it('does not call onUpdate if no race is selected', () => {
+            const updateFunc = jest.fn();
+            const component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{availableRaces: []}}/>);
 
-        component.find('button').at(0).simulate('click');
+            component.find('button').at(0).simulate('click');
 
-        expect(updateFunc).toHaveBeenCalledTimes(0);
-    });
+            expect(updateFunc).toHaveBeenCalledTimes(0);
+        });
 
-    it('calls onUpdate once with the expected race', () => {
-        const updateFunc = jest.fn();
-        const component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{availableRaces: []}}/>);
-        component.setState({selectedRace: 'testRace'});
+        it('calls onUpdate once with the expected race', () => {
+            const updateFunc = jest.fn();
+            const component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{availableRaces: []}}/>);
+            component.setState({selectedRace: 'testRace'});
 
-        component.find('button').at(0).simulate('click');
+            component.find('button').at(0).simulate('click');
 
-        expect(updateFunc).toHaveBeenCalledTimes(1);
-        expect(component.instance().props.selectedChar.race).toBe('testRace');
+            expect(updateFunc).toHaveBeenCalledTimes(1);
+            expect(component.instance().props.selectedChar.race).toBe('testRace');
+        });
     });
 });

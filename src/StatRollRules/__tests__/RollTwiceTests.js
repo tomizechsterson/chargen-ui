@@ -31,7 +31,7 @@ describe('RollTwice tests', () => {
             component.find('input').at(1).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(1);
-            expect(component.instance().props.selectedChar.completionStep).toBe(1);
+            expect(updateFunc).toHaveBeenCalledWith({completionStep: 1});
         });
     });
 

@@ -137,7 +137,7 @@ const SelectorADD2 = () => {
     ];
     return (
         <div>
-            <ADD2Characters useTestData={true} testData={internalTestData} serverGateway={new ServerGateway()}/>
+            <ADD2Characters useTestData={false} testData={internalTestData} serverGateway={new ServerGateway()}/>
         </div>
     );
 };

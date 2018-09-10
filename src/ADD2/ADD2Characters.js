@@ -65,7 +65,7 @@ export default class ADD2Characters extends Component {
             if (!useTestData) {
                 serverGateway.deleteChar(id, function() {
                     this.loadCharsFromServer();
-                }, function(error) {
+                }.bind(this), function(error) {
                     console.error(error);
                 });
             }
@@ -82,7 +82,7 @@ export default class ADD2Characters extends Component {
         if(!useTestData) {
             serverGateway.updateChar(character, function() {
                 this.loadCharsFromServer();
-            }, function(error) {
+            }.bind(this), function(error) {
                 console.error(error);
             });
         }
@@ -128,7 +128,7 @@ export default class ADD2Characters extends Component {
             if(!useTestData) {
                 serverGateway.createChar(newChar, function() {
                     this.loadCharsFromServer();
-                }, function(error) {
+                }.bind(this), function(error) {
                     console.error(error);
                 });
             }

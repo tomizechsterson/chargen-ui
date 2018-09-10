@@ -213,6 +213,25 @@ describe('ServerGateway tests', () => {
         assertErrorCall(error, 'test getRaces error');
     });
 
+    it('returns expected results when getStatAdjustments', () => {
+        const adjustments = JSON.stringify({'int': 1, 'wis': -1});
+
+        gateway.getAdjustments('test', function(response) {
+            expect(response.int).toBe(1);
+            expect(response.wis).toBe(-1);
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, adjustments);
+    });
+
+    it('calls onError if getStatAdjustments fails', () => {
+        const error = jest.fn();
+
+        gateway.getAdjustments('', null, error);
+        requests[0].respond(500, '', 'test adjustments error');
+
+        assertErrorCall(error, 'test adjustments error');
+    });
+
     const assertRollData = (response, length, data) => {
         expect(response).toHaveLength(length);
         expect(response).toEqual(data);

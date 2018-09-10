@@ -124,4 +124,16 @@ export default class ServerGateway {
         };
         xhr.send();
     };
+
+    getAdjustments = (selectedRace, onResponse, onError) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', Urls.ADD2Url() + 'statadjust/' + selectedRace, true);
+        xhr.onload = function() {
+            if(xhr.status === 200)
+                onResponse(JSON.parse(xhr.responseText));
+            else
+                onError(xhr.responseText);
+        };
+        xhr.send();
+    };
 }

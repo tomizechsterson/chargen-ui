@@ -79,6 +79,14 @@ export default class ADD2Characters extends Component {
         chars[i] = character;
         this.setState({characterData: chars});
 
+        if(character.completionStep === 2) {
+            serverGateway.getRaces(character, function(response) {
+                character.availableRaces = response;
+            }, function(error) {
+                console.error(error);
+            });
+        }
+
         if(!useTestData) {
             serverGateway.updateChar(character, function() {
                 this.loadCharsFromServer();

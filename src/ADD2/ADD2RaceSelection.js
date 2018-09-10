@@ -3,24 +3,14 @@ import React, {Component} from 'react';
 export default class ADD2RaceSelection extends Component {
     constructor(props) {
         super(props);
-        this.state = {races: [], selectedRace: null};
-    }
-
-    componentDidMount() {
-        const {gateway, selectedChar} = this.props;
-        gateway.getRaces(selectedChar, function(response) {
-            this.setState({races: response});
-        }.bind(this), function(error) {
-            console.error(error);
-        });
+        this.state = {selectedRace: null};
     }
 
     render() {
-        const {races} = this.state;
         const {selectedChar} = this.props;
-        const options = races.map(function(item) {
-            let id = 0;
-            return <option key={id + 1} value={item}>{item}</option>
+        let id = 0;
+        const options = selectedChar.availableRaces.map(function(item) {
+            return <option key={id++} value={item}>{item}</option>
         });
         return (
             <div>

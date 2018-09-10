@@ -180,18 +180,35 @@ describe('ADD2Characters tests', () => {
             requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(getTestRolls()));
             rollOnce.find('input').at(1).simulate('click');
 
-            expect(requests[2].url).toEqual(expect.stringMatching(/\/add2character\/2$/));
-            expect(requests[2].method).toEqual('put');
-            expect(requests[2].requestBody).toContain('"str":3');
-            expect(requests[2].requestBody).toContain('"dex":4');
-            expect(requests[2].requestBody).toContain('"con":5');
-            expect(requests[2].requestBody).toContain('"int":6');
-            expect(requests[2].requestBody).toContain('"wis":7');
-            expect(requests[2].requestBody).toContain('"chr":8');
+            expect(requests[3].url).toEqual(expect.stringMatching(/\/add2character\/2$/));
+            expect(requests[3].method).toEqual('put');
+            expect(requests[3].requestBody).toContain('"str":3');
+            expect(requests[3].requestBody).toContain('"dex":4');
+            expect(requests[3].requestBody).toContain('"con":5');
+            expect(requests[3].requestBody).toContain('"int":6');
+            expect(requests[3].requestBody).toContain('"wis":7');
+            expect(requests[3].requestBody).toContain('"chr":8');
             expect(consoleError).toHaveBeenCalledTimes(0);
         });
 
         it('writes to console.error if update fails', () => {
+            const dataJson = JSON.stringify(getTestData());
+            const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
+            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            const charData = component.state().characterData;
+            component.setState({selected: charData[1]});
+
+            const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
+            rollOnce.find('input').at(0).simulate('click');
+            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(getTestRolls()));
+            rollOnce.find('input').at(1).simulate('click');
+            requests[2].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(['race1', 'race2']));
+            requests[3].respond(500);
+
+            expect(consoleError).toHaveBeenCalledTimes(1);
+        });
+
+        it('writes to console.error if getRaces fails', () => {
             const dataJson = JSON.stringify(getTestData());
             const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
             requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
@@ -257,8 +274,8 @@ describe('ADD2Characters tests', () => {
             const charDetails = component.find(ADD2CharacterDetails);
             charDetails.find('button').simulate('click');
 
-            expect(requests[2].url).toEqual(expect.stringMatching(/\/add2character\/1$/));
-            expect(requests[2].method).toEqual('delete');
+            expect(requests[1].url).toEqual(expect.stringMatching(/\/add2character\/1$/));
+            expect(requests[1].method).toEqual('delete');
             charData = component.instance().state.characterData;
             expect(charData.length).toBe(4);
             expect(charData[0].id).toBe(2);
@@ -274,7 +291,7 @@ describe('ADD2Characters tests', () => {
 
             const charDetails = component.find(ADD2CharacterDetails);
             charDetails.find('button').simulate('click');
-            requests[2].respond(500);
+            requests[1].respond(500);
 
             expect(consoleError).toHaveBeenCalledTimes(1);
         });
@@ -306,7 +323,8 @@ describe('ADD2Characters tests', () => {
                 spell: 17,
                 hp: 9,
                 moveRate: 12,
-                funds: 170
+                funds: 170,
+                availableRaces: []
             },
             {
                 id: 2,
@@ -332,7 +350,8 @@ describe('ADD2Characters tests', () => {
                 spell: 0,
                 hp: 0,
                 moveRate: 0,
-                funds: 0
+                funds: 0,
+                availableRaces: []
             },
             {
                 id: 3,

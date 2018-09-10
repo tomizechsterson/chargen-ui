@@ -12,7 +12,8 @@ const ADD2CharacterCreation = (props) => {
             <ADD2StatRoll selectedChar={selectedChar} gateway={gateway}
                           onUpdate={onUpdate} />}
             {selectedChar.completionStep === 2 &&
-            <ADD2RaceSelection selectedChar={selectedChar} gateway={gateway} />}
+            <ADD2RaceSelection selectedChar={selectedChar} gateway={gateway}
+                               onUpdate={onUpdate}/>}
         </div>
     );
 };

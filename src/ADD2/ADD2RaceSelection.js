@@ -3,7 +3,25 @@ import React, {Component} from 'react';
 export default class ADD2RaceSelection extends Component {
     constructor(props) {
         super(props);
-        this.state = {selectedRace: null};
+        this.state = {selectedRace: ''};
+
+        this.handleRaceChange = this.handleRaceChange.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+    }
+
+    handleRaceChange(e) {
+        this.setState({selectedRace: e.target.value});
+    }
+
+    handleUpdate() {
+        const {selectedRace} = this.state;
+        if(!selectedRace)
+            alert('must select a race to save');
+        else {
+            this.props.selectedChar.race = selectedRace;
+            this.props.selectedChar.completionStep++;
+            this.props.onUpdate(this.props.selectedChar);
+        }
     }
 
     render() {
@@ -21,9 +39,11 @@ export default class ADD2RaceSelection extends Component {
                 WIS: {selectedChar.wis} <br/>
                 CHR: {selectedChar.chr} <br/>
                 Select race:
-                <select>
+                <select onChange={this.handleRaceChange}>
+                    <option key={-1} value='' />
                     {options}
                 </select>
+                <button onClick={this.handleUpdate}>Save</button>
             </div>
         );
     }

@@ -110,4 +110,18 @@ export default class ServerGateway {
         };
         xhr.send();
     };
+
+    getRaces = (selectedChar, onResponse, onError) => {
+        const c = selectedChar;
+        const statsInUrl = c.str + '/' + c.dex + '/' + c.con + '/' + c.int + '/' + c.wis + '/' + c.chr;
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', Urls.ADD2Url() + 'races/' + statsInUrl, true);
+        xhr.onload = function() {
+            if(xhr.status === 200)
+                onResponse(JSON.parse(xhr.responseText));
+            else
+                onError(xhr.responseText);
+        };
+        xhr.send();
+    };
 }

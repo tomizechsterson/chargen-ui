@@ -194,6 +194,25 @@ describe('ServerGateway tests', () => {
         assertErrorCall(error, 'test add7Dice error');
     });
 
+    it('returns expected results with getRaces', () => {
+        const racesJson = JSON.stringify(['race1', 'race2']);
+
+        gateway.getRaces({}, function(response) {
+            expect(response).toContain('race1');
+            expect(response).toContain('race2');
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, racesJson);
+    });
+
+    it('calls onError if getRaces call fails', () => {
+        const error = jest.fn();
+
+        gateway.getRaces({}, null, error);
+        requests[0].respond(500, '', 'test getRaces error');
+
+        assertErrorCall(error, 'test getRaces error');
+    });
+
     const assertRollData = (response, length, data) => {
         expect(response).toHaveLength(length);
         expect(response).toEqual(data);

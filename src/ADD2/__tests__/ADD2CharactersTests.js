@@ -257,8 +257,8 @@ describe('ADD2Characters tests', () => {
             const charDetails = component.find(ADD2CharacterDetails);
             charDetails.find('button').simulate('click');
 
-            expect(requests[1].url).toEqual(expect.stringMatching(/\/add2character\/1$/));
-            expect(requests[1].method).toEqual('delete');
+            expect(requests[2].url).toEqual(expect.stringMatching(/\/add2character\/1$/));
+            expect(requests[2].method).toEqual('delete');
             charData = component.instance().state.characterData;
             expect(charData.length).toBe(4);
             expect(charData[0].id).toBe(2);
@@ -274,7 +274,7 @@ describe('ADD2Characters tests', () => {
 
             const charDetails = component.find(ADD2CharacterDetails);
             charDetails.find('button').simulate('click');
-            requests[1].respond(500);
+            requests[2].respond(500);
 
             expect(consoleError).toHaveBeenCalledTimes(1);
         });

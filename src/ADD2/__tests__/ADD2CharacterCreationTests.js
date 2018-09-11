@@ -3,6 +3,7 @@ import {shallow} from 'enzyme';
 import ADD2CharacterCreation from '../ADD2CharacterCreation';
 import ADD2StatRoll from "../ADD2StatRoll";
 import ADD2RaceSelection from "../ADD2RaceSelection";
+import ADD2ClassSelection from "../ADD2ClassSelection";
 
 describe('ADD2CharacterCreation Tests', () => {
     let props;
@@ -19,11 +20,6 @@ describe('ADD2CharacterCreation Tests', () => {
         mountedADD2CharacterCreation = undefined;
     });
 
-    it('always renders a div', () => {
-        const divs = characterCreation().find('div');
-        expect(divs.length).toBeGreaterThan(0);
-    });
-
     it('always renders the character name', () => {
         props.selectedChar = {name: 'testName', completionStep: 1};
         expect(characterCreation().text()).toContain('testName');
@@ -36,6 +32,11 @@ describe('ADD2CharacterCreation Tests', () => {
     it('renders an `ADD2RaceSelection` if completionStep is 2', () => {
         props.selectedChar = {completionStep: 2};
         expect(characterCreation().find(ADD2RaceSelection)).toHaveLength(1);
+    });
+
+    it('renders an `ADD2ClassSelection` if completionStep is 3', () => {
+        props.selectedChar = {completionStep: 3};
+        expect(characterCreation().find(ADD2ClassSelection)).toHaveLength(1);
     });
 
     describe('when `onUpdate` is defined', () => {

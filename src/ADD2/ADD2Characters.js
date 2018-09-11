@@ -182,6 +182,7 @@ export default class ADD2Characters extends Component {
                 <div>
                     <ADD2CharacterDetails selectedChar={selected} gateway={serverGateway}
                                           onDelete={this.handleDelete} onUpdate={this.handleUpdate} />
+                    {selected && <button onClick={() => this.handleDelete(selected.id)}>Delete</button>}
                 </div>
             </div>
         );

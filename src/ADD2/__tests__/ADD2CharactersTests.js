@@ -256,8 +256,7 @@ describe('ADD2Characters tests', () => {
             expect(testData.length).toBe(5);
             expect(testData[0].id).toBe(1);
 
-            const charDetails = component.find(ADD2CharacterDetails);
-            charDetails.find('button').at(1).simulate('click');
+            component.find('button').at(2).simulate('click');
 
             testData = component.instance().state.characterData;
             expect(testData.length).toBe(4);
@@ -273,8 +272,7 @@ describe('ADD2Characters tests', () => {
             expect(charData.length).toBe(5);
             expect(charData[0].id).toBe(1);
 
-            const charDetails = component.find(ADD2CharacterDetails);
-            charDetails.find('button').at(1).simulate('click');
+            component.find('button').at(2).simulate('click');
 
             expect(requests[1].url).toEqual(expect.stringMatching(/\/add2character\/1$/));
             expect(requests[1].method).toEqual('delete');
@@ -291,8 +289,7 @@ describe('ADD2Characters tests', () => {
             let charData = component.state().characterData;
             component.setState({selected: charData[0]});
 
-            const charDetails = component.find(ADD2CharacterDetails);
-            charDetails.find('button').at(1).simulate('click');
+            component.find('button').at(2).simulate('click');
             requests[1].respond(500);
 
             expect(consoleError).toHaveBeenCalledTimes(1);

@@ -78,8 +78,6 @@ export default class ADD2Characters extends Component {
         const i = chars.findIndex(function(o) {return o.id === character.id});
         chars[i] = character;
         this.setState({characterData: chars});
-        character.availableRaces = [];
-        character.availableClases = [];
 
         if(character.completionStep === 2) {
             serverGateway.getRaces(character, function(response) {

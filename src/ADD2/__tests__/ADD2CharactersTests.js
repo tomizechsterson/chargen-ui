@@ -384,7 +384,7 @@ describe('ADD2Characters tests', () => {
             {
                 id: 4,
                 name: 'Rip Steakface',
-                completionStep: 1,
+                completionStep: 3,
                 str: 0,
                 dex: 0,
                 con: 0,
@@ -396,6 +396,7 @@ describe('ADD2Characters tests', () => {
                 height: 0,
                 weight: 0,
                 age: 0,
+                availableClasses: [],
                 className: 'none',
                 alignment: 'none',
                 paralyze: 0,
@@ -410,7 +411,7 @@ describe('ADD2Characters tests', () => {
             {
                 id: 5,
                 name: 'Swift McRunfast',
-                completionStep: 2,
+                completionStep: 3,
                 str: 12,
                 dex: 12,
                 con: 10,
@@ -422,6 +423,7 @@ describe('ADD2Characters tests', () => {
                 height: 65,
                 weight: 110,
                 age: 18,
+                availableClasses: [],
                 className: 'Mage',
                 alignment: 'Neutral Good',
                 paralyze: 14,

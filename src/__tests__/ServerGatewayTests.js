@@ -232,6 +232,25 @@ describe('ServerGateway tests', () => {
         assertErrorCall(error, 'test adjustments error');
     });
 
+    it('returns expected results with getClasses', () => {
+        const classesJson = JSON.stringify(['class1', 'class2']);
+
+        gateway.getClasses({}, function(response) {
+            expect(response).toContain('class1');
+            expect(response).toContain('class2');
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, classesJson);
+    });
+
+    it('calls onError if getClasses fails', () => {
+        const error = jest.fn();
+
+        gateway.getClasses({}, null, error);
+        requests[0].respond(500, '', 'test getClasses error');
+
+        assertErrorCall(error, 'test getClasses error');
+    });
+
     const assertRollData = (response, length, data) => {
         expect(response).toHaveLength(length);
         expect(response).toEqual(data);

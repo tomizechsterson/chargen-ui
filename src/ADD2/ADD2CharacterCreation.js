@@ -16,7 +16,8 @@ const ADD2CharacterCreation = (props) => {
             <ADD2RaceSelection selectedChar={selectedChar} gateway={gateway}
                                onUpdate={onUpdate}/>}
             {selectedChar.completionStep === 3 &&
-            <ADD2ClassSelection/>}
+            <ADD2ClassSelection selectedChar={selectedChar} gateway={gateway}
+                                onUpdate={onUpdate}/>}
         </div>
     );
 };

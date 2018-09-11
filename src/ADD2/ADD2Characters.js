@@ -87,6 +87,14 @@ export default class ADD2Characters extends Component {
             });
         }
 
+        if(character.completionStep === 3) {
+            serverGateway.getClasses(character, function(response) {
+                character.availableClasses = response;
+            }, function(error) {
+                console.error(error);
+            });
+        }
+
         if(!useTestData) {
             serverGateway.updateChar(character, function() {
                 this.loadCharsFromServer();

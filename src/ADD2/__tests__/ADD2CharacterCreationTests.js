@@ -61,5 +61,17 @@ describe('ADD2CharacterCreation Tests', () => {
             const add2StatRoll = characterCreation().find(ADD2StatRoll);
             expect(add2StatRoll.props().selectedChar).toBe(props.selectedChar);
         });
+
+        it('sets the selectedChar prop of the ADD2RaceSelection component', () => {
+            props.selectedChar = {completionStep: 2};
+            const raceSelection = characterCreation().find(ADD2RaceSelection);
+            expect(raceSelection.props().selectedChar).toBe(props.selectedChar);
+        });
+
+        it('sets the selectedChar prop of the ADD2RaceSelection component', () => {
+            props.selectedChar = {completionStep: 3};
+            const classSelection = characterCreation().find(ADD2ClassSelection);
+            expect(classSelection.props().selectedChar).toBe(props.selectedChar);
+        });
     });
 });

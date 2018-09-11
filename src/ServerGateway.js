@@ -136,4 +136,18 @@ export default class ServerGateway {
         };
         xhr.send();
     };
+
+    getClasses = (selectedChar, onResponse, onError) => {
+        const c = selectedChar;
+        const url = c.race + '/' + c.str + '/' + c.dex + '/' + c.con + '/' + c.int + '/' + c.wis + '/' + c.chr;
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', Urls.ADD2Url() + 'classes/' + url, true);
+        xhr.onload = function() {
+            if(xhr.status === 200)
+                onResponse(JSON.parse(xhr.responseText));
+            else
+                onError(xhr.responseText);
+        };
+        xhr.send();
+    };
 }

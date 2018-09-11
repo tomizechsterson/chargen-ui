@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 export default class ADD2RaceSelection extends Component {
     constructor(props) {
         super(props);
-        this.state = {selectedRace: ''};
+        this.state = {selectedRace: '', adjustments: undefined};
 
         this.handleRaceChange = this.handleRaceChange.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
@@ -11,6 +11,11 @@ export default class ADD2RaceSelection extends Component {
 
     handleRaceChange(e) {
         this.setState({selectedRace: e.target.value});
+        this.props.gateway.getAdjustments(e.target.value, function(response) {
+            this.setState({adjustments: response});
+        }.bind(this), function(error) {
+            console.error(error);
+        });
     }
 
     handleUpdate() {

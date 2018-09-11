@@ -1,5 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
+import sinon from 'sinon';
 import ADD2RaceSelection from '../ADD2RaceSelection';
 import ServerGateway from "../../ServerGateway";
 
@@ -32,33 +33,52 @@ describe('ADD2RaceSelection tests', () => {
 
     describe('Race Drop Down', () => {
         it('changes state to selected race', () => {
-            const component = shallow(<ADD2RaceSelection selectedChar={{availableRaces: []}}/>);
+            const component = shallow(<ADD2RaceSelection gateway={new ServerGateway()} selectedChar={{availableRaces: []}}/>);
             const raceDropDown = component.find('select');
 
             raceDropDown.simulate('change', {target: {value: 'test1'}});
             expect(component.state().selectedRace).toBe('test1');
         });
+
+        it('gets stat adjustments for selected race', () => {
+            const xhr = sinon.useFakeXMLHttpRequest();
+            const requests = [];
+            xhr.onCreate = function(xhr) {
+                requests.push(xhr);
+            }.bind(this);
+            const component = shallow(<ADD2RaceSelection gateway={new ServerGateway()} selectedChar={{availableRaces: []}}/>);
+            const raceDropDown = component.find('select');
+
+            raceDropDown.simulate('change', {target: {value: 'testRace'}});
+            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify({"int": 1, "wis": -1}));
+
+            expect(component.instance().state.adjustments.int).toEqual(1);
+            expect(component.instance().state.adjustments.wis).toEqual(-1);
+
+            xhr.restore();
+        });
     });
 
     describe('Save Button', () => {
-        it('does not call onUpdate if no race is selected', () => {
-            const updateFunc = jest.fn();
-            const component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{availableRaces: []}}/>);
+        let updateFunc, component;
+        beforeEach(() => {
+            updateFunc = jest.fn();
+            component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{completionStep: 2, availableRaces: []}}/>);
+        });
 
+        it('does not call onUpdate if no race is selected', () => {
             component.find('button').at(0).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
-        it('calls onUpdate once with the expected race', () => {
-            const updateFunc = jest.fn();
-            const component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{availableRaces: []}}/>);
+        it('calls onUpdate once with the expected race and increments completionStep', () => {
             component.setState({selectedRace: 'testRace'});
 
             component.find('button').at(0).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(1);
-            expect(component.instance().props.selectedChar.race).toBe('testRace');
+            expect(updateFunc).toHaveBeenCalledWith({availableRaces: [], completionStep: 3, race: 'testRace'});
         });
     });
 });

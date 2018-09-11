@@ -68,7 +68,7 @@ describe('ADD2RaceSelection tests', () => {
         let updateFunc, component;
         beforeEach(() => {
             updateFunc = jest.fn();
-            component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{completionStep: 2, availableRaces: []}}/>);
+            component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{completionStep: 2, str: 4, dex: 4, con: 4, int: 4, wis: 4, chr: 4, availableRaces: []}}/>);
         });
 
         it('does not call onUpdate if no race is selected', () => {
@@ -78,12 +78,32 @@ describe('ADD2RaceSelection tests', () => {
         });
 
         it('calls onUpdate once with the expected race and increments completionStep', () => {
-            component.setState({selectedRace: 'testRace'});
+            component.setState({selectedRace: 'testRace', adjustments: {}});
 
             component.find('button').at(0).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(1);
-            expect(updateFunc).toHaveBeenCalledWith({availableRaces: [], completionStep: 3, race: 'testRace'});
+            expect(component.instance().props.selectedChar.str).toBe(4);
+            expect(component.instance().props.selectedChar.dex).toBe(4);
+            expect(component.instance().props.selectedChar.con).toBe(4);
+            expect(component.instance().props.selectedChar.int).toBe(4);
+            expect(component.instance().props.selectedChar.wis).toBe(4);
+            expect(component.instance().props.selectedChar.chr).toBe(4);
+            expect(component.instance().props.selectedChar.completionStep).toBe(3);
+            expect(component.instance().props.selectedChar.race).toBe('testRace');
+        });
+
+        it('applies stat adjustments', () => {
+            component.setState({adjustments: {'str': 1, 'dex': -1, 'con': 2, 'int': 3, 'wis': 4, 'chr': 5}, selectedRace: 'test'});
+
+            component.find('button').at(0).simulate('click');
+
+            expect(component.instance().props.selectedChar.str).toBe(5);
+            expect(component.instance().props.selectedChar.dex).toBe(3);
+            expect(component.instance().props.selectedChar.con).toBe(6);
+            expect(component.instance().props.selectedChar.int).toBe(7);
+            expect(component.instance().props.selectedChar.wis).toBe(8);
+            expect(component.instance().props.selectedChar.chr).toBe(9);
         });
     });
 });

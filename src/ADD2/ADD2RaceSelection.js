@@ -20,13 +20,21 @@ export default class ADD2RaceSelection extends Component {
     }
 
     handleUpdate() {
-        const {selectedRace} = this.state;
+        const {selectedRace, adjustments} = this.state;
+        const {selectedChar, onUpdate} = this.props;
+
         if(!selectedRace)
             alert('must select a race to save');
         else {
-            this.props.selectedChar.race = selectedRace;
-            this.props.selectedChar.completionStep++;
-            this.props.onUpdate(this.props.selectedChar);
+            selectedChar.str += adjustments.str ? adjustments.str : 0;
+            selectedChar.dex += adjustments.dex ? adjustments.dex : 0;
+            selectedChar.con += adjustments.con ? adjustments.con : 0;
+            selectedChar.int += adjustments.int ? adjustments.int : 0;
+            selectedChar.wis += adjustments.wis ? adjustments.wis : 0;
+            selectedChar.chr += adjustments.chr ? adjustments.chr : 0;
+            selectedChar.race = selectedRace;
+            selectedChar.completionStep++;
+            onUpdate(selectedChar);
         }
     }
 

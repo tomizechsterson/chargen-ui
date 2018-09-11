@@ -84,6 +84,7 @@ describe('ADD2Characters tests', () => {
         });
 
         it('calls the service with the expected character data', () => {
+            const loadCharsSpy = jest.spyOn(ADD2Characters.prototype, 'loadCharsFromServer');
             const dataJson = JSON.stringify(getTestData());
             component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
             requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
@@ -95,6 +96,7 @@ describe('ADD2Characters tests', () => {
             expect(requests[1].method).toEqual('post');
             expect(requests[1].requestBody).toContain('"name":"testName"');
             expect(consoleError).toHaveBeenCalledTimes(0);
+            expect(loadCharsSpy).toHaveBeenCalledTimes(1);
         });
 
         it('writes to console.error if creating new character fails', () => {

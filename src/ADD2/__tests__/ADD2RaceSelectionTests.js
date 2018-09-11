@@ -71,6 +71,14 @@ describe('ADD2RaceSelection tests', () => {
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
+        it('does not call onUpdate if no gender is selected', () => {
+            component.setState({selectedRace: 'something'});
+
+            component.find('button').simulate('click');
+
+            expect(updateFunc).toHaveBeenCalledTimes(0);
+        });
+
         it('calls onUpdate once with the expected race and gender and increments completionStep', () => {
             component.setState({selectedRace: 'testRace', adjustments: {}});
             component.find('input').at(1).simulate('change', {target: {value: 'F'}});
@@ -90,7 +98,7 @@ describe('ADD2RaceSelection tests', () => {
         });
 
         it('applies stat adjustments', () => {
-            component.setState({adjustments: {'str': 1, 'dex': -1, 'con': 2, 'int': 3, 'wis': 4, 'chr': 5}, selectedRace: 'test'});
+            component.setState({adjustments: {'str': 1, 'dex': -1, 'con': 2, 'int': 3, 'wis': 4, 'chr': 5}, selectedRace: 'test', selectedGender: 'test'});
 
             component.find('button').at(0).simulate('click');
 

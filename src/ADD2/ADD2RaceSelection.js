@@ -30,6 +30,8 @@ export default class ADD2RaceSelection extends Component {
 
         if(!selectedRace)
             alert('must select a race to save');
+        else if(!selectedGender)
+            alert('must select a gender to save');
         else {
             selectedChar.str += adjustments.str ? adjustments.str : 0;
             selectedChar.dex += adjustments.dex ? adjustments.dex : 0;

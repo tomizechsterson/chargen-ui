@@ -55,6 +55,14 @@ describe('ADD2Characters tests', () => {
             expect(component.state().newCharName).toBe('something');
         });
 
+        it('calls handleCreate when enter is pressed', () => {
+            newCharNameInput.simulate('change', {target: {value: 'test'}});
+            newCharNameInput.simulate('keyPress', {key: 'Enter'});
+
+            expect(component.state().characterData).toHaveLength(1);
+            expect(component.state().characterData[0].name).toBe('test');
+        });
+
         it('clears out the text box if trim results in empty string', () => {
             newCharNameInput.simulate('change', {target: {value: '     '}});
             createButton.simulate('click');

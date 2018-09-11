@@ -166,6 +166,11 @@ export default class ADD2Characters extends Component {
         this.setState({newCharName: e.target.value});
     }
 
+    handleKeyPress = event => {
+        if(event.key === 'Enter')
+            this.handleCreate();
+    };
+
     componentDidMount() {
         this.loadCharsFromServer();
     }
@@ -185,7 +190,7 @@ export default class ADD2Characters extends Component {
                 <div>
                     <button onClick={() => this.handleCreate()}>Create</button>
                     <input type='text' maxLength='32' placeholder='character name' value={newCharName}
-                           onChange={(e) => this.handleNewNameChange(e)}/>
+                           onChange={(e) => this.handleNewNameChange(e)} onKeyPress={this.handleKeyPress}/>
                     <ADD2CharacterTable characters={characterData} onSelect={this.handleSelect} />
                 </div>
                 <div>

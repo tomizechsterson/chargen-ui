@@ -155,6 +155,7 @@ export default class ADD2Characters extends Component {
 
     render() {
         const {newCharName, characterData, selected} = this.state;
+        const {serverGateway} = this.props;
         const topLevelColumnsStyle = {
             columnCount: 2,
             columnRuleStyle: 'solid',
@@ -171,7 +172,7 @@ export default class ADD2Characters extends Component {
                     <ADD2CharacterTable characters={characterData} onSelect={this.handleSelect} />
                 </div>
                 <div>
-                    <ADD2CharacterDetails selectedChar={selected} gateway={this.props.serverGateway}
+                    <ADD2CharacterDetails selectedChar={selected} gateway={serverGateway}
                                           onDelete={this.handleDelete} onUpdate={this.handleUpdate} />
                 </div>
             </div>

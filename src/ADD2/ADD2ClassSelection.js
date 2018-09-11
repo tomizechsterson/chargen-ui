@@ -29,7 +29,7 @@ export default class ADD2ClassSelection extends Component {
     render() {
         const {selectedChar} = this.props;
         let id = 0;
-        const options = selectedChar.availableClasses.map(function (item) {
+        const options = selectedChar.availableClasses && selectedChar.availableClasses.map(function (item) {
             return <option key={id++} value={item}>{item}</option>
         });
         return (

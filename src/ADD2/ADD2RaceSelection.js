@@ -50,7 +50,7 @@ export default class ADD2RaceSelection extends Component {
         const {selectedChar} = this.props;
         const {adjustments} = this.state;
         let id = 0;
-        const options = selectedChar.availableRaces.map(function(item) {
+        const options = selectedChar.availableRaces && selectedChar.availableRaces.map(function(item) {
             return <option key={id++} value={item}>{item}</option>
         });
         return (

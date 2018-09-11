@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import ADD2ClassSelection from '../ADD2ClassSelection';
 
 describe('ADD2 Class Selection Tests', () => {
-    it('renders', () => {
+    it('renders itself', () => {
         const component = shallow(<ADD2ClassSelection/>);
         expect(component.text()).toContain('Class Selection');
     });

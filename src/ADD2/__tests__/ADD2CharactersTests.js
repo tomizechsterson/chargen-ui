@@ -36,7 +36,7 @@ describe('ADD2Characters tests', () => {
         beforeEach(() => {
             component = shallow(<ADD2Characters useTestData={true} testData={[]}/>);
             newCharNameInput = component.find('input');
-            createButton = component.find('button');
+            createButton = component.find('button').at(0);
             consoleError = jest.fn();
             console.error = consoleError;
             xhr = sinon.useFakeXMLHttpRequest();
@@ -99,16 +99,27 @@ describe('ADD2Characters tests', () => {
             expect(loadCharsSpy).toHaveBeenCalledTimes(1);
         });
 
+        it('does not add new character if the name is a duplicate', () => {
+            component = shallow(<ADD2Characters useTestData={true} testData={getTestData()}/>);
+            createButton = component.find('button').at(0);
+            expect(component.state().characterData).toHaveLength(5);
+            component.setState({newCharName: 'Big McLargeHuge'});
+
+            createButton.simulate('click');
+
+            expect(component.state().characterData).toHaveLength(5);
+        });
+
         it('writes to console.error if creating new character fails', () => {
             const dataJson = JSON.stringify(getTestData());
             component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
             requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
 
             component.find('input').simulate('change', {target: {value: 'errorForSomeReason'}});
-            component.find('button').simulate('click');
+            component.find('button').at(0).simulate('click');
             requests[1].respond(500);
 
-            expect(consoleError).toHaveBeenCalledTimes(1);
+            expect(consoleError).toHaveBeenCalledTimes(2);
         });
     });
 

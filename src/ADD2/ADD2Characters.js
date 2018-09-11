@@ -107,7 +107,16 @@ export default class ADD2Characters extends Component {
     handleCreate() {
         const {useTestData, serverGateway} = this.props;
         const {newCharName, characterData} = this.state;
-        if(newCharName.trim()) {
+
+        function newNameIsUnique(newCharName) {
+            const index = characterData.findIndex(function(c) {
+                return c.name === newCharName;
+            });
+
+            return index === -1;
+        }
+
+        if(newCharName.trim() && newNameIsUnique(newCharName)) {
             let newId = 0;
             const characters = characterData;
             if(characters.length === 0)
@@ -145,7 +154,7 @@ export default class ADD2Characters extends Component {
                 serverGateway.createChar(newChar, function() {
                     this.loadCharsFromServer();
                 }.bind(this), function(error) {
-                    console.error(error);
+                    console.error('error: '); console.error(error);
                 });
             }
         }

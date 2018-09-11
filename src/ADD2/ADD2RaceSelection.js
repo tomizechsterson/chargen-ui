@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import StatAdjustmentDisplay from "../GeneralDisplays/StatAdjustmentDisplay";
 
 export default class ADD2RaceSelection extends Component {
     constructor(props) {
@@ -31,18 +32,19 @@ export default class ADD2RaceSelection extends Component {
 
     render() {
         const {selectedChar} = this.props;
+        const {adjustments} = this.state;
         let id = 0;
         const options = selectedChar.availableRaces.map(function(item) {
             return <option key={id++} value={item}>{item}</option>
         });
         return (
             <div>
-                STR: {selectedChar.str} <br/>
-                DEX: {selectedChar.dex} <br/>
-                CON: {selectedChar.con} <br/>
-                INT: {selectedChar.int} <br/>
-                WIS: {selectedChar.wis} <br/>
-                CHR: {selectedChar.chr} <br/>
+                <StatAdjustmentDisplay text={'STR: '} stat={selectedChar.str} adjustment={adjustments && adjustments.str}/>
+                <StatAdjustmentDisplay text={'DEX: '} stat={selectedChar.dex} adjustment={adjustments && adjustments.dex}/>
+                <StatAdjustmentDisplay text={'CON: '} stat={selectedChar.con} adjustment={adjustments && adjustments.con}/>
+                <StatAdjustmentDisplay text={'INT: '} stat={selectedChar.int} adjustment={adjustments && adjustments.int}/>
+                <StatAdjustmentDisplay text={'WIS: '} stat={selectedChar.wis} adjustment={adjustments && adjustments.wis}/>
+                <StatAdjustmentDisplay text={'CHR: '} stat={selectedChar.chr} adjustment={adjustments && adjustments.chr}/>
                 Select race:
                 <select onChange={this.handleRaceChange}>
                     <option key={-1} value='' />

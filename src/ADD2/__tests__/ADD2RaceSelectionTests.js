@@ -5,20 +5,8 @@ import ADD2RaceSelection from '../ADD2RaceSelection';
 import ServerGateway from "../../ServerGateway";
 
 describe('ADD2RaceSelection tests', () => {
-    it('renders the stats of the selected character', () => {
-        const testChar = {id: 1, str: 3, dex: 4, con: 5, int: 6, wis: 7, chr: 8, availableRaces: []};
-        const component = shallow(<ADD2RaceSelection selectedChar={testChar} gateway={new ServerGateway()}/>);
-
-        expect(component.text()).toContain('STR: 3');
-        expect(component.text()).toContain('DEX: 4');
-        expect(component.text()).toContain('CON: 5');
-        expect(component.text()).toContain('INT: 6');
-        expect(component.text()).toContain('WIS: 7');
-        expect(component.text()).toContain('CHR: 8');
-    });
-
     it('renders the available races', () => {
-        const testChar = {str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3, availableRaces: ['race1', 'race2']};
+        const testChar = {availableRaces: ['race1', 'race2']};
         const component = shallow(<ADD2RaceSelection selectedChar={testChar} gateway={new ServerGateway()}/>);
 
         expect(component.text()).toContain('race1');
@@ -32,6 +20,18 @@ describe('ADD2RaceSelection tests', () => {
     });
 
     describe('Race Drop Down', () => {
+        let xhr, requests;
+        beforeEach(() => {
+            xhr = sinon.useFakeXMLHttpRequest();
+            requests = [];
+            xhr.onCreate = function(xhr) {
+                requests.push(xhr);
+            }.bind(this);
+        });
+        afterEach(() => {
+            xhr.restore();
+        });
+
         it('changes state to selected race', () => {
             const component = shallow(<ADD2RaceSelection gateway={new ServerGateway()} selectedChar={{availableRaces: []}}/>);
             const raceDropDown = component.find('select');
@@ -40,12 +40,19 @@ describe('ADD2RaceSelection tests', () => {
             expect(component.state().selectedRace).toBe('test1');
         });
 
+        it('writes to console if getting stat adjustments fails', () => {
+            const consoleError = jest.fn();
+            console.error = consoleError;
+            const component = shallow(<ADD2RaceSelection gateway={new ServerGateway()} selectedChar={{availableRaces: []}}/>);
+            const raceDropDown = component.find('select');
+
+            raceDropDown.simulate('change', {target: {value: 'something'}});
+            requests[0].respond(500);
+
+            expect(consoleError).toHaveBeenCalledTimes(1);
+        });
+
         it('gets stat adjustments for selected race', () => {
-            const xhr = sinon.useFakeXMLHttpRequest();
-            const requests = [];
-            xhr.onCreate = function(xhr) {
-                requests.push(xhr);
-            }.bind(this);
             const component = shallow(<ADD2RaceSelection gateway={new ServerGateway()} selectedChar={{availableRaces: []}}/>);
             const raceDropDown = component.find('select');
 
@@ -54,8 +61,6 @@ describe('ADD2RaceSelection tests', () => {
 
             expect(component.instance().state.adjustments.int).toEqual(1);
             expect(component.instance().state.adjustments.wis).toEqual(-1);
-
-            xhr.restore();
         });
     });
 

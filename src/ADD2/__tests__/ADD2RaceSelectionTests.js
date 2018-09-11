@@ -77,8 +77,9 @@ describe('ADD2RaceSelection tests', () => {
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
-        it('calls onUpdate once with the expected race and increments completionStep', () => {
+        it('calls onUpdate once with the expected race and gender and increments completionStep', () => {
             component.setState({selectedRace: 'testRace', adjustments: {}});
+            component.find('input').at(1).simulate('change', {target: {value: 'F'}});
 
             component.find('button').at(0).simulate('click');
 
@@ -91,6 +92,7 @@ describe('ADD2RaceSelection tests', () => {
             expect(component.instance().props.selectedChar.chr).toBe(4);
             expect(component.instance().props.selectedChar.completionStep).toBe(3);
             expect(component.instance().props.selectedChar.race).toBe('testRace');
+            expect(component.instance().props.selectedChar.gender).toBe('F');
         });
 
         it('applies stat adjustments', () => {

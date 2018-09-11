@@ -4,9 +4,10 @@ import StatAdjustmentDisplay from "../GeneralDisplays/StatAdjustmentDisplay";
 export default class ADD2RaceSelection extends Component {
     constructor(props) {
         super(props);
-        this.state = {selectedRace: '', adjustments: undefined};
+        this.state = {selectedRace: '', adjustments: undefined, selectedGender: ''};
 
         this.handleRaceChange = this.handleRaceChange.bind(this);
+        this.handleGenderChange = this.handleGenderChange.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
     }
 
@@ -19,8 +20,12 @@ export default class ADD2RaceSelection extends Component {
         });
     }
 
+    handleGenderChange(e) {
+        this.setState({selectedGender: e.target.value});
+    }
+
     handleUpdate() {
-        const {selectedRace, adjustments} = this.state;
+        const {selectedRace, adjustments, selectedGender} = this.state;
         const {selectedChar, onUpdate} = this.props;
 
         if(!selectedRace)
@@ -33,6 +38,7 @@ export default class ADD2RaceSelection extends Component {
             selectedChar.wis += adjustments.wis ? adjustments.wis : 0;
             selectedChar.chr += adjustments.chr ? adjustments.chr : 0;
             selectedChar.race = selectedRace;
+            selectedChar.gender = selectedGender;
             selectedChar.completionStep++;
             onUpdate(selectedChar);
         }
@@ -58,6 +64,10 @@ export default class ADD2RaceSelection extends Component {
                     <option key={-1} value='' />
                     {options}
                 </select>
+                Select Gender:
+                <input type='radio' name='gender' value='M' id='m' onChange={this.handleGenderChange}/><label htmlFor='m'>Male</label>
+                <input type='radio' name='gender' value='F' id='f' onChange={this.handleGenderChange}/><label htmlFor='f'>Female</label>
+                <br/>
                 <button onClick={this.handleUpdate}>Save</button>
             </div>
         );

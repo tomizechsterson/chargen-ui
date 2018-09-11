@@ -7,16 +7,10 @@ import ServerGateway from "../../ServerGateway";
 describe('ADD2RaceSelection tests', () => {
     it('renders the available races', () => {
         const testChar = {availableRaces: ['race1', 'race2']};
-        const component = shallow(<ADD2RaceSelection selectedChar={testChar} gateway={new ServerGateway()}/>);
+        const component = shallow(<ADD2RaceSelection selectedChar={testChar}/>);
 
         expect(component.text()).toContain('race1');
         expect(component.text()).toContain('race2');
-    });
-
-    it('renders a save button', () => {
-        const component = shallow(<ADD2RaceSelection selectedChar={{availableRaces:[]}}/>);
-
-        expect(component.find('button')).toHaveLength(1);
     });
 
     describe('Race Drop Down', () => {

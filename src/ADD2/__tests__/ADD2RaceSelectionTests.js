@@ -51,7 +51,7 @@ describe('ADD2RaceSelection tests', () => {
             const raceDropDown = component.find('select');
 
             raceDropDown.simulate('change', {target: {value: 'testRace'}});
-            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify({"int": 1, "wis": -1}));
+            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify({'int': 1, 'wis': -1}));
 
             expect(component.instance().state.adjustments.int).toEqual(1);
             expect(component.instance().state.adjustments.wis).toEqual(-1);

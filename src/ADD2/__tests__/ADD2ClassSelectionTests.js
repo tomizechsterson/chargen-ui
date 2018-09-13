@@ -24,7 +24,6 @@ describe('ADD2 Class Selection Tests', () => {
     it('renders the available classes', () => {
         const testChar = {availableClasses: ['class1', 'class2']};
         const component = shallow(<ADD2ClassSelection selectedChar={testChar}/>);
-
         expect(component.text()).toContain('class1');
         expect(component.text()).toContain('class2');
     });

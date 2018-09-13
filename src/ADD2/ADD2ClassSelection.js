@@ -40,6 +40,7 @@ export default class ADD2ClassSelection extends Component {
                 INT: {selectedChar.int} <br/>
                 WIS: {selectedChar.wis} <br/>
                 CHR: {selectedChar.chr} <br/>
+                Race: {selectedChar.race} Gender: {selectedChar.gender} <br/>
                 Select class:
                 <select onChange={this.handleClassChange}>
                     <option key={-1} value=''/>

@@ -14,6 +14,13 @@ describe('ADD2 Class Selection Tests', () => {
         expect(component.text()).toContain('CHR: 8');
     });
 
+    it('renders the race and gender of the selected character', () => {
+        const testChar = {race: 'testRace', gender: 'M'};
+        const component = shallow(<ADD2ClassSelection selectedChar={testChar}/>);
+        expect(component.text()).toContain('Race: testRace');
+        expect(component.text()).toContain('Gender: M');
+    });
+
     it('renders the available classes', () => {
         const testChar = {availableClasses: ['class1', 'class2']};
         const component = shallow(<ADD2ClassSelection selectedChar={testChar}/>);

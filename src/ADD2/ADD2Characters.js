@@ -95,6 +95,14 @@ export default class ADD2Characters extends Component {
             });
         }
 
+        if(character.completionStep === 4) {
+            serverGateway.getAlignments(character.className, function(response) {
+                character.availableAlignments = response;
+            }, function(error) {
+                console.error(error);
+            });
+        }
+
         if(!useTestData) {
             serverGateway.updateChar(character, function() {
                 this.loadCharsFromServer();

@@ -251,6 +251,25 @@ describe('ServerGateway tests', () => {
         assertErrorCall(error, 'test getClasses error');
     });
 
+    it('returns expected results with getAlignments', () => {
+        const alignmentsJson = JSON.stringify(['test1', 'test2']);
+
+        gateway.getAlignments('', function(response) {
+            expect(response).toContain('test1');
+            expect(response).toContain('test2');
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, alignmentsJson);
+    });
+
+    it('calls onError if getAlignments fails', () => {
+        const error = jest.fn();
+
+        gateway.getAlignments('', null, error);
+        requests[0].respond(500, '', 'test alignments error');
+
+        assertErrorCall(error, 'test alignments error');
+    });
+
     const assertRollData = (response, length, data) => {
         expect(response).toHaveLength(length);
         expect(response).toEqual(data);

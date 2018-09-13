@@ -150,4 +150,16 @@ export default class ServerGateway {
         };
         xhr.send();
     };
+
+    getAlignments = (className, onResponse, onError) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', Urls.ADD2Url() + 'alignment/' + className, true);
+        xhr.onload = function() {
+            if(xhr.status === 200)
+                onResponse(JSON.parse(xhr.responseText));
+            else
+                onError(xhr.responseText);
+        };
+        xhr.send();
+    };
 }

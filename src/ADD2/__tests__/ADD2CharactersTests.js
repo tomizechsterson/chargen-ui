@@ -8,6 +8,8 @@ import ADD2CharacterCreation from '../ADD2CharacterCreation';
 import ADD2StatRoll from '../ADD2StatRoll';
 import RollOnce from '../../StatRollRules/RollOnce';
 import ServerGateway from "../../ServerGateway";
+import ADD2RaceSelection from "../ADD2RaceSelection";
+import ADD2ClassSelection from "../ADD2ClassSelection";
 
 describe('ADD2Characters tests', () => {
     it('always renders a top-level div', () => {
@@ -190,11 +192,7 @@ describe('ADD2Characters tests', () => {
         });
 
         it('calls the service with the expected character id and request body', () => {
-            const dataJson = JSON.stringify(getTestData());
-            const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
-            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
-            const charData = component.state().characterData;
-            component.setState({selected: charData[1]});
+            const component = setupComponentAndSelectTestChar(1);
 
             const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
             rollOnce.find('input').at(0).simulate('click');
@@ -213,11 +211,7 @@ describe('ADD2Characters tests', () => {
         });
 
         it('writes to console.error if update fails', () => {
-            const dataJson = JSON.stringify(getTestData());
-            const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
-            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
-            const charData = component.state().characterData;
-            component.setState({selected: charData[1]});
+            const component = setupComponentAndSelectTestChar(1);
 
             const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
             rollOnce.find('input').at(0).simulate('click');
@@ -230,11 +224,7 @@ describe('ADD2Characters tests', () => {
         });
 
         it('writes to console.error if getRaces fails', () => {
-            const dataJson = JSON.stringify(getTestData());
-            const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
-            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
-            const charData = component.state().characterData;
-            component.setState({selected: charData[1]});
+            const component = setupComponentAndSelectTestChar(1);
 
             const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
             rollOnce.find('input').at(0).simulate('click');
@@ -244,6 +234,63 @@ describe('ADD2Characters tests', () => {
 
             expect(consoleError).toHaveBeenCalledTimes(1);
         });
+
+        it('populates available classes when updating', () => {
+            const component = setupComponentAndSelectTestChar(2);
+
+            const raceSelection = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2RaceSelection);
+            raceSelection.find('select').simulate('change', {target: {value: 'race1'}});
+            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify({'int': 1, 'wis': -1}));
+            raceSelection.find('input').at(1).simulate('change', {target: {value: 'F'}});
+            raceSelection.find('button').simulate('click');
+            requests[2].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(['class1', 'class2']));
+
+            expect(component.state().characterData[2].availableClasses).toEqual(['class1', 'class2']);
+        });
+
+        it('writes to console.error if getClasses fails', () => {
+            const component = setupComponentAndSelectTestChar(2);
+
+            const raceSelection = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2RaceSelection);
+            raceSelection.find('select').simulate('change', {target: {value: 'race1'}});
+            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify({'int': 1, 'wis': -1}));
+            raceSelection.find('input').at(1).simulate('change', {target: {value: 'F'}});
+            raceSelection.find('button').simulate('click');
+            requests[2].respond(500);
+
+            expect(consoleError).toHaveBeenCalledTimes(1);
+        });
+
+        it('populates available alignments as expected when updating', () => {
+            const component = setupComponentAndSelectTestChar(3);
+
+            const classSelection = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2ClassSelection);
+            classSelection.find('select').simulate('change', {target: {value: 'class1'}});
+            classSelection.find('button').simulate('click');
+            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(['alignment1', 'alignment2']));
+
+            expect(component.state().characterData[3].availableAlignments).toEqual(['alignment1', 'alignment2']);
+        });
+
+        it('writes to console.error if getAlignments fails', () => {
+            const component = setupComponentAndSelectTestChar(3);
+
+            const classSelection = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2ClassSelection);
+            classSelection.find('select').simulate('change', {target: {value: 'class1'}});
+            classSelection.find('button').simulate('click');
+            requests[1].respond(500);
+
+            expect(consoleError).toHaveBeenCalledTimes(1);
+        });
+
+        const setupComponentAndSelectTestChar = (charIndex) => {
+            const dataJson = JSON.stringify(getTestData());
+            const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
+            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            const charData = component.state().characterData;
+            component.setState({selected: charData[charIndex]});
+            return component;
+        };
 
         const getTestRolls = () => {
             return [[1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6]];
@@ -374,15 +421,16 @@ describe('ADD2Characters tests', () => {
             {
                 id: 3,
                 name: 'Crunch Bonemeal',
-                completionStep: 1,
-                str: 0,
-                dex: 0,
-                con: 0,
-                int: 0,
-                wis: 0,
-                chr: 0,
-                race: 'none',
-                gender: 'n',
+                completionStep: 2,
+                str: 9,
+                dex: 9,
+                con: 9,
+                int: 9,
+                wis: 9,
+                chr: 9,
+                race: 'Human',
+                availableRaces: ['race1'],
+                gender: 'M',
                 height: 0,
                 weight: 0,
                 age: 0,
@@ -401,13 +449,13 @@ describe('ADD2Characters tests', () => {
                 id: 4,
                 name: 'Rip Steakface',
                 completionStep: 3,
-                str: 0,
-                dex: 0,
-                con: 0,
-                int: 0,
-                wis: 0,
-                chr: 0,
-                race: 'none',
+                str: 99,
+                dex: 9,
+                con: 9,
+                int: 9,
+                wis: 9,
+                chr: 9,
+                race: 'test',
                 gender: 'n',
                 height: 0,
                 weight: 0,

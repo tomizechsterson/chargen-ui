@@ -4,6 +4,7 @@ import ADD2CharacterCreation from '../ADD2CharacterCreation';
 import ADD2StatRoll from "../ADD2StatRoll";
 import ADD2RaceSelection from "../ADD2RaceSelection";
 import ADD2ClassSelection from "../ADD2ClassSelection";
+import ADD2AlignmentSelection from "../ADD2AlignmentSelection";
 
 describe('ADD2CharacterCreation Tests', () => {
     let props;
@@ -21,7 +22,7 @@ describe('ADD2CharacterCreation Tests', () => {
     });
 
     it('always renders the character name', () => {
-        props.selectedChar = {name: 'testName', completionStep: 1};
+        props.selectedChar = {name: 'testName'};
         expect(characterCreation().text()).toContain('testName');
     });
 
@@ -39,11 +40,37 @@ describe('ADD2CharacterCreation Tests', () => {
         expect(characterCreation().find(ADD2ClassSelection)).toHaveLength(1);
     });
 
+    it('renders an `ADD2AlignmentSelection` if completionStep is 4', () => {
+        props.selectedChar = {completionStep: 4};
+        expect(characterCreation().find(ADD2AlignmentSelection)).toHaveLength(1);
+    });
+
     describe('when `onUpdate` is defined', () => {
         it('sets the rendered `ADD2StatRoll`s `onUpdate` prop to the same value as `onUpdate`', () => {
             props.onUpdate = jest.fn();
             const add2StatRoll = characterCreation().find(ADD2StatRoll);
             expect(add2StatRoll.props().onUpdate).toBe(props.onUpdate);
+        });
+
+        it('sets the rendered `ADD2RaceSelection`s `onUpdate` prop to the expected function', () => {
+            props.onUpdate = jest.fn();
+            props.selectedChar = {completionStep: 2};
+            const raceSelection = characterCreation().find(ADD2RaceSelection);
+            expect(raceSelection.props().onUpdate).toBe(props.onUpdate);
+        });
+
+        it('sets the rendered `ADD2ClassSelection`s `onUpdate` prop to the expected function', () => {
+            props.onUpdate = jest.fn();
+            props.selectedChar = {completionStep: 3};
+            const classSelection = characterCreation().find(ADD2ClassSelection);
+            expect(classSelection.props().onUpdate).toBe(props.onUpdate);
+        });
+
+        it('sets the rendered `ADD2AlignmentSelection`s `onUpdate` prop to the expected function', () => {
+            props.onUpdate = jest.fn();
+            props.selectedChar = {completionStep: 4};
+            const alignmentSelection = characterCreation().find(ADD2AlignmentSelection);
+            expect(alignmentSelection.props().onUpdate).toBe(props.onUpdate);
         });
     });
 
@@ -57,7 +84,6 @@ describe('ADD2CharacterCreation Tests', () => {
 
     describe('when `selectedChar` is defined', () => {
         it('sets the rendered `ADD2StatRoll`s `selectedChar` prop to the same value as `selectedChar`', () => {
-            props.selectedChar = {completionStep: 1};
             const add2StatRoll = characterCreation().find(ADD2StatRoll);
             expect(add2StatRoll.props().selectedChar).toBe(props.selectedChar);
         });
@@ -68,10 +94,16 @@ describe('ADD2CharacterCreation Tests', () => {
             expect(raceSelection.props().selectedChar).toBe(props.selectedChar);
         });
 
-        it('sets the selectedChar prop of the ADD2RaceSelection component', () => {
+        it('sets the selectedChar prop of the ADD2ClassSelection component', () => {
             props.selectedChar = {completionStep: 3};
             const classSelection = characterCreation().find(ADD2ClassSelection);
             expect(classSelection.props().selectedChar).toBe(props.selectedChar);
+        });
+
+        it('sets the selectedChar prop of the ADD2AlignmentSelection component', () => {
+            props.selectedChar = {completionStep: 4};
+            const alignmentSelection = characterCreation().find(ADD2AlignmentSelection);
+            expect(alignmentSelection.props().selectedChar).toBe(props.selectedChar);
         });
     });
 });

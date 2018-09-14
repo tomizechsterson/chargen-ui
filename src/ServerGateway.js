@@ -162,4 +162,28 @@ export default class ServerGateway {
         };
         xhr.send();
     };
+
+    getHWA = (race, gender, onResponse, onError) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', Urls.ADD2Url() + 'hwa/' + race + '/' + gender, true);
+        xhr.onload = function() {
+            if(xhr.status === 200)
+                onResponse(JSON.parse(xhr.responseText));
+            else
+                onError(xhr.responseText);
+        };
+        xhr.send();
+    };
+
+    getHPGP = (className, onResponse, onError) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', Urls.ADD2Url() + 'hpgp/' + className, true);
+        xhr.onload = function() {
+            if(xhr.status === 200)
+                onResponse(JSON.parse(xhr.responseText));
+            else
+                onError(xhr.responseText);
+        };
+        xhr.send();
+    };
 }

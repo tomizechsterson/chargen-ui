@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import ServerGateway from '../ServerGateway';
 
 describe('ServerGateway tests', () => {
-    let xhr, requests, gateway;
+    let xhr, requests, gateway, error;
 
     beforeEach(() => {
         xhr = sinon.useFakeXMLHttpRequest();
@@ -12,6 +12,7 @@ describe('ServerGateway tests', () => {
         }.bind(this);
 
         gateway = new ServerGateway();
+        error = jest.fn();
     });
     afterEach(() => {
         xhr.restore();
@@ -27,8 +28,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError callback if get fails', () => {
-        const error = jest.fn();
-
         gateway.getChars(null, error);
         requests[0].respond(500, '', 'test get error');
 
@@ -44,8 +43,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if delete fails', () => {
-        const error = jest.fn();
-
         gateway.deleteChar(1, null, error);
         requests[0].respond(500, '', 'test delete error');
 
@@ -68,8 +65,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if update fails', () => {
-        const error = jest.fn();
-
         gateway.deleteChar(1, null, error);
         requests[0].respond(500, '', 'test update error');
 
@@ -87,8 +82,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if creating character fails', () => {
-        const error = jest.fn();
-
         gateway.createChar(null, null, error);
         requests[0].respond(500, '', 'test create error');
 
@@ -105,8 +98,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if rollOnce server call fails', () => {
-        const error = jest.fn();
-
         gateway.rollOnce(null, error);
         requests[0].respond(500, '', 'test rollOnce error');
 
@@ -123,8 +114,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if rollTwice server call fails', () => {
-        const error = jest.fn();
-
         gateway.rollTwice(null, error);
         requests[0].respond(500, '', 'test rollTwice error');
 
@@ -150,8 +139,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if the assignment server call fails', () => {
-        const error = jest.fn();
-
         gateway.assignment('test', null, error);
         requests[0].respond(500, '', 'test assignment error');
 
@@ -168,8 +155,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if rollFour server call fails', () => {
-        const error = jest.fn();
-
         gateway.rollFour(null, error);
         requests[0].respond(500, '', 'test rollFour error');
 
@@ -186,8 +171,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if Add7 server call fails', () => {
-        const error = jest.fn();
-
         gateway.add7Dice(null, error);
         requests[0].respond(500, '', 'test add7Dice error');
 
@@ -205,8 +188,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if getRaces call fails', () => {
-        const error = jest.fn();
-
         gateway.getRaces({}, null, error);
         requests[0].respond(500, '', 'test getRaces error');
 
@@ -224,8 +205,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if getStatAdjustments fails', () => {
-        const error = jest.fn();
-
         gateway.getAdjustments('', null, error);
         requests[0].respond(500, '', 'test adjustments error');
 
@@ -243,8 +222,6 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if getClasses fails', () => {
-        const error = jest.fn();
-
         gateway.getClasses({}, null, error);
         requests[0].respond(500, '', 'test getClasses error');
 
@@ -262,12 +239,45 @@ describe('ServerGateway tests', () => {
     });
 
     it('calls onError if getAlignments fails', () => {
-        const error = jest.fn();
-
         gateway.getAlignments('', null, error);
         requests[0].respond(500, '', 'test alignments error');
 
         assertErrorCall(error, 'test alignments error');
+    });
+
+    it('returns expected results when getting height/weight/age', () => {
+        const hwaJson = JSON.stringify([65, 110, 19]);
+
+        gateway.getHWA('', '', function(response) {
+            expect(response).toContain(65);
+            expect(response).toContain(110);
+            expect(response).toContain(19);
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, hwaJson);
+    });
+
+    it('calls onError if getting height/weight/age fails', () => {
+        gateway.getHWA('', '', null, error);
+        requests[0].respond(500, '', 'test hwa error');
+
+        assertErrorCall(error, 'test hwa error');
+    });
+
+    it('returns expected results when getting hp/initial funds', () => {
+        const hpgpJson = JSON.stringify([7, 90]);
+
+        gateway.getHPGP('', function(response) {
+            expect(response).toContain(7);
+            expect(response).toContain(90);
+        });
+        requests[0].respond(200, {'Content-Type':'text/json'}, hpgpJson);
+    });
+
+    it('calls onError if getting hp/initial funds fails', () => {
+        gateway.getHPGP('', null, error);
+        requests[0].respond(500, '', 'test hpgp error');
+
+        assertErrorCall(error, 'test hpgp error');
     });
 
     const assertRollData = (response, length, data) => {

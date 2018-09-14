@@ -67,8 +67,8 @@ export default class ADD2FinalAttributes extends Component {
                 Race: {selectedChar.race} Gender: {selectedChar.gender} Class: {selectedChar.className} Alignment: {selectedChar.alignment} <br/>
                 Age: {age} Height: {feet(height)}'{inches(height)}" Weight: {weight} <br/>
                 HP: {hp} Funds: {funds} gp <br/>
-                <button onClick={this.handleHWA}>Re-roll Height/Weight/Age</button>
-                <button onClick={this.handleHPGP}>Re-roll HP/GP</button>
+                <button onClick={this.handleHWA}>Roll Height/Weight/Age</button>
+                <button onClick={this.handleHPGP}>Roll HP/GP</button>
                 <button onClick={this.handleUpdate}>Save</button>
             </div>
         );

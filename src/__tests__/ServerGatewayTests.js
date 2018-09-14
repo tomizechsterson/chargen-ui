@@ -280,6 +280,27 @@ describe('ServerGateway tests', () => {
         assertErrorCall(error, 'test hpgp error');
     });
 
+    it('returns expected results when getting move rate/saving throws', () => {
+        const resultsJson = JSON.stringify([9, 20, 19, 18, 17, 16]);
+
+        gateway.getFinalAttributes('', '', function(response) {
+            expect(response).toContain(9);
+            expect(response).toContain(20);
+            expect(response).toContain(19);
+            expect(response).toContain(18);
+            expect(response).toContain(17);
+            expect(response).toContain(16);
+        });
+        requests[0].respond(200, {'Content-Type': 'text/json'}, resultsJson);
+    });
+
+    it('calls onError if getting final attributes fails', () => {
+        gateway.getFinalAttributes('', '', null, error);
+        requests[0].respond(500, '', 'test final attributes error');
+
+        assertErrorCall(error, 'test final attributes error');
+    });
+
     const assertRollData = (response, length, data) => {
         expect(response).toHaveLength(length);
         expect(response).toEqual(data);

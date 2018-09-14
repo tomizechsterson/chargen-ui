@@ -25,14 +25,21 @@ describe('ADD2 Final Attributes Tests', () => {
         expect(component.text()).toContain('Alignment: testAlignment');
     });
 
-    it('renders height, weight, age, initial funds, and HP from state', () => {
+    it('renders all the attributes from state', () => {
         const component = shallow(<ADD2FinalAttributes selectedChar={{}}/>);
-        component.setState({height: 67, weight: 120, age: 25, hp: 10, funds: 120});
+        component.setState({height: 67, weight: 120, age: 25, hp: 10, funds: 120, moveRate: 9,
+            paralyze: 10, rod: 11, petrification: 12, breath: 13, spell: 14});
         expect(component.text()).toContain('Height: 5\'7"');
         expect(component.text()).toContain('Weight: 120');
         expect(component.text()).toContain('Age: 25');
         expect(component.text()).toContain('HP: 10');
         expect(component.text()).toContain('Funds: 120 gp');
+        expect(component.text()).toContain('Paralyzation, Poison, Death Magic: 10');
+        expect(component.text()).toContain('Rod, Staff, Wand: 11');
+        expect(component.text()).toContain('Petrification, Polymorph: 12');
+        expect(component.text()).toContain('Breath Weapon: 13');
+        expect(component.text()).toContain('Spell: 14');
+        expect(component.text()).toContain('Movement Rate: 9');
     });
 
     describe('Roll Vitals Buttons', () => {
@@ -82,6 +89,41 @@ describe('ADD2 Final Attributes Tests', () => {
             assertError(consoleError, 'test hpgp error');
         });
 
+        it('if move rate != 0, does not update the move rate and saving throws', () => {
+            component.setState({moveRate: 1, paralyze: 9, rod: 9, petrification: 9, breath: 9, spell: 9});
+            component.find('button').at(1).simulate('click');
+            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([7, 90]));
+
+            expect(component.state().moveRate).toBe(1);
+            expect(component.state().paralyze).toBe(9);
+            expect(component.state().rod).toBe(9);
+            expect(component.state().petrification).toBe(9);
+            expect(component.state().breath).toBe(9);
+            expect(component.state().spell).toBe(9);
+        });
+
+        it('if move rate is 0, also updates the move rate and saving throws', () => {
+            component.find('button').at(1).simulate('click');
+            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([7, 90]));
+            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([9, 20, 19, 18, 17, 16]));
+
+            expect(component.state().moveRate).toBe(9);
+            expect(component.state().paralyze).toBe(20);
+            expect(component.state().rod).toBe(19);
+            expect(component.state().petrification).toBe(18);
+            expect(component.state().breath).toBe(17);
+            expect(component.state().spell).toBe(16);
+
+        });
+
+        it('writes to console.error if move rate is 0 and getting final attributes fails', () => {
+            component.find('button').at(1).simulate('click');
+            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([7, 90]));
+            requests[1].respond(500, '', 'test final attributes error');
+
+            assertError(consoleError, 'test final attributes error');
+        });
+
         const assertError = (consoleErr, errorMsg) => {
             expect(consoleErr).toHaveBeenCalledTimes(1);
             expect(consoleErr).toHaveBeenCalledWith(errorMsg);
@@ -104,12 +146,14 @@ describe('ADD2 Final Attributes Tests', () => {
         });
 
         it('calls onUpdate with the expected attributes and increments completionStep', () => {
-            component.setState({height: 1, weight: 2, age: 3, hp: 4, funds: 5});
+            component.setState({height: 1, weight: 2, age: 3, hp: 4, funds: 5,
+                moveRate: 1, paralyze: 9, rod: 9, petrification: 9, breath: 9, spell: 9});
 
             component.find('button').at(2).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(1);
-            expect(updateFunc).toHaveBeenCalledWith({"age": 3, "completionStep": 6, "funds": 5, "height": 1, "hp": 4, "weight": 2});
+            expect(updateFunc).toHaveBeenCalledWith({'age': 3, 'completionStep': 6, 'funds': 5, 'height': 1, 'hp': 4, 'weight': 2,
+            'moveRate': 1, 'paralyze': 9, 'rod': 9, 'petrification': 9, 'breath': 9, 'spell': 9});
         });
     });
 });

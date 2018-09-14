@@ -19,7 +19,7 @@ describe('VitalsDisplay tests', () => {
             expect(component.text()).toContain('Class: testClass');
             expect(component.text()).toContain('Alignment: testAlignment');
             expect(component.text()).toContain('Age: 1');
-            expect(component.text()).toContain('Height: 2');
+            expect(component.text()).toContain('Height: 0\'2"');
             expect(component.text()).toContain('Weight: 3');
         });
     });

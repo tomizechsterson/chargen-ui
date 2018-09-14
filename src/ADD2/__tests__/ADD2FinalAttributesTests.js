@@ -87,4 +87,29 @@ describe('ADD2 Final Attributes Tests', () => {
             expect(consoleErr).toHaveBeenCalledWith(errorMsg);
         };
     });
+
+    describe('Save Button', () => {
+        let updateFunc, component;
+        beforeEach(() => {
+            updateFunc = jest.fn();
+            component = shallow(<ADD2FinalAttributes onUpdate={updateFunc} selectedChar={{completionStep: 5}}/>);
+        });
+
+        it('does not call onUpdate if any attribute has not been rolled', () => {
+            component.setState({height: 0, weight: 0, age: 0, hp: 0, funds: 0});
+
+            component.find('button').at(2).simulate('click');
+
+            expect(updateFunc).toHaveBeenCalledTimes(0);
+        });
+
+        it('calls onUpdate with the expected attributes and increments completionStep', () => {
+            component.setState({height: 1, weight: 2, age: 3, hp: 4, funds: 5});
+
+            component.find('button').at(2).simulate('click');
+
+            expect(updateFunc).toHaveBeenCalledTimes(1);
+            expect(updateFunc).toHaveBeenCalledWith({"age": 3, "completionStep": 6, "funds": 5, "height": 1, "hp": 4, "weight": 2});
+        });
+    });
 });

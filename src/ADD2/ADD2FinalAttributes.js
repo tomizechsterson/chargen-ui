@@ -8,6 +8,7 @@ export default class ADD2FinalAttributes extends Component {
 
         this.handleHWA = this.handleHWA.bind(this);
         this.handleHPGP = this.handleHPGP.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     handleHWA() {
@@ -26,6 +27,23 @@ export default class ADD2FinalAttributes extends Component {
         }.bind(this), function(error) {
             console.error(error);
         });
+    }
+
+    handleUpdate() {
+        const {height, weight, age, funds, hp} = this.state;
+        const {selectedChar, onUpdate} = this.props;
+
+        if(!height || !weight || !age || !funds || !hp)
+            alert('must roll for all attributes to save');
+        else {
+            selectedChar.height = height;
+            selectedChar.weight = weight;
+            selectedChar.age = age;
+            selectedChar.funds = funds;
+            selectedChar.hp = hp;
+            selectedChar.completionStep++;
+            onUpdate(selectedChar);
+        }
     }
 
     render() {
@@ -51,6 +69,7 @@ export default class ADD2FinalAttributes extends Component {
                 HP: {hp} Funds: {funds} gp <br/>
                 <button onClick={this.handleHWA}>Re-roll Height/Weight/Age</button>
                 <button onClick={this.handleHPGP}>Re-roll HP/GP</button>
+                <button onClick={this.handleUpdate}>Save</button>
             </div>
         );
     }

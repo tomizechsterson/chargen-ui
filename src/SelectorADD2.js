@@ -7,7 +7,7 @@ const SelectorADD2 = () => {
         {
             id: 1,
             name: 'Big McLargeHuge',
-            completionStep: 5,
+            completionStep: 6,
             str: 18,
             dex: 14,
             con: 9,
@@ -111,7 +111,7 @@ const SelectorADD2 = () => {
         {
             id: 5,
             name: 'Swift McRunfast',
-            completionStep: 5,
+            completionStep: 6,
             str: 12,
             dex: 12,
             con: 10,

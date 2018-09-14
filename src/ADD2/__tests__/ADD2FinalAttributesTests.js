@@ -25,9 +25,9 @@ describe('ADD2 Final Attributes Tests', () => {
         expect(component.text()).toContain('Alignment: testAlignment');
     });
 
-    it('renders the height, weight, age, initial funds, and HP of the selected character', () => {
-        const testChar = {height: 67, weight: 120, age: 25, hp: 10, funds: 120};
-        const component = shallow(<ADD2FinalAttributes selectedChar={testChar}/>);
+    it('renders height, weight, age, initial funds, and HP from state', () => {
+        const component = shallow(<ADD2FinalAttributes selectedChar={{}}/>);
+        component.setState({height: 67, weight: 120, age: 25, hp: 10, funds: 120});
         expect(component.text()).toContain('Height: 5\'7"');
         expect(component.text()).toContain('Weight: 120');
         expect(component.text()).toContain('Age: 25');
@@ -55,9 +55,9 @@ describe('ADD2 Final Attributes Tests', () => {
             component.find('button').at(0).simulate('click');
             requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([70, 150, 25]));
 
-            expect(component.instance().props.selectedChar.height).toBe(70);
-            expect(component.instance().props.selectedChar.weight).toBe(150);
-            expect(component.instance().props.selectedChar.age).toBe(25);
+            expect(component.state().height).toBe(70);
+            expect(component.state().weight).toBe(150);
+            expect(component.state().age).toBe(25);
         });
 
         it('HWA button writes to console.error if getting height/weight/age fails', () => {
@@ -71,8 +71,8 @@ describe('ADD2 Final Attributes Tests', () => {
             component.find('button').at(1).simulate('click');
             requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([7, 90]));
 
-            expect(component.instance().props.selectedChar.hp).toBe(7);
-            expect(component.instance().props.selectedChar.funds).toBe(90);
+            expect(component.state().hp).toBe(7);
+            expect(component.state().funds).toBe(90);
         });
 
         it('Hp/Gp button writes to console.error if getting hp/initial funds fails', () => {

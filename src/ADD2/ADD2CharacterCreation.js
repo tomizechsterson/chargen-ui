@@ -3,6 +3,7 @@ import ADD2StatRoll from './ADD2StatRoll';
 import ADD2RaceSelection from "./ADD2RaceSelection";
 import ADD2ClassSelection from "./ADD2ClassSelection";
 import ADD2AlignmentSelection from "./ADD2AlignmentSelection";
+import ADD2FinalAttributes from "./ADD2FinalAttributes";
 
 const ADD2CharacterCreation = (props) => {
     const {selectedChar, onUpdate, gateway} = props;
@@ -22,6 +23,9 @@ const ADD2CharacterCreation = (props) => {
             {selectedChar.completionStep === 4 &&
             <ADD2AlignmentSelection selectedChar={selectedChar} gateway={gateway}
                                     onUpdate={onUpdate}/>}
+            {selectedChar.completionStep === 5 &&
+            <ADD2FinalAttributes selectedChar={selectedChar} gateway={gateway}
+                                 onUpdate={onUpdate}/>}
         </div>
     );
 };

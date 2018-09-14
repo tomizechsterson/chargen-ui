@@ -7,7 +7,7 @@ import ADD2DisplayCompleted from "../ADD2DisplayCompleted";
 describe('ADD2CharacterDetails Tests', () => {
     describe('when `selectedChar` is defined', () => {
         it('and character is complete, only ADD2DisplayCompleted is rendered', () => {
-            const testChar = {completionStep: 5};
+            const testChar = {completionStep: 6};
             const component = shallow(<ADD2CharacterDetails selectedChar={testChar} />);
 
             expect(component.find(ADD2DisplayCompleted)).toHaveLength(1);
@@ -16,7 +16,7 @@ describe('ADD2CharacterDetails Tests', () => {
         });
 
         it('and character is incomplete, only ADD2CharacterCreation is rendered', () => {
-            const testChar = {completionStep: 4};
+            const testChar = {completionStep: 5};
             const component = shallow(<ADD2CharacterDetails selectedChar={testChar} />);
 
             expect(component.find(ADD2DisplayCompleted)).toHaveLength(0);

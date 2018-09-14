@@ -5,6 +5,7 @@ import ADD2StatRoll from "../ADD2StatRoll";
 import ADD2RaceSelection from "../ADD2RaceSelection";
 import ADD2ClassSelection from "../ADD2ClassSelection";
 import ADD2AlignmentSelection from "../ADD2AlignmentSelection";
+import ADD2FinalAttributes from "../ADD2FinalAttributes";
 
 describe('ADD2CharacterCreation Tests', () => {
     let props;
@@ -45,6 +46,11 @@ describe('ADD2CharacterCreation Tests', () => {
         expect(characterCreation().find(ADD2AlignmentSelection)).toHaveLength(1);
     });
 
+    it('renders an `ADD2FinalAttributes` if completionStep is 5', () => {
+        props.selectedChar = {completionStep: 5};
+        expect(characterCreation().find(ADD2FinalAttributes)).toHaveLength(1);
+    });
+
     describe('when `onUpdate` is defined', () => {
         it('sets the rendered `ADD2StatRoll`s `onUpdate` prop to the same value as `onUpdate`', () => {
             props.onUpdate = jest.fn();
@@ -71,6 +77,13 @@ describe('ADD2CharacterCreation Tests', () => {
             props.selectedChar = {completionStep: 4};
             const alignmentSelection = characterCreation().find(ADD2AlignmentSelection);
             expect(alignmentSelection.props().onUpdate).toBe(props.onUpdate);
+        });
+
+        it('sets the rendered `ADD2FinalAttributes`s `onUpdate` prop to the expected function', () => {
+            props.onUpdate = jest.fn();
+            props.selectedChar = {completionStep: 5};
+            const finalAttributes = characterCreation().find(ADD2FinalAttributes);
+            expect(finalAttributes.props().onUpdate).toBe(props.onUpdate);
         });
     });
 
@@ -104,6 +117,12 @@ describe('ADD2CharacterCreation Tests', () => {
             props.selectedChar = {completionStep: 4};
             const alignmentSelection = characterCreation().find(ADD2AlignmentSelection);
             expect(alignmentSelection.props().selectedChar).toBe(props.selectedChar);
+        });
+
+        it('sets the selectedChar prop of the ADD2FinalAttributes component', () => {
+            props.selectedChar = {completionStep: 5};
+            const finalAttributes = characterCreation().find(ADD2FinalAttributes);
+            expect(finalAttributes.props().selectedChar).toBe(props.selectedChar);
         });
     });
 });

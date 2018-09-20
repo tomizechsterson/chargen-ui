@@ -97,7 +97,7 @@ describe('ADD2Characters tests', () => {
             const loadCharsSpy = jest.spyOn(ADD2Characters.prototype, 'loadCharsFromServer');
             const dataJson = JSON.stringify(getTestData());
             component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
-            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            requests[0].respond(200, {'Content-Type': 'application/json'}, dataJson);
 
             component.find('input').simulate('change', {target: {value: 'testName'}});
             component.find('button').simulate('click');
@@ -123,7 +123,7 @@ describe('ADD2Characters tests', () => {
         it('writes to console.error if creating new character fails', () => {
             const dataJson = JSON.stringify(getTestData());
             component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
-            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            requests[0].respond(200, {'Content-Type': 'application/json'}, dataJson);
 
             component.find('input').simulate('change', {target: {value: 'errorForSomeReason'}});
             component.find('button').at(0).simulate('click');
@@ -196,7 +196,7 @@ describe('ADD2Characters tests', () => {
 
             const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
             rollOnce.find('input').at(0).simulate('click');
-            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(getTestRolls()));
+            requests[1].respond(200, {'Content-Type': 'application/json'}, JSON.stringify(getTestRolls()));
             rollOnce.find('input').at(1).simulate('click');
 
             expect(requests[3].url).toEqual(expect.stringMatching(/\/add2character\/2$/));
@@ -215,9 +215,9 @@ describe('ADD2Characters tests', () => {
 
             const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
             rollOnce.find('input').at(0).simulate('click');
-            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(getTestRolls()));
+            requests[1].respond(200, {'Content-Type': 'application/json'}, JSON.stringify(getTestRolls()));
             rollOnce.find('input').at(1).simulate('click');
-            requests[2].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(['race1', 'race2']));
+            requests[2].respond(200, {'Content-Type': 'application/json'}, JSON.stringify(['race1', 'race2']));
             requests[3].respond(500);
 
             expect(consoleError).toHaveBeenCalledTimes(1);
@@ -228,7 +228,7 @@ describe('ADD2Characters tests', () => {
 
             const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
             rollOnce.find('input').at(0).simulate('click');
-            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(getTestRolls()));
+            requests[1].respond(200, {'Content-Type': 'application/json'}, JSON.stringify(getTestRolls()));
             rollOnce.find('input').at(1).simulate('click');
             requests[2].respond(500);
 
@@ -240,10 +240,10 @@ describe('ADD2Characters tests', () => {
 
             const raceSelection = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2RaceSelection);
             raceSelection.find('select').simulate('change', {target: {value: 'race1'}});
-            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify({'int': 1, 'wis': -1}));
+            requests[1].respond(200, {'Content-Type': 'application/json'}, JSON.stringify({'int': 1, 'wis': -1}));
             raceSelection.find('input').at(1).simulate('change', {target: {value: 'F'}});
             raceSelection.find('button').simulate('click');
-            requests[2].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(['class1', 'class2']));
+            requests[2].respond(200, {'Content-Type': 'application/json'}, JSON.stringify(['class1', 'class2']));
 
             expect(component.state().characterData[2].availableClasses).toEqual(['class1', 'class2']);
         });
@@ -253,7 +253,7 @@ describe('ADD2Characters tests', () => {
 
             const raceSelection = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2RaceSelection);
             raceSelection.find('select').simulate('change', {target: {value: 'race1'}});
-            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify({'int': 1, 'wis': -1}));
+            requests[1].respond(200, {'Content-Type': 'application/json'}, JSON.stringify({'int': 1, 'wis': -1}));
             raceSelection.find('input').at(1).simulate('change', {target: {value: 'F'}});
             raceSelection.find('button').simulate('click');
             requests[2].respond(500);
@@ -267,7 +267,7 @@ describe('ADD2Characters tests', () => {
             const classSelection = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2ClassSelection);
             classSelection.find('select').simulate('change', {target: {value: 'class1'}});
             classSelection.find('button').simulate('click');
-            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify(['alignment1', 'alignment2']));
+            requests[1].respond(200, {'Content-Type': 'application/json'}, JSON.stringify(['alignment1', 'alignment2']));
 
             expect(component.state().characterData[3].availableAlignments).toEqual(['alignment1', 'alignment2']);
         });
@@ -286,7 +286,7 @@ describe('ADD2Characters tests', () => {
         const setupComponentAndSelectTestChar = (charIndex) => {
             const dataJson = JSON.stringify(getTestData());
             const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
-            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            requests[0].respond(200, {'Content-Type': 'application/json'}, dataJson);
             const charData = component.state().characterData;
             component.setState({selected: charData[charIndex]});
             return component;
@@ -332,7 +332,7 @@ describe('ADD2Characters tests', () => {
         it('calls the service with the expected id for deletion', () => {
             const dataJson = JSON.stringify(getTestData());
             const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
-            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            requests[0].respond(200, {'Content-Type': 'application/json'}, dataJson);
             let charData = component.state().characterData;
             component.setState({selected: charData[0]});
             expect(charData.length).toBe(5);
@@ -351,7 +351,7 @@ describe('ADD2Characters tests', () => {
         it('writes to console error if delete fails', () => {
             const dataJson = JSON.stringify(getTestData());
             const component = mount(<ADD2Characters useTestData={false} serverGateway={new ServerGateway()}/>);
-            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            requests[0].respond(200, {'Content-Type': 'application/json'}, dataJson);
             let charData = component.state().characterData;
             component.setState({selected: charData[0]});
 

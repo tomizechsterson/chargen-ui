@@ -24,7 +24,7 @@ describe('ServerGateway tests', () => {
         gateway.getChars(function(response) {
             expect(response).toHaveLength(5);
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, dataJson);
     });
 
     it('calls onError callback if get fails', () => {
@@ -94,7 +94,7 @@ describe('ServerGateway tests', () => {
         gateway.rollOnce(function(response) {
             assertRollData(response, 6, get6Rolls());
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, rollsJson);
     });
 
     it('calls onError if rollOnce server call fails', () => {
@@ -110,7 +110,7 @@ describe('ServerGateway tests', () => {
         gateway.rollTwice(function(response) {
             assertRollData(response, 12, get12Rolls());
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, rollsJson);
     });
 
     it('calls onError if rollTwice server call fails', () => {
@@ -126,7 +126,7 @@ describe('ServerGateway tests', () => {
         gateway.assignment('assignment', function(response) {
             assertRollData(response, 6, get6Rolls());
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, rollsJson);
     });
 
     it('returns expected rolls with assignmentDouble rule', () => {
@@ -135,7 +135,7 @@ describe('ServerGateway tests', () => {
         gateway.assignment('assignmentDouble', function(response) {
             assertRollData(response, 12, get12Rolls());
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, rollsJson);
     });
 
     it('calls onError if the assignment server call fails', () => {
@@ -151,7 +151,7 @@ describe('ServerGateway tests', () => {
         gateway.rollFour(function(response) {
             assertRollData(response, 6, get6RollsWith4Dice());
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, rollsJson);
     });
 
     it('calls onError if rollFour server call fails', () => {
@@ -167,7 +167,7 @@ describe('ServerGateway tests', () => {
         gateway.add7Dice(function(response) {
             assertRollData(response, 7, get7Rolls());
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, rollsJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, rollsJson);
     });
 
     it('calls onError if Add7 server call fails', () => {
@@ -184,7 +184,7 @@ describe('ServerGateway tests', () => {
             expect(response).toContain('race1');
             expect(response).toContain('race2');
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, racesJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, racesJson);
     });
 
     it('calls onError if getRaces call fails', () => {
@@ -201,7 +201,7 @@ describe('ServerGateway tests', () => {
             expect(response.int).toBe(1);
             expect(response.wis).toBe(-1);
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, adjustments);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, adjustments);
     });
 
     it('calls onError if getStatAdjustments fails', () => {
@@ -218,7 +218,7 @@ describe('ServerGateway tests', () => {
             expect(response).toContain('class1');
             expect(response).toContain('class2');
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, classesJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, classesJson);
     });
 
     it('calls onError if getClasses fails', () => {
@@ -235,7 +235,7 @@ describe('ServerGateway tests', () => {
             expect(response).toContain('test1');
             expect(response).toContain('test2');
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, alignmentsJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, alignmentsJson);
     });
 
     it('calls onError if getAlignments fails', () => {
@@ -253,7 +253,7 @@ describe('ServerGateway tests', () => {
             expect(response).toContain(110);
             expect(response).toContain(19);
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, hwaJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, hwaJson);
     });
 
     it('calls onError if getting height/weight/age fails', () => {
@@ -270,7 +270,7 @@ describe('ServerGateway tests', () => {
             expect(response).toContain(7);
             expect(response).toContain(90);
         });
-        requests[0].respond(200, {'Content-Type':'text/json'}, hpgpJson);
+        requests[0].respond(200, {'Content-Type':'application/json'}, hpgpJson);
     });
 
     it('calls onError if getting hp/initial funds fails', () => {
@@ -291,7 +291,7 @@ describe('ServerGateway tests', () => {
             expect(response).toContain(17);
             expect(response).toContain(16);
         });
-        requests[0].respond(200, {'Content-Type': 'text/json'}, resultsJson);
+        requests[0].respond(200, {'Content-Type': 'application/json'}, resultsJson);
     });
 
     it('calls onError if getting final attributes fails', () => {

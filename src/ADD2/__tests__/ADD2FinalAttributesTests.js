@@ -60,7 +60,7 @@ describe('ADD2 Final Attributes Tests', () => {
 
         it('HWA button updates the height, weight, and age of the selected character', () => {
             component.find('button').at(0).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([70, 150, 25]));
+            requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify([70, 150, 25]));
 
             expect(component.state().height).toBe(70);
             expect(component.state().weight).toBe(150);
@@ -76,7 +76,7 @@ describe('ADD2 Final Attributes Tests', () => {
 
         it('Hp/Gp button updates the HP and starting funds of the selected character', () => {
             component.find('button').at(1).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([7, 90]));
+            requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify([7, 90]));
 
             expect(component.state().hp).toBe(7);
             expect(component.state().funds).toBe(90);
@@ -92,7 +92,7 @@ describe('ADD2 Final Attributes Tests', () => {
         it('if move rate != 0, does not update the move rate and saving throws', () => {
             component.setState({moveRate: 1, paralyze: 9, rod: 9, petrification: 9, breath: 9, spell: 9});
             component.find('button').at(1).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([7, 90]));
+            requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify([7, 90]));
 
             expect(component.state().moveRate).toBe(1);
             expect(component.state().paralyze).toBe(9);
@@ -104,8 +104,8 @@ describe('ADD2 Final Attributes Tests', () => {
 
         it('if move rate is 0, also updates the move rate and saving throws', () => {
             component.find('button').at(1).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([7, 90]));
-            requests[1].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([9, 20, 19, 18, 17, 16]));
+            requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify([7, 90]));
+            requests[1].respond(200, {'Content-Type': 'application/json'}, JSON.stringify([9, 20, 19, 18, 17, 16]));
 
             expect(component.state().moveRate).toBe(9);
             expect(component.state().paralyze).toBe(20);
@@ -118,7 +118,7 @@ describe('ADD2 Final Attributes Tests', () => {
 
         it('writes to console.error if move rate is 0 and getting final attributes fails', () => {
             component.find('button').at(1).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'text/json'}, JSON.stringify([7, 90]));
+            requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify([7, 90]));
             requests[1].respond(500, '', 'test final attributes error');
 
             assertError(consoleError, 'test final attributes error');

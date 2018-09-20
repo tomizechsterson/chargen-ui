@@ -130,7 +130,7 @@ describe('Assignment component tests', () => {
 
             component.find('input').at(0).simulate('click');
 
-            requests[0].respond(200, {'Content-Type': 'text/json'}, '{}');
+            requests[0].respond(200, {'Content-Type': 'application/json'}, '{}');
             expect(component.state().selectedChar.str).toBeUndefined();
             expect(component.state().selectedChar.dex).toBeUndefined();
             expect(component.state().selectedChar.con).toBeUndefined();
@@ -144,7 +144,7 @@ describe('Assignment component tests', () => {
             component.setState({selectedChar: {}});
 
             component.find('input').at(0).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'text/json'}, '{}');
+            requests[0].respond(200, {'Content-Type': 'application/json'}, '{}');
 
             expect(requests[0].url).toEqual(expect.stringMatching(/rollstats\/assignment$/));
         });
@@ -154,7 +154,7 @@ describe('Assignment component tests', () => {
             component.setState({selectedChar: {}});
 
             component.find('input').at(0).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'text/json'}, '{}');
+            requests[0].respond(200, {'Content-Type': 'application/json'}, '{}');
 
             expect(requests[0].url).toEqual(expect.stringMatching(/rollstats\/assignmentDouble$/));
         });
@@ -166,7 +166,7 @@ describe('Assignment component tests', () => {
             const responseJson = JSON.stringify(responseData);
 
             component.find('input').at(0).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'text/json'}, responseJson);
+            requests[0].respond(200, {'Content-Type': 'application/json'}, responseJson);
             const rollObjects = component.state().rolls;
 
             assertRollObject(rollObjects[0], 0, false, ' (1 + 1 + 1)', 3);

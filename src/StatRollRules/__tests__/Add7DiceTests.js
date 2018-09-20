@@ -75,7 +75,7 @@ describe('Add7Dice tests', () => {
 
             component.find('button').at(0).simulate('click');
 
-            requests[0].respond(200, {'Content-Type': 'text/json'}, '{}');
+            requests[0].respond(200, {'Content-Type': 'application/json'}, '{}');
             expect(component.state().selectedChar.str).toBe(8);
             expect(component.state().selectedChar.dex).toBe(8);
             expect(component.state().selectedChar.con).toBe(8);
@@ -91,7 +91,7 @@ describe('Add7Dice tests', () => {
             const responseJson = JSON.stringify(responseData);
 
             component.find('button').at(0).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'text/json'}, responseJson);
+            requests[0].respond(200, {'Content-Type': 'application/json'}, responseJson);
             const rollObjects = component.state().rolls;
 
             assertRollObject(rollObjects[0], 0, false, 1);

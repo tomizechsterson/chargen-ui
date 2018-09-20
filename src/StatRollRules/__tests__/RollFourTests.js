@@ -56,7 +56,7 @@ describe('RollFour tests', () => {
 
             component.find('input').at(0).simulate('click');
 
-            requests[0].respond(200, {'Content-Type': 'text/json'}, dataJson);
+            requests[0].respond(200, {'Content-Type': 'application/json'}, dataJson);
             expect(component.state().selectedChar.id).toBe(1);
             expect(component.state().selectedChar.str).toBe(3);
             expect(component.state().selectedChar.dex).toBe(4);

@@ -40,7 +40,7 @@ export default class ServerGateway {
 
     createChar = (character, onResponse, onError) => {
         const xhr = new XMLHttpRequest();
-        xhr.open('post', Urls.ADD2Url() + 'new', true);
+        xhr.open('post', Urls.ADD2Url(), true);
         xhr.onload = function() {
             if(xhr.status === 200)
                 onResponse();
@@ -153,7 +153,7 @@ export default class ServerGateway {
 
     getAlignments = (className, onResponse, onError) => {
         const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'alignment/' + encodeURIComponent(className), true);
+        xhr.open('get', Urls.ADD2Url() + 'alignment/' + className, true);
         xhr.onload = function() {
             if(xhr.status === 200)
                 onResponse(JSON.parse(xhr.responseText));
@@ -177,7 +177,7 @@ export default class ServerGateway {
 
     getHPGP = (className, onResponse, onError) => {
         const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'hpgp/' + encodeURIComponent(className), true);
+        xhr.open('get', Urls.ADD2Url() + 'hpgp/' + className, true);
         xhr.onload = function() {
             if(xhr.status === 200)
                 onResponse(JSON.parse(xhr.responseText));
@@ -189,7 +189,7 @@ export default class ServerGateway {
 
     getFinalAttributes = (race, className, onResponse, onError) => {
         const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'final/' + race + '/' + encodeURIComponent(className), true);
+        xhr.open('get', Urls.ADD2Url() + 'final/' + race + '/' + className, true);
         xhr.onload = function() {
             if(xhr.status === 200)
                 onResponse(JSON.parse(xhr.responseText));

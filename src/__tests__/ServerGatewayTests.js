@@ -75,7 +75,6 @@ describe('ServerGateway tests', () => {
         const testChar = {name: 'testName'};
         gateway.createChar(testChar, function() {
             expect(requests[0].method).toEqual('post');
-            expect(requests[0].url).toEqual(expect.stringMatching(/\/new$/));
             expect(requests[0].requestBody).toContain('"name":"testName"');
         });
         requests[0].respond(200);

@@ -102,7 +102,6 @@ describe('ADD2Characters tests', () => {
             component.find('input').simulate('change', {target: {value: 'testName'}});
             component.find('button').simulate('click');
 
-            expect(requests[1].url).toEqual(expect.stringMatching(/\/new$/));
             expect(requests[1].method).toEqual('post');
             expect(requests[1].requestBody).toContain('"name":"testName"');
             expect(consoleError).toHaveBeenCalledTimes(0);

@@ -1,11 +1,11 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import SelectorDD35 from '../SelectorDD35';
+import DD35Characters from "../DD35/DD35Characters";
 
 describe('SelectorDD35 Tests', () => {
-    it('renders the expected top-level div and component', () => {
+    it('renders a DD35Characters component', () => {
         const component = shallow(<SelectorDD35/>);
-        expect(component.find('div')).toHaveLength(1);
-        expect(component.find('p')).toHaveLength(1);
+        expect(component.find(DD35Characters)).toHaveLength(1);
     });
 });

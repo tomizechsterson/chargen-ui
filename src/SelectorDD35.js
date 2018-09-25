@@ -1,10 +1,9 @@
 import React from 'react';
+import DD35Characters from "./DD35/DD35Characters";
 
 const SelectorDD35 = () => {
     return (
-        <div>
-            <p>D&D 3.5 characters</p>
-        </div>
+        <DD35Characters />
     );
 };
 export default SelectorDD35;

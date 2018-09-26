@@ -92,4 +92,18 @@ describe('DD35 Character Table Tests', () => {
             expect(component.find('tbody tr button')).toHaveLength(2);
         });
     });
+
+    describe('Editing a character', () => {
+        it('calls onSelect with the expected character when edit button is clicked', () => {
+            const selectFn = jest.fn();
+            const component = shallow(<DD35CharacterTable onSelect={selectFn}/>);
+            component.setState({characterData: [{id: 1, name: 'test1'}, {id: 2, name: 'test2'}]});
+
+            component.find('tbody tr button').at(0).simulate('click');
+            expect(selectFn).toHaveBeenCalledWith({id: 1, name: 'test1'});
+
+            component.find('tbody tr button').at(2).simulate('click');
+            expect(selectFn).toHaveBeenCalledWith({id: 2, name: 'test2'});
+        });
+    });
 });

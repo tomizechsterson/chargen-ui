@@ -46,6 +46,8 @@ export default class DD35CharacterTable extends Component {
         const rowItems = characterData.map(function(item) {
             return <tr key={item.id}>
                 <td>{item.name}</td>
+                <td><button>Edit</button></td>
+                <td><button>Delete</button></td>
             </tr>
         });
 
@@ -60,6 +62,8 @@ export default class DD35CharacterTable extends Component {
                     <thead>
                     <tr>
                         <th>Name</th>
+                        <th/>
+                        <th/>
                     </tr>
                     </thead>
                     <tbody>

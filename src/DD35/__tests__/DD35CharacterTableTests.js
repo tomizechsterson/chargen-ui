@@ -86,5 +86,10 @@ describe('DD35 Character Table Tests', () => {
             component.setState({characterData: [{id: 1}, {id: 2}]});
             expect(component.find('tbody tr')).toHaveLength(2);
         });
+
+        it('renders buttons for edit and delete', () => {
+            component.setState({characterData: [{id: 1}]});
+            expect(component.find('tbody tr button')).toHaveLength(2);
+        });
     });
 });

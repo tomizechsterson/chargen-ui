@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import DD35CharacterTable from "./DD35CharacterTable";
 
 export default class DD35Characters extends Component {
     render() {
         return (
             <div>
-                <p>D&D 3.5 characters</p>
+                <DD35CharacterTable/>
             </div>
         );
     }

@@ -98,11 +98,12 @@ describe('DD35 Character Table Tests', () => {
             const selectFn = jest.fn();
             const component = shallow(<DD35CharacterTable onSelect={selectFn}/>);
             component.setState({characterData: [{id: 1, name: 'test1'}, {id: 2, name: 'test2'}]});
+            const characterRows = component.find('tbody tr');
 
-            component.find('tbody tr button').at(0).simulate('click');
+            characterRows.at(0).find('button').at(0).simulate('click');
             expect(selectFn).toHaveBeenCalledWith({id: 1, name: 'test1'});
 
-            component.find('tbody tr button').at(2).simulate('click');
+            characterRows.at(1).find('button').at(0).simulate('click');
             expect(selectFn).toHaveBeenCalledWith({id: 2, name: 'test2'});
         });
     });

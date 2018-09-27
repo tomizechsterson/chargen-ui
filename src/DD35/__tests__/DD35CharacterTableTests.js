@@ -107,4 +107,16 @@ describe('DD35 Character Table Tests', () => {
             expect(selectFn).toHaveBeenCalledWith({id: 2, name: 'test2'});
         });
     });
+
+    describe('Deleting a character', () => {
+        it('removes the character from state', () => {
+            const component = shallow(<DD35CharacterTable/>);
+            component.setState({characterData: [{id: 1}, {id: 2}]});
+            expect(component.state().characterData).toHaveLength(2);
+            const rows = component.find('tbody tr');
+
+            rows.at(0).find('button').at(1).simulate('click');
+            expect(component.state().characterData).toHaveLength(1);
+        });
+    });
 });

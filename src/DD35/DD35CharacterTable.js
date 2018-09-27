@@ -32,6 +32,16 @@ export default class DD35CharacterTable extends Component {
             this.setState({newCharName: ''});
     }
 
+    handleDelete(id) {
+        const {characterData} = this.state;
+        const index = characterData.findIndex(function(c) {
+            return c.id === id;
+        });
+
+        characterData.splice(index, 1);
+        this.setState({characterData: characterData});
+    }
+
     handleNewNameChange(e) {
         this.setState({newCharName: e.target.value});
     }
@@ -48,9 +58,9 @@ export default class DD35CharacterTable extends Component {
             return <tr key={item.id}>
                 <td>{item.name}</td>
                 <td><button onClick={() => onSelect(item)}>Edit</button></td>
-                <td><button>Delete</button></td>
+                <td><button onClick={() => this.handleDelete(item.id)}>Delete</button></td>
             </tr>
-        });
+        }.bind(this));
 
         return (
             <div>

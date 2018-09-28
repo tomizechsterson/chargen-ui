@@ -71,7 +71,7 @@ describe('ServerGateway tests', () => {
         assertErrorCall(error, 'test update error');
     });
 
-    it('calls new on service with expected request body', () => {
+    it('posts to service with expected request body', () => {
         const testChar = {name: 'testName'};
         gateway.createChar(testChar, function() {
             expect(requests[0].method).toEqual('post');

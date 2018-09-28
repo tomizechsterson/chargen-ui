@@ -1,201 +1,80 @@
 import Urls from './ApiUrls';
+import ServerCall from './ServerCall';
 
 export default class ServerGateway {
+    constructor() {
+        this.serverCall = new ServerCall();
+    }
+
     getChars = (onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url(), true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url());
     };
 
     deleteChar = (id, onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('delete', Urls.ADD2Url() + id, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse();
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doDelete(onResponse, onError, Urls.ADD2Url() + id);
     };
 
     updateChar = (character, onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('put', Urls.ADD2Url() + character.id, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse();
-            else
-                onError(xhr.responseText);
-        };
-        xhr.setRequestHeader('content-type', 'application/json');
-        xhr.send(JSON.stringify(character));
+        this.serverCall.doOthers(onResponse, onError, 'put', Urls.ADD2Url() + character.id, character);
     };
 
     createChar = (character, onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('post', Urls.ADD2Url(), true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse();
-            else
-                onError(xhr.responseText);
-        };
-        xhr.setRequestHeader('content-type', 'application/json');
-        xhr.send(JSON.stringify(character));
+        this.serverCall.doOthers(onResponse, onError, 'post', Urls.ADD2Url(), character);
     };
 
     rollOnce = (onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'rollstats/rollonce', true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/rollonce');
     };
 
     rollTwice = (onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'rollstats/rolltwice', true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/rolltwice');
     };
 
     assignment = (assignmentMethod, onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'rollstats/' + assignmentMethod, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/' + assignmentMethod);
     };
 
     rollFour = (onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'rollstats/rollfour', true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/rollfour');
     };
 
     add7Dice = (onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'rollstats/AddSevenDice', true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/AddSevenDice');
     };
 
     getRaces = (selectedChar, onResponse, onError) => {
         const c = selectedChar;
-        const statsInUrl = c.str + '/' + c.dex + '/' + c.con + '/' + c.int + '/' + c.wis + '/' + c.chr;
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'races/' + statsInUrl, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        const url = [];
+        url.push(Urls.ADD2Url(), 'races/', c.str, '/', c.dex, '/', c.con, '/', c.int, '/', c.wis, '/', c.chr);
+        const statsInUrl = url.join('');
+        this.serverCall.doGet(onResponse, onError, statsInUrl);
     };
 
     getAdjustments = (selectedRace, onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'statadjust/' + selectedRace, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'statadjust/' + selectedRace);
     };
 
     getClasses = (selectedChar, onResponse, onError) => {
         const c = selectedChar;
-        const url = c.race + '/' + c.str + '/' + c.dex + '/' + c.con + '/' + c.int + '/' + c.wis + '/' + c.chr;
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'classes/' + url, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        const url = [];
+        url.push(Urls.ADD2Url(), 'classes/', c.race, '/', c.str, '/', c.dex, '/', c.con, '/', c.int, '/', c.wis, '/', c.chr);
+        const fullUrl = url.join('');
+        this.serverCall.doGet(onResponse, onError, fullUrl);
     };
 
     getAlignments = (className, onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'alignment/' + className, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'alignment/' + className);
     };
 
     getHWA = (race, gender, onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'hwa/' + race + '/' + gender, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'hwa/' + race + '/' + gender);
     };
 
     getHPGP = (className, onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'hpgp/' + className, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'hpgp/' + className);
     };
 
     getFinalAttributes = (race, className, onResponse, onError) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('get', Urls.ADD2Url() + 'final/' + race + '/' + className, true);
-        xhr.onload = function() {
-            if(xhr.status === 200)
-                onResponse(JSON.parse(xhr.responseText));
-            else
-                onError(xhr.responseText);
-        };
-        xhr.send();
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'final/' + race + '/' + className);
     };
 }

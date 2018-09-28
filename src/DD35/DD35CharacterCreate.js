@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 
 export default class DD35CharacterCreate extends Component {
     render() {
+        const {onClose} = this.props;
+
         return (
-            <p>Character creation</p>
+            <button onClick={() => onClose()}>Close</button>
         );
     }
 }

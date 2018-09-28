@@ -8,10 +8,15 @@ export default class DD35Characters extends Component {
         this.state = {selectedChar: undefined};
 
         this.handleSelect = this.handleSelect.bind(this);
+        this.handleDeselect = this.handleDeselect.bind(this);
     }
 
     handleSelect(character) {
         this.setState({selectedChar: character});
+    }
+
+    handleDeselect() {
+        this.setState({selectedChar: undefined});
     }
 
     render() {
@@ -19,7 +24,7 @@ export default class DD35Characters extends Component {
 
         return (
             <div>
-                {selectedChar && <DD35CharacterCreate/>}
+                {selectedChar && <DD35CharacterCreate onClose={this.handleDeselect}/>}
                 {!selectedChar && <DD35CharacterTable onSelect={this.handleSelect}/>}
             </div>
         );

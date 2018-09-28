@@ -37,4 +37,15 @@ describe('DD35Characters Integration Tests', () => {
 
         expect(component.state().selectedChar).toEqual({id: 1, name: 'test'});
     });
+
+    it('clears the selected character when clicking the close button in Create component', () => {
+        const component = mount(<DD35Characters/>);
+        component.setState({selectedChar: {id: 1, name: 'test'}});
+        expect(component.state().selectedChar).toEqual({id: 1, name: 'test'});
+        const createComponent = component.find(DD35CharacterCreate);
+
+        createComponent.props().onClose();
+
+        expect(component.state().selectedChar).toBeUndefined();
+    });
 });

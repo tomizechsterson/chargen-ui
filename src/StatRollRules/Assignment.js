@@ -20,7 +20,7 @@ export default class Assignment extends Component {
         let statRolls = [];
         const serviceMethod = double ? 'assignmentDouble' : 'assignment';
 
-        gateway.assignment(serviceMethod, function(response) {
+        gateway.rollStats('rollstats/' + serviceMethod, function(response) {
             for(let i = 0; i < response.length; i++) {
                 statRolls.push({id: i, assigned: false, text: ' (' + response[i].join(' + ') + ')', value: response[i].reduce((a, b) => a + b, 0)});
             }

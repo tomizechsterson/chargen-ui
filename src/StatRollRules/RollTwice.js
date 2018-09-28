@@ -20,7 +20,7 @@ export default class RollTwice extends Component {
 
     rollStats() {
         const {selectedChar, gateway} = this.props;
-        gateway.rollTwice(function(response) {
+        gateway.rollStats('rollstats/rolltwice', function(response) {
             selectedChar.str = RollTwice.getHigherRoll(response[0], response[1]);
             selectedChar.dex = RollTwice.getHigherRoll(response[2], response[3]);
             selectedChar.con = RollTwice.getHigherRoll(response[4], response[5]);

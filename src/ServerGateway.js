@@ -22,24 +22,8 @@ export default class ServerGateway {
         this.serverCall.doOthers(onResponse, onError, 'post', Urls.ADD2Url(), character);
     };
 
-    rollOnce = (onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/rollonce');
-    };
-
-    rollTwice = (onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/rolltwice');
-    };
-
-    assignment = (assignmentMethod, onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/' + assignmentMethod);
-    };
-
-    rollFour = (onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/rollfour');
-    };
-
-    add7Dice = (onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'rollstats/AddSevenDice');
+    rollStats = (rollRule, onResponse, onError) => {
+        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + rollRule);
     };
 
     getRaces = (selectedChar, onResponse, onError) => {

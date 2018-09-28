@@ -18,7 +18,7 @@ export default class Add7Dice extends Component {
             currentChar.int = currentChar.wis = currentChar.chr = 8;
         let statRolls = [];
 
-        gateway.add7Dice(function(response) {
+        gateway.rollStats('rollstats/AddSevenDice', function(response) {
             for(let i = 0; i < response.length; i++) {
                 statRolls.push({id: i, assigned: false, value: response[i][0]});
             }

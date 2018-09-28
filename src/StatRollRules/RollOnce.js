@@ -13,7 +13,7 @@ export default class RollOnce extends Component {
 
     rollStats() {
         const {selectedChar, gateway} = this.props;
-        gateway.rollOnce(function(response) {
+        gateway.rollStats('rollstats/rollonce', function(response) {
             selectedChar.str = response[0].reduce((a, b) => a + b, 0);
             selectedChar.dex = response[1].reduce((a, b) => a + b, 0);
             selectedChar.con = response[2].reduce((a, b) => a + b, 0);

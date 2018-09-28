@@ -22,7 +22,7 @@ export default class RollFour extends Component {
 
     rollStats() {
         const {selectedChar, gateway} = this.props;
-        gateway.rollFour(function(response) {
+        gateway.rollStats('rollstats/rollfour', function(response) {
             selectedChar.str = RollFour.addThreeLargest(response[0]);
             selectedChar.dex = RollFour.addThreeLargest(response[1]);
             selectedChar.con = RollFour.addThreeLargest(response[2]);

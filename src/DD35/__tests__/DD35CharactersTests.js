@@ -1,5 +1,5 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import {shallow, mount} from 'enzyme';
 import DD35Characters from '../DD35Characters';
 import DD35CharacterTable from "../DD35CharacterTable";
 import DD35CharacterCreate from "../DD35CharacterCreate";
@@ -24,5 +24,19 @@ describe('DD35Characters Tests', () => {
         expect(component.find(DD35CharacterCreate)).toHaveLength(1);
         component.setState({selectedChar: undefined});
         expect(component.find(DD35CharacterTable)).toHaveLength(1);
+    });
+});
+
+describe('DD35Characters Integration Tests', () => {
+    it('sets the selected character when clicking a button on the table', () => {
+        const component = mount(<DD35Characters/>);
+        expect(component.state().selectedChar).toBeUndefined();
+        const table = component.find(DD35CharacterTable);
+        table.find('input').simulate('change', {target: {value: 'test'}});
+        table.find('button').at(0).simulate('click');
+
+        expect(table.find('tbody tr')).toHaveLength(1);
+
+        expect(component.state().selectedChar).toBe({id: 1, name: 'test'});
     });
 });

@@ -54,6 +54,7 @@ export default class DD35CharacterTable extends Component {
     render() {
         const {newCharName, characterData} = this.state;
         const {onSelect} = this.props;
+
         const rowItems = characterData.map(function(item) {
             return <tr key={item.id}>
                 <td>{item.name}</td>

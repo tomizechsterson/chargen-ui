@@ -32,11 +32,9 @@ describe('DD35Characters Integration Tests', () => {
         const component = mount(<DD35Characters/>);
         expect(component.state().selectedChar).toBeUndefined();
         const table = component.find(DD35CharacterTable);
-        table.find('input').simulate('change', {target: {value: 'test'}});
-        table.find('button').at(0).simulate('click');
 
-        expect(table.find('tbody tr')).toHaveLength(1);
+        table.props().onSelect({id: 1, name: 'test'});
 
-        expect(component.state().selectedChar).toBe({id: 1, name: 'test'});
+        expect(component.state().selectedChar).toEqual({id: 1, name: 'test'});
     });
 });

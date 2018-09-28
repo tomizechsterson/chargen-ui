@@ -15,11 +15,11 @@ export default class ServerGateway {
     };
 
     updateChar = (character, onResponse, onError) => {
-        this.serverCall.doOthers(onResponse, onError, 'put', Urls.ADD2Url() + character.id, character);
+        this.serverCall.doRequestWithBody(onResponse, onError, 'put', Urls.ADD2Url() + character.id, character);
     };
 
     createChar = (character, onResponse, onError) => {
-        this.serverCall.doOthers(onResponse, onError, 'post', Urls.ADD2Url(), character);
+        this.serverCall.doRequestWithBody(onResponse, onError, 'post', Urls.ADD2Url(), character);
     };
 
     rollStats = (rollRule, onResponse, onError) => {

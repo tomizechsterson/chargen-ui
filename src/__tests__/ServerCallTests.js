@@ -39,7 +39,7 @@ describe('Server call', () => {
 
     it('posts with the expected url and body', () => {
         const testChar = {name: 'test'};
-        serverCall.doOthers(response, error, 'post', Urls.ADD2Url(), testChar);
+        serverCall.doRequestWithBody(response, error, 'post', Urls.ADD2Url(), testChar);
         requests[0].respond(200);
 
         expect(response).toHaveBeenCalledTimes(1);
@@ -49,7 +49,7 @@ describe('Server call', () => {
 
     it('puts with the expected url and body', () => {
         const testChar = {id: 2, name: 'test', str: 3, dex: 4, con: 5, int: 6, wis: 7, chr: 8};
-        serverCall.doOthers(response, error, 'put', Urls.ADD2Url() + testChar.id, testChar);
+        serverCall.doRequestWithBody(response, error, 'put', Urls.ADD2Url() + testChar.id, testChar);
         requests[0].respond(200);
 
         expect(response).toHaveBeenCalledTimes(1);
@@ -65,8 +65,8 @@ describe('Server call', () => {
         expect(requests[0].requestBody).toContain('"chr":8');
     });
 
-    it('calls error function if not 200 in doOthers', () => {
-        serverCall.doOthers(response, error);
+    it('calls error function if not 200 in doRequestWithBody', () => {
+        serverCall.doRequestWithBody(response, error);
         requests[0].respond(500, '', 'test error');
 
         expect(error).toHaveBeenCalledTimes(1);

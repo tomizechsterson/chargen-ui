@@ -23,7 +23,7 @@ export default class ServerCall {
         xhr.send();
     };
 
-    doOthers = (onResponse, onError, method, url, bodyObject) => {
+    doRequestWithBody = (onResponse, onError, method, url, bodyObject) => {
         const xhr = new XMLHttpRequest();
         xhr.open(method, url, true);
         xhr.onload = function() {

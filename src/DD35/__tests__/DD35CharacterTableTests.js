@@ -118,5 +118,11 @@ describe('DD35 Character Table Tests', () => {
             rows.at(0).find('button').at(1).simulate('click');
             expect(component.state().characterData).toHaveLength(1);
         });
+
+        it('calls the server with the expected id', () => {
+            const component = shallow(<DD35CharacterTable/>);
+            component.setState({characterData: [{id: 1}, {id: 2}]});
+            
+        });
     });
 });

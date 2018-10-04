@@ -1,9 +1,17 @@
 import React, {Component} from 'react';
+import ServerGatewayDD35 from "../ServerGatewayDD35";
 
 export default class DD35CharacterTable extends Component {
     constructor(props) {
         super(props);
         this.state = {newCharName: '', characterData: []};
+        this.serverGateway = new ServerGatewayDD35();
+
+        this.serverGateway.getChars(function(response) {
+            this.setState({newCharName: '', characterData: response});
+        }.bind(this), function(error) {
+            console.error(error);
+        });
     }
 
     handleCreate() {
@@ -27,6 +35,16 @@ export default class DD35CharacterTable extends Component {
             const newChar = {id: newId, name: newCharName};
             const newCharList = characters.concat([newChar]);
             this.setState({characterData: newCharList, newCharName: ''});
+
+            this.serverGateway.createChar(newChar, function() {
+                this.serverGateway.getChars(function(response) {
+                    this.setState({characterData: response});
+                }.bind(this), function(error) {
+                    console.error(error);
+                });
+            }.bind(this), function(error) {
+                console.error(error);
+            });
         }
         else
             this.setState({newCharName: ''});
@@ -40,6 +58,16 @@ export default class DD35CharacterTable extends Component {
 
         characterData.splice(index, 1);
         this.setState({characterData: characterData});
+
+        this.serverGateway.deleteChar(id, function() {
+            this.serverGateway.getChars(function(response) {
+                this.setState({characterData: response});
+            }.bind(this), function(error) {
+                console.error(error);
+            })
+        }.bind(this), function(error) {
+            console.error(error);
+        });
     }
 
     handleNewNameChange(e) {

@@ -35,6 +35,7 @@ Be sure to have the latest versions of these installed:
 - Navigate into this folder with your terminal of choice
 - Run `npm install` to pull down all the dev dependencies
 - You will also need the services from the [CharGen](https://github.com/tomizechsterson/CharGen) project running on their default port in order for any features beyond creating and deleting characters to work (i.e. rolling stats, selecting race/class). Just follow the steps in that project's readme to get them downloaded and running.
+- As an option, you can use the services from the [chargen-nancy](https://github.com/tomizechsterson/chargen-nancy) project instead. Just make sure to update the URL's found in the `ApiUrls.js` file to point to the address on which they listen for requests.
  
 At this point, you should have everything you need to fire up your IDE of choice and start tinkering around. If not, feel free to open an issue and I'll see what I can do.
 

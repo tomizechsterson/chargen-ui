@@ -3,12 +3,14 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/xb44gjr03xuw7exf?svg=true)](https://ci.appveyor.com/project/tomizechsterson/chargen-ui)
 [![Coverage Status](https://coveralls.io/repos/github/tomizechsterson/chargen-ui/badge.svg)](https://coveralls.io/github/tomizechsterson/chargen-ui)
 
-This project is a UI frontend that allows the user to go through the process of creating a character for tabletop RPG's. It won't truly implement the FULL process, since ultimately, this is a toy project that I'm using to learn a few things:
+This project is a UI frontend that allows the user to go through the process of creating a character for tabletop RPG's. It won't truly implement the FULL process, since ultimately, this is a toy project that I'm using to work on some things:
 
 - [ReactJS](https://reactjs.org/)
 - [Jest](https://jestjs.io/en/)
 - [Enzyme](http://airbnb.io/enzyme/)
 - [Sinon](https://sinonjs.org/)
+- More JavaScript in general, especially with ES6 and ES2017
+  - Specifically async/await and promises
 - TDD'ing React components (and really, TDD on the UI side in general)
 - Microservices (more of just an exposure really... I hysterically underestimated the size of the frontend in comparison to the size of the backend on this project)
 

@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
-import ServerGatewayDD35 from "../ServerGatewayDD35";
 
 export default class DD35CharacterTable extends Component {
     constructor(props) {
         super(props);
         this.state = {newCharName: '', characterData: []};
-        this.serverGateway = new ServerGatewayDD35();
+        const {gateway} = this.props;
 
-        this.serverGateway.getChars(function(response) {
+        gateway.getChars(function(response) {
             this.setState({newCharName: '', characterData: response});
         }.bind(this), function(error) {
             console.error(error);
         });
     }
 
-    handleCreate() {
+    async handleCreate() {
         const {newCharName, characterData} = this.state;
+        const {gateway} = this.props;
 
         function newNameIsUnique(name) {
             const index = characterData.findIndex(function(c) {
@@ -36,22 +36,15 @@ export default class DD35CharacterTable extends Component {
             const newCharList = characters.concat([newChar]);
             this.setState({characterData: newCharList, newCharName: ''});
 
-            this.serverGateway.createChar(newChar, function() {
-                this.serverGateway.getChars(function(response) {
-                    this.setState({characterData: response});
-                }.bind(this), function(error) {
-                    console.error(error);
-                });
-            }.bind(this), function(error) {
-                console.error(error);
-            });
+            await gateway.createNew(newChar);
         }
         else
             this.setState({newCharName: ''});
     }
 
-    handleDelete(id) {
+    async handleDelete(id) {
         const {characterData} = this.state;
+        const {gateway} = this.props;
         const index = characterData.findIndex(function(c) {
             return c.id === id;
         });
@@ -59,15 +52,7 @@ export default class DD35CharacterTable extends Component {
         characterData.splice(index, 1);
         this.setState({characterData: characterData});
 
-        this.serverGateway.deleteChar(id, function() {
-            this.serverGateway.getChars(function(response) {
-                this.setState({characterData: response});
-            }.bind(this), function(error) {
-                console.error(error);
-            })
-        }.bind(this), function(error) {
-            console.error(error);
-        });
+        await gateway.deleteNew(id);
     }
 
     handleNewNameChange(e) {

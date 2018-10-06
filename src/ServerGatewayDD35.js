@@ -9,12 +9,32 @@ export default class ServerGatewayDD35 {
     getChars = (onResponse, onError) => {
         this.serverCall.doGet(onResponse, onError, Urls.DD35Url());
     };
-
-    createChar = (character, onResponse, onError) => {
-        this.serverCall.doRequestWithBody(onResponse, onError, 'post', Urls.DD35Url(), character);
+/*
+    getNew = async () => {
+        try {
+            const response = await fetch(Urls.DD35Url(), {headers: {'Content-type': 'application/json'}});
+            if(response.ok) {
+                return await response.json();
+            }
+        } catch(e) {
+            throw Error(e);
+        }
+    };
+*/
+    createNew = async (character) => {
+        try {
+            const headers = new Headers({'Content-type': 'application/json'});
+            await fetch(Urls.DD35Url(), {method: 'post', headers: headers, body: JSON.stringify(character)});
+        } catch(e) {
+            throw Error(e);
+        }
     };
 
-    deleteChar = (id, onResponse, onError) => {
-        this.serverCall.doDelete(onResponse, onError, Urls.DD35Url() + id);
+    deleteNew = async (id) => {
+        try {
+            await fetch (Urls.DD35Url() + id, {method: 'delete', headers: {'Content-type': 'application/json'}});
+        } catch(e) {
+            throw Error(e);
+        }
     };
 }

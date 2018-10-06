@@ -4,15 +4,19 @@ import DD35CharacterTable from "../DD35CharacterTable";
 
 describe('DD35 Character Table Tests', () => {
     it('Renders', () => {
-        const component = shallow(<DD35CharacterTable/>);
+        function mockGateway() {return {getChars: () => {}}}
+        const component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
         expect(component.find('input')).toHaveLength(1);
         expect(component.find('button')).toHaveLength(1);
     });
 
-    describe('Creating New Characters', () => {
+    describe('Creating new characters', () => {
         let component, newNameInput, createButton;
+        function mockGateway() {
+            return {getChars: () => {},createNew: () => {}}
+        }
         beforeEach(() => {
-            component = shallow(<DD35CharacterTable/>);
+            component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
             newNameInput = component.find('input');
             createButton = component.find('button');
         });
@@ -22,30 +26,6 @@ describe('DD35 Character Table Tests', () => {
             newNameInput.simulate('change', {target: {value: 'newName'}});
 
             expect(component.state().newCharName).toBe('newName');
-        });
-
-        it('creates new character when enter is pressed', () => {
-            newNameInput.simulate('change', {target: {value: 'test'}});
-            newNameInput.simulate('keyPress', {key: 'a'});
-            newNameInput.simulate('keyPress', {key: 'Enter'});
-
-            expect(component.state().characterData).toHaveLength(1);
-            expect(component.state().characterData[0].id).toBe(1);
-            expect(component.state().characterData[0].name).toBe('test');
-        });
-
-        it('creates a second new character with id 2 (using button)', () => {
-            newNameInput.simulate('change', {target: {value: 'char1'}});
-            createButton.simulate('click');
-
-            expect(component.state().characterData).toHaveLength(1);
-            expect(component.state().characterData[0].id).toBe(1);
-
-            newNameInput.simulate('change', {target: {value: 'char2'}});
-            createButton.simulate('click');
-
-            expect(component.state().characterData).toHaveLength(2);
-            expect(component.state().characterData[1].id).toBe(2);
         });
 
         it('does not add a new character if the name is empty', () => {
@@ -62,6 +42,32 @@ describe('DD35 Character Table Tests', () => {
             expect(component.state().newCharName).toBe('');
         });
 
+        it('creates a character when enter is pressed', () => {
+            newNameInput.simulate('change', {target: {value: 'blah'}});
+            newNameInput.simulate('keyPress', {key: 'a'});
+            newNameInput.simulate('keyPress', {key: 'Enter'});
+
+            expect(component.state().characterData).toHaveLength(1);
+            expect(component.state().characterData[0].id).toBe(1);
+            expect(component.state().characterData[0].name).toBe('blah');
+        });
+
+        it('creates a second new character with id 2 (using button)', () => {
+            newNameInput.simulate('change', {target: {value: 'char1'}});
+            createButton.simulate('click');
+
+            expect(component.state().characterData).toHaveLength(1);
+            expect(component.state().characterData[0].id).toBe(1);
+            expect(component.state().characterData[0].name).toBe('char1');
+
+            newNameInput.simulate('change', {target: {value: 'char2'}});
+            createButton.simulate('click');
+
+            expect(component.state().characterData).toHaveLength(2);
+            expect(component.state().characterData[1].id).toBe(2);
+            expect(component.state().characterData[1].name).toBe('char2');
+        });
+
         it('does not add a character if the name is a duplicate', () => {
             newNameInput.simulate('change', {target: {value: 'char1'}});
             createButton.simulate('click');
@@ -74,8 +80,11 @@ describe('DD35 Character Table Tests', () => {
 
     describe('Displaying the table', () => {
         let component;
+        function mockGateway() {
+            return {getChars: () => {},createNew: () => {}}
+        }
         beforeEach(() => {
-            component = shallow(<DD35CharacterTable/>);
+            component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
         });
 
         it('renders a message if there are no characters', () => {
@@ -94,9 +103,12 @@ describe('DD35 Character Table Tests', () => {
     });
 
     describe('Editing a character', () => {
+        function mockGateway() {
+            return {getChars: () => {},createNew: () => {}}
+        }
         it('calls onSelect with the expected character when edit button is clicked', () => {
             const selectFn = jest.fn();
-            const component = shallow(<DD35CharacterTable onSelect={selectFn}/>);
+            const component = shallow(<DD35CharacterTable onSelect={selectFn} gateway={mockGateway()}/>);
             component.setState({characterData: [{id: 1, name: 'test1'}, {id: 2, name: 'test2'}]});
             const characterRows = component.find('tbody tr');
 
@@ -109,8 +121,11 @@ describe('DD35 Character Table Tests', () => {
     });
 
     describe('Deleting a character', () => {
+        function mockGateway() {
+            return { getChars: () => {}, createNew: () => {}, deleteNew: () => {}}
+        }
         it('removes the character from state', () => {
-            const component = shallow(<DD35CharacterTable/>);
+            const component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
             component.setState({characterData: [{id: 1}, {id: 2}]});
             expect(component.state().characterData).toHaveLength(2);
             const rows = component.find('tbody tr');
@@ -120,7 +135,7 @@ describe('DD35 Character Table Tests', () => {
         });
 
         it('calls the server with the expected id', () => {
-            const component = shallow(<DD35CharacterTable/>);
+            const component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
             component.setState({characterData: [{id: 1}, {id: 2}]});
             
         });

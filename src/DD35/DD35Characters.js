@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import DD35CharacterTable from "./DD35CharacterTable";
 import DD35CharacterCreate from "./DD35CharacterCreate";
+import ServerGatewayDD35 from "../ServerGatewayDD35";
 
 export default class DD35Characters extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ export default class DD35Characters extends Component {
         return (
             <div>
                 {selectedChar && <DD35CharacterCreate onClose={this.handleDeselect}/>}
-                {!selectedChar && <DD35CharacterTable onSelect={this.handleSelect}/>}
+                {!selectedChar && <DD35CharacterTable onSelect={this.handleSelect} gateway={new ServerGatewayDD35()}/>}
             </div>
         );
     }

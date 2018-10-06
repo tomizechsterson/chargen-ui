@@ -36,7 +36,7 @@ export default class DD35CharacterTable extends Component {
             const newCharList = characters.concat([newChar]);
             this.setState({characterData: newCharList, newCharName: ''});
 
-            await gateway.createNew(newChar);
+            await gateway.createCharacter(newChar);
         }
         else
             this.setState({newCharName: ''});
@@ -52,7 +52,7 @@ export default class DD35CharacterTable extends Component {
         characterData.splice(index, 1);
         this.setState({characterData: characterData});
 
-        await gateway.deleteNew(id);
+        await gateway.deleteCharacter(id);
     }
 
     handleNewNameChange(e) {

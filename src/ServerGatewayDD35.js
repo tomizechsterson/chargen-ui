@@ -21,7 +21,7 @@ export default class ServerGatewayDD35 {
         }
     };
 */
-    createNew = async (character) => {
+    createCharacter = async (character) => {
         try {
             const headers = new Headers({'Content-type': 'application/json'});
             await fetch(Urls.DD35Url(), {method: 'post', headers: headers, body: JSON.stringify(character)});
@@ -30,7 +30,7 @@ export default class ServerGatewayDD35 {
         }
     };
 
-    deleteNew = async (id) => {
+    deleteCharacter = async (id) => {
         try {
             await fetch (Urls.DD35Url() + id, {method: 'delete', headers: {'Content-type': 'application/json'}});
         } catch(e) {

@@ -28,8 +28,12 @@ describe('DD35Characters Tests', () => {
 });
 
 describe('DD35Characters Integration Tests', () => {
+    function mockGateway() {
+        return {getNew: () => {return []}}
+    }
+
     it('sets the selected character when clicking a button on the table', () => {
-        const component = mount(<DD35Characters/>);
+        const component = mount(<DD35Characters gateway={mockGateway()}/>);
         expect(component.state().selectedChar).toBeUndefined();
         const table = component.find(DD35CharacterTable);
 
@@ -39,7 +43,7 @@ describe('DD35Characters Integration Tests', () => {
     });
 
     it('clears the selected character when clicking the close button in Create component', () => {
-        const component = mount(<DD35Characters/>);
+        const component = mount(<DD35Characters gateway={mockGateway()}/>);
         component.setState({selectedChar: {id: 1, name: 'test'}});
         expect(component.state().selectedChar).toEqual({id: 1, name: 'test'});
         const createComponent = component.find(DD35CharacterCreate);

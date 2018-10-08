@@ -4,13 +4,18 @@ export default class DD35CharacterTable extends Component {
     constructor(props) {
         super(props);
         this.state = {newCharName: '', characterData: []};
-        const {gateway} = this.props;
+        this.isUnmounted = false;
+    }
 
-        gateway.getChars(function(response) {
-            this.setState({newCharName: '', characterData: response});
-        }.bind(this), function(error) {
-            console.error(error);
-        });
+    async componentDidMount() {
+        const {gateway} = this.props;
+        const data = await gateway.getNew();
+        if(!this.isUnmounted)
+            this.setState({characterData: data});
+    }
+
+    componentWillUnmount() {
+        this.isUnmounted = true;
     }
 
     async handleCreate() {

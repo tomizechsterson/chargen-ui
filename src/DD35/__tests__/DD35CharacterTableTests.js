@@ -3,9 +3,10 @@ import {shallow} from 'enzyme';
 import DD35CharacterTable from "../DD35CharacterTable";
 
 describe('DD35 Character Table Tests', () => {
+    function baseMockGateway() {return {getNew: () => {return []}}}
+
     it('Renders', () => {
-        function mockGateway() {return {getChars: () => {}}}
-        const component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
+        const component = shallow(<DD35CharacterTable gateway={baseMockGateway()}/>);
         expect(component.find('input')).toHaveLength(1);
         expect(component.find('button')).toHaveLength(1);
     });
@@ -13,7 +14,7 @@ describe('DD35 Character Table Tests', () => {
     describe('Creating new characters', () => {
         let component, newNameInput, createButton;
         function mockGateway() {
-            return {getChars: () => {},createNew: () => {}}
+            return {getNew: () => {return []}, createCharacter: () => {}}
         }
         beforeEach(() => {
             component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
@@ -80,11 +81,8 @@ describe('DD35 Character Table Tests', () => {
 
     describe('Displaying the table', () => {
         let component;
-        function mockGateway() {
-            return {getChars: () => {},createNew: () => {}}
-        }
         beforeEach(() => {
-            component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
+            component = shallow(<DD35CharacterTable gateway={baseMockGateway()}/>);
         });
 
         it('renders a message if there are no characters', () => {
@@ -103,12 +101,9 @@ describe('DD35 Character Table Tests', () => {
     });
 
     describe('Editing a character', () => {
-        function mockGateway() {
-            return {getChars: () => {},createNew: () => {}}
-        }
         it('calls onSelect with the expected character when edit button is clicked', () => {
             const selectFn = jest.fn();
-            const component = shallow(<DD35CharacterTable onSelect={selectFn} gateway={mockGateway()}/>);
+            const component = shallow(<DD35CharacterTable onSelect={selectFn} gateway={baseMockGateway()}/>);
             component.setState({characterData: [{id: 1, name: 'test1'}, {id: 2, name: 'test2'}]});
             const characterRows = component.find('tbody tr');
 
@@ -122,7 +117,7 @@ describe('DD35 Character Table Tests', () => {
 
     describe('Deleting a character', () => {
         function mockGateway() {
-            return { getChars: () => {}, createNew: () => {}, deleteNew: () => {}}
+            return {getNew: () => {return []}, deleteCharacter: () => {}}
         }
         it('removes the character from state', () => {
             const component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);

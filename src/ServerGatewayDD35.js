@@ -1,26 +1,19 @@
 import Urls from './ApiUrls';
-import ServerCall from './ServerCall';
 
 export default class ServerGatewayDD35 {
-    constructor() {
-        this.serverCall = new ServerCall();
-    }
-
-    getChars = (onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.DD35Url());
-    };
-/*
     getNew = async () => {
         try {
             const response = await fetch(Urls.DD35Url(), {headers: {'Content-type': 'application/json'}});
             if(response.ok) {
                 return await response.json();
             }
+            else
+                console.error(response);
         } catch(e) {
             throw Error(e);
         }
     };
-*/
+
     createCharacter = async (character) => {
         try {
             const headers = new Headers({'Content-type': 'application/json'});

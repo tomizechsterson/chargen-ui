@@ -25,7 +25,7 @@ export default class DD35Characters extends Component {
 
         return (
             <div>
-                {selectedChar && <DD35CharacterCreate onClose={this.handleDeselect}/>}
+                {selectedChar && <DD35CharacterCreate selectedChar={selectedChar} onClose={this.handleDeselect}/>}
                 {!selectedChar && <DD35CharacterTable onSelect={this.handleSelect} gateway={gateway}/>}
             </div>
         );

@@ -51,10 +51,10 @@ describe('ADD2RaceSelection tests', () => {
             const raceDropDown = component.find('select');
 
             raceDropDown.simulate('change', {target: {value: 'testRace'}});
-            requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify({'int': 1, 'wis': -1}));
+            requests[0].respond(200, {'Content-Type': 'application/json'}, JSON.stringify([{'key': 'int', 'value': 1}, {'key': 'wis', 'value': -1}]));
 
-            expect(component.instance().state.adjustments.int).toEqual(1);
-            expect(component.instance().state.adjustments.wis).toEqual(-1);
+            expect(component.instance().state.adjustments[0].value).toEqual(1);
+            expect(component.instance().state.adjustments[1].value).toEqual(-1);
         });
     });
 
@@ -80,7 +80,7 @@ describe('ADD2RaceSelection tests', () => {
         });
 
         it('calls onUpdate once with the expected race and gender and increments completionStep', () => {
-            component.setState({selectedRace: 'testRace', adjustments: {}});
+            component.setState({selectedRace: 'testRace', adjustments: [{}]});
             component.find('input').at(1).simulate('change', {target: {value: 'F'}});
 
             component.find('button').at(0).simulate('click');
@@ -98,7 +98,11 @@ describe('ADD2RaceSelection tests', () => {
         });
 
         it('applies stat adjustments', () => {
-            component.setState({adjustments: {'str': 1, 'dex': -1, 'con': 2, 'int': 3, 'wis': 4, 'chr': 5}, selectedRace: 'test', selectedGender: 'test'});
+            component.setState({adjustments:
+                    [{'key': 'str', 'value': 1}, {'key': 'dex', 'value': -1},
+                    {'key': 'con', 'value': 2}, {'key': 'int', 'value': 3},
+                    {'key': 'wis', 'value': 4}, {'key': 'chr', 'value': 5}],
+                selectedRace: 'test', selectedGender: 'test'});
 
             component.find('button').at(0).simulate('click');
 

@@ -6,7 +6,7 @@ export default class ServerGateway {
         this.serverCall = new ServerCall();
     }
 
-    getCharsNew = async () => {
+    getCharacters = async () => {
         const response = await fetch(Urls.ADD2Url(), {headers: {'Content-type': 'application/json'}});
         if(response.ok)
             return await response.json();
@@ -14,16 +14,16 @@ export default class ServerGateway {
             console.error(response);
     };
 
-    deleteCharNew = async (id) => {
+    deleteCharacter = async (id) => {
         await fetch(Urls.ADD2Url() + id, {method: 'delete', headers: {'Content-type': 'application/json'}});
     };
 
-    updateCharNew = async (character) => {
+    updateCharacter = async (character) => {
         const headers = new Headers({'Content-type': 'application/json'});
         await fetch(Urls.ADD2Url() + character.id, {method: 'put', headers: headers, body: JSON.stringify(character)});
     };
 
-    createCharNew = async (character) => {
+    createCharacter = async (character) => {
         const headers = new Headers({'Content-type': 'application/json'});
         await fetch(Urls.ADD2Url(), {method: 'post', headers: headers, body: JSON.stringify(character)});
     };
@@ -32,7 +32,7 @@ export default class ServerGateway {
         this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + rollRule);
     };
 
-    getRacesNew = async (character) => {
+    getRaces = async (character) => {
         const c = character;
         const url = [];
         url.push(Urls.ADD2Url(), 'races/', c.str, '/', c.dex, '/', c.con, '/', c.int, '/', c.wis, '/', c.chr);
@@ -44,11 +44,15 @@ export default class ServerGateway {
             console.error(response);
     };
 
-    getAdjustments = (selectedRace, onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'statadjust/' + selectedRace);
+    getAdjustmentsNew = async (selectedRace) => {
+        const response = await fetch(Urls.ADD2Url() + 'statadjust/' + selectedRace, {headers: {'Content-type': 'application/json'}});
+        if(response.ok)
+            return await response.json();
+        else
+            console.error(response);
     };
 
-    getClassesNew = async (character) => {
+    getClasses = async (character) => {
         const c = character;
         const url = [];
         url.push(Urls.ADD2Url(), 'classes/', c.race, '/', c.str, '/', c.dex, '/', c.con, '/', c.int, '/', c.wis, '/', c.chr);
@@ -60,7 +64,7 @@ export default class ServerGateway {
             console.error(response);
     };
 
-    getAlignmentsNew = async (className) => {
+    getAlignments = async (className) => {
         const response = await fetch(Urls.ADD2Url() + 'alignment/' + className, {headers: {'Content-type': 'application/json'}});
         if(response.ok)
             return await response.json();

@@ -19,7 +19,7 @@ export default class ADD2Characters extends Component {
 
     async componentDidMount() {
         const {serverGateway} = this.props;
-        const data = await serverGateway.getCharsNew();
+        const data = await serverGateway.getCharacters();
         if(!this.isUnmounted)
             this.setState({characterData: data});
     }
@@ -62,7 +62,7 @@ export default class ADD2Characters extends Component {
                 this.setState({selected: null});
 
             if (!useTestData)
-                await serverGateway.deleteCharNew(id);
+                await serverGateway.deleteCharacter(id);
         }
     }
 
@@ -70,14 +70,14 @@ export default class ADD2Characters extends Component {
         const {useTestData, serverGateway} = this.props;
 
         if(character.completionStep === 2)
-            character.availableRaces = await serverGateway.getRacesNew(character);
+            character.availableRaces = await serverGateway.getRaces(character);
 
         if(character.completionStep === 3) {
-            character.availableClasses = await serverGateway.getClassesNew(character);
+            character.availableClasses = await serverGateway.getClasses(character);
         }
 
         if(character.completionStep === 4) {
-            character.availableAlignments = await serverGateway.getAlignmentsNew(character.className);
+            character.availableAlignments = await serverGateway.getAlignments(character.className);
         }
 
         const chars = this.state.characterData;
@@ -86,7 +86,7 @@ export default class ADD2Characters extends Component {
         this.setState({characterData: chars});
 
         if(!useTestData)
-            await serverGateway.updateCharNew(character);
+            await serverGateway.updateCharacter(character);
     }
 
     async handleCreate() {
@@ -136,7 +136,7 @@ export default class ADD2Characters extends Component {
             this.setState({characterData: newCharList, newCharName: ''});
 
             if(!useTestData)
-                await serverGateway.createCharNew(newChar);
+                await serverGateway.createCharacter(newChar);
         }
         else
             this.setState({newCharName: ''});

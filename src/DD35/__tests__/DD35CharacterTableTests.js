@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import DD35CharacterTable from "../DD35CharacterTable";
 
 describe('DD35 Character Table Tests', () => {
-    function baseMockGateway() {return {getNew: () => {return []}}}
+    function baseMockGateway() {return {get: () => {return []}}}
 
     it('Renders', () => {
         const component = shallow(<DD35CharacterTable gateway={baseMockGateway()}/>);
@@ -14,7 +14,7 @@ describe('DD35 Character Table Tests', () => {
     describe('Creating new characters', () => {
         let component, newNameInput, createButton;
         function mockGateway() {
-            return {getNew: () => {return []}, createCharacter: () => {}}
+            return {get: () => {return []}, createCharacter: () => {}}
         }
         beforeEach(() => {
             component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
@@ -117,7 +117,7 @@ describe('DD35 Character Table Tests', () => {
 
     describe('Deleting a character', () => {
         function mockGateway() {
-            return {getNew: () => {return []}, deleteCharacter: () => {}}
+            return {get: () => {return []}, deleteCharacter: () => {}}
         }
         it('removes the character from state', () => {
             const component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);

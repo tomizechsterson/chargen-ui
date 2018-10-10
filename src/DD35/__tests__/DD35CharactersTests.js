@@ -29,7 +29,7 @@ describe('DD35Characters Tests', () => {
 
 describe('DD35Characters Integration Tests', () => {
     function mockGateway() {
-        return {getNew: () => {return []}}
+        return {get: () => {return []}}
     }
 
     it('sets the selected character when clicking a button on the table', () => {

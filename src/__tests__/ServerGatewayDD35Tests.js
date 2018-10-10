@@ -22,10 +22,10 @@ describe('Server Gateway DD35 Tests', () => {
         window.fetch.restore();
     });
 
-    it('getNew returns expected data when response is ok', async () => {
+    it('get returns expected data when response is ok', async () => {
         window.fetch.returns(jsonOk({id: 1, name: 'test'}));
 
-        const data = await gateway.getNew();
+        const data = await gateway.get();
 
         expect(data.id).toBe(1);
         expect(data.name).toBe('test');
@@ -44,7 +44,7 @@ describe('Server Gateway DD35 Tests', () => {
         }
         window.fetch.returns(jsonNotOk());
 
-        const data = await gateway.getNew();
+        const data = await gateway.get();
 
         expect(errorFunc).toHaveBeenCalledTimes(1);
         expect(data).toBeUndefined();

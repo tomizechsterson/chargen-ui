@@ -1,7 +1,7 @@
 import Urls from './ApiUrls';
 
 export default class ServerGatewayDD35 {
-    getNew = async () => {
+    get = async () => {
         const response = await fetch(Urls.DD35Url(), {headers: {'Content-type': 'application/json'}});
         if(response.ok) {
             return await response.json();

@@ -9,7 +9,7 @@ export default class DD35CharacterTable extends Component {
 
     async componentDidMount() {
         const {gateway} = this.props;
-        const data = await gateway.getNew();
+        const data = await gateway.get();
         if(!this.isUnmounted)
             this.setState({characterData: data});
     }

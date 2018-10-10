@@ -12,6 +12,17 @@ describe('ADD2RaceSelection tests', () => {
         expect(component.text()).toContain('race2');
     });
 
+    describe('Race Drop Down', () => {
+        it('Changes state as expected', () => {
+            function mockGateway() {return {getAdjustments: () => {return []}}}
+            const component = shallow(<ADD2RaceSelection gateway={mockGateway()} selectedChar={{availableRaces: []}}/>);
+            const raceDropDown = component.find('select');
+
+            raceDropDown.simulate('change', {target: {value: 'test'}});
+            expect(component.state().selectedRace).toBe('test');
+        });
+    });
+
     describe('Save Button', () => {
         let updateFunc, component;
         beforeEach(() => {

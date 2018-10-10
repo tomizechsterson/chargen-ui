@@ -44,7 +44,7 @@ export default class ServerGateway {
             console.error(response);
     };
 
-    getAdjustmentsNew = async (selectedRace) => {
+    getAdjustments = async (selectedRace) => {
         const response = await fetch(Urls.ADD2Url() + 'statadjust/' + selectedRace, {headers: {'Content-type': 'application/json'}});
         if(response.ok)
             return await response.json();

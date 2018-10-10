@@ -14,7 +14,7 @@ export default class ADD2RaceSelection extends Component {
     async handleRaceChange(e) {
         const {gateway} = this.props;
         this.setState({selectedRace: e.target.value});
-        const data = await gateway.getAdjustmentsNew(e.target.value);
+        const data = await gateway.getAdjustments(e.target.value);
         this.setState({adjustments: data});
     }
 

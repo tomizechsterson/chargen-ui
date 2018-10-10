@@ -12,31 +12,22 @@ export default class ADD2FinalAttributes extends Component {
         this.handleUpdate = this.handleUpdate.bind(this);
     }
 
-    handleHWA() {
+    async handleHWA() {
         const {selectedChar, gateway} = this.props;
-        gateway.getHWA(selectedChar.race, selectedChar.gender, function(response) {
-            this.setState({height: response[0], weight: response[1], age: response[2]});
-        }.bind(this), function(error) {
-            console.error(error);
-        });
+        const hwa = await gateway.getHWA(selectedChar.race, selectedChar.gender);
+        this.setState({height: hwa[0], weight: hwa[1], age: hwa[2]});
     }
 
-    handleHPGP() {
+    async handleHPGP() {
         const {selectedChar, gateway} = this.props;
         const {moveRate} = this.state;
-        gateway.getHPGP(selectedChar.className, function(response) {
-            this.setState({hp: response[0], funds: response[1]});
-        }.bind(this), function(error) {
-            console.error(error);
-        });
+        const hpgp = await gateway.getHPGP(selectedChar.className);
+        this.setState({hp: hpgp[0], funds: hpgp[1]});
 
         if(!moveRate) {
-            gateway.getFinalAttributes(selectedChar.race, selectedChar.className, function(response) {
-                this.setState({moveRate: response[0], paralyze: response[1], rod: response[2], petrification: response[3],
-                breath: response[4], spell: response[5]});
-            }.bind(this), function(error) {
-                console.error(error);
-            });
+            const data = await gateway.getFinalAttributes(selectedChar.race, selectedChar.className);
+            this.setState({moveRate: data[0], paralyze: data[1], rod: data[2],
+                petrification: data[3], breath: data[4], spell: data[5]});
         }
     }
 

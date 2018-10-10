@@ -72,15 +72,27 @@ export default class ServerGateway {
             console.error(response);
     };
 
-    getHWA = (race, gender, onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'hwa/' + race + '/' + gender);
+    getHWA = async (race, gender) => {
+        const response = await fetch(Urls.ADD2Url() + 'hwa/' + race + '/' + gender, {headers: {'Content-type': 'application/json'}});
+        if(response.ok)
+            return await response.json();
+        else
+            console.error(response);
     };
 
-    getHPGP = (className, onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'hpgp/' + className);
+    getHPGP = async (className) => {
+        const response = await fetch(Urls.ADD2Url() + 'hpgp/' + className, {headers: {'Content-type': 'application/json'}});
+        if(response.ok)
+            return await response.json();
+        else
+            console.error(response);
     };
 
-    getFinalAttributes = (race, className, onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'final/' + race + '/' + className);
+    getFinalAttributes = async (race, className) => {
+        const response = await fetch(Urls.ADD2Url() + 'final/' + race + '/' + className, {headers: {'Content-type': 'application/json'}});
+        if(response.ok)
+            return await response.json();
+        else
+            console.error(response);
     };
 }

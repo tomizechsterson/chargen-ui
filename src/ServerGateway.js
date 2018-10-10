@@ -6,48 +6,66 @@ export default class ServerGateway {
         this.serverCall = new ServerCall();
     }
 
-    getChars = (onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url());
+    getCharsNew = async () => {
+        const response = await fetch(Urls.ADD2Url(), {headers: {'Content-type': 'application/json'}});
+        if(response.ok)
+            return await response.json();
+        else
+            console.error(response);
     };
 
-    deleteChar = (id, onResponse, onError) => {
-        this.serverCall.doDelete(onResponse, onError, Urls.ADD2Url() + id);
+    deleteCharNew = async (id) => {
+        await fetch(Urls.ADD2Url() + id, {method: 'delete', headers: {'Content-type': 'application/json'}});
     };
 
-    updateChar = (character, onResponse, onError) => {
-        this.serverCall.doRequestWithBody(onResponse, onError, 'put', Urls.ADD2Url() + character.id, character);
+    updateCharNew = async (character) => {
+        const headers = new Headers({'Content-type': 'application/json'});
+        await fetch(Urls.ADD2Url() + character.id, {method: 'put', headers: headers, body: JSON.stringify(character)});
     };
 
-    createChar = (character, onResponse, onError) => {
-        this.serverCall.doRequestWithBody(onResponse, onError, 'post', Urls.ADD2Url(), character);
+    createCharNew = async (character) => {
+        const headers = new Headers({'Content-type': 'application/json'});
+        await fetch(Urls.ADD2Url(), {method: 'post', headers: headers, body: JSON.stringify(character)});
     };
 
     rollStats = (rollRule, onResponse, onError) => {
         this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + rollRule);
     };
 
-    getRaces = (selectedChar, onResponse, onError) => {
-        const c = selectedChar;
+    getRacesNew = async (character) => {
+        const c = character;
         const url = [];
         url.push(Urls.ADD2Url(), 'races/', c.str, '/', c.dex, '/', c.con, '/', c.int, '/', c.wis, '/', c.chr);
         const statsInUrl = url.join('');
-        this.serverCall.doGet(onResponse, onError, statsInUrl);
+        const response = await fetch(statsInUrl, {headers: {'Content-type': 'application/json'}});
+        if(response.ok)
+            return await response.json();
+        else
+            console.error(response);
     };
 
     getAdjustments = (selectedRace, onResponse, onError) => {
         this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'statadjust/' + selectedRace);
     };
 
-    getClasses = (selectedChar, onResponse, onError) => {
-        const c = selectedChar;
+    getClassesNew = async (character) => {
+        const c = character;
         const url = [];
         url.push(Urls.ADD2Url(), 'classes/', c.race, '/', c.str, '/', c.dex, '/', c.con, '/', c.int, '/', c.wis, '/', c.chr);
         const fullUrl = url.join('');
-        this.serverCall.doGet(onResponse, onError, fullUrl);
+        const response = await fetch(fullUrl, {headers: {'Content-type': 'application/json'}});
+        if(response.ok)
+            return await response.json();
+        else
+            console.error(response);
     };
 
-    getAlignments = (className, onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + 'alignment/' + className);
+    getAlignmentsNew = async (className) => {
+        const response = await fetch(Urls.ADD2Url() + 'alignment/' + className, {headers: {'Content-type': 'application/json'}});
+        if(response.ok)
+            return await response.json();
+        else
+            console.error(response);
     };
 
     getHWA = (race, gender, onResponse, onError) => {

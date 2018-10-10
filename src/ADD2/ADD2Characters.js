@@ -10,23 +10,22 @@ export default class ADD2Characters extends Component {
             selected: null,
             newCharName: ''
         };
+        this.isUnmounted = false;
 
         this.handleSelect = this.handleSelect.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
     }
 
-    loadCharsFromServer() {
-        const {useTestData, testData, serverGateway} = this.props;
-        if (useTestData)
-            this.setState({characterData: testData});
-        else {
-            serverGateway.getChars(function(response) {
-                this.setState({characterData: response});
-            }.bind(this), function(error) {
-                console.error(error);
-            });
-        }
+    async componentDidMount() {
+        const {serverGateway} = this.props;
+        const data = await serverGateway.getCharsNew();
+        if(!this.isUnmounted)
+            this.setState({characterData: data});
+    }
+
+    componentWillUnmount() {
+        this.isUnmounted = true;
     }
 
     handleSelect(id) {
@@ -47,7 +46,7 @@ export default class ADD2Characters extends Component {
         }
     }
 
-    handleDelete(id) {
+    async handleDelete(id) {
         const {useTestData, serverGateway} = this.props;
         const {characterData, selected} = this.state;
         const index = characterData.findIndex(function (o) {
@@ -62,57 +61,35 @@ export default class ADD2Characters extends Component {
             if(charToDelete.id === selected.id)
                 this.setState({selected: null});
 
-            if (!useTestData) {
-                serverGateway.deleteChar(id, function() {
-                    this.loadCharsFromServer();
-                }.bind(this), function(error) {
-                    console.error(error);
-                });
-            }
+            if (!useTestData)
+                await serverGateway.deleteCharNew(id);
         }
     }
 
-    handleUpdate(character) {
+    async handleUpdate(character) {
         const {useTestData, serverGateway} = this.props;
+
+        if(character.completionStep === 2)
+            character.availableRaces = await serverGateway.getRacesNew(character);
+
+        if(character.completionStep === 3) {
+            character.availableClasses = await serverGateway.getClassesNew(character);
+        }
+
+        if(character.completionStep === 4) {
+            character.availableAlignments = await serverGateway.getAlignmentsNew(character.className);
+        }
+
         const chars = this.state.characterData;
         const i = chars.findIndex(function(o) {return o.id === character.id});
         chars[i] = character;
         this.setState({characterData: chars});
 
-        if(character.completionStep === 2) {
-            serverGateway.getRaces(character, function(response) {
-                character.availableRaces = response;
-            }, function(error) {
-                console.error(error);
-            });
-        }
-
-        if(character.completionStep === 3) {
-            serverGateway.getClasses(character, function(response) {
-                character.availableClasses = response;
-            }, function(error) {
-                console.error(error);
-            });
-        }
-
-        if(character.completionStep === 4) {
-            serverGateway.getAlignments(character.className, function(response) {
-                character.availableAlignments = response;
-            }, function(error) {
-                console.error(error);
-            });
-        }
-
-        if(!useTestData) {
-            serverGateway.updateChar(character, function() {
-                this.loadCharsFromServer();
-            }.bind(this), function(error) {
-                console.error(error);
-            });
-        }
+        if(!useTestData)
+            await serverGateway.updateCharNew(character);
     }
 
-    handleCreate() {
+    async handleCreate() {
         const {useTestData, serverGateway} = this.props;
         const {newCharName, characterData} = this.state;
 
@@ -158,13 +135,8 @@ export default class ADD2Characters extends Component {
             const newCharList = characters.concat([newChar]);
             this.setState({characterData: newCharList, newCharName: ''});
 
-            if(!useTestData) {
-                serverGateway.createChar(newChar, function() {
-                    this.loadCharsFromServer();
-                }.bind(this), function(error) {
-                    console.error('error: '); console.error(error);
-                });
-            }
+            if(!useTestData)
+                await serverGateway.createCharNew(newChar);
         }
         else
             this.setState({newCharName: ''});
@@ -178,10 +150,6 @@ export default class ADD2Characters extends Component {
         if(event.key === 'Enter')
             this.handleCreate();
     };
-
-    componentDidMount() {
-        this.loadCharsFromServer();
-    }
 
     render() {
         const {newCharName, characterData, selected} = this.state;

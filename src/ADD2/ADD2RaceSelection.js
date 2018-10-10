@@ -25,7 +25,7 @@ export default class ADD2RaceSelection extends Component {
     }
 
     handleUpdate() {
-        const {selectedRace, adjustments, selectedGender} = this.state;
+        const {selectedRace, selectedGender} = this.state;
         const {selectedChar, onUpdate} = this.props;
 
         if(!selectedRace)
@@ -33,12 +33,12 @@ export default class ADD2RaceSelection extends Component {
         else if(!selectedGender)
             alert('must select a gender to save');
         else {
-            selectedChar.str += adjustments.str ? adjustments.str : 0;
-            selectedChar.dex += adjustments.dex ? adjustments.dex : 0;
-            selectedChar.con += adjustments.con ? adjustments.con : 0;
-            selectedChar.int += adjustments.int ? adjustments.int : 0;
-            selectedChar.wis += adjustments.wis ? adjustments.wis : 0;
-            selectedChar.chr += adjustments.chr ? adjustments.chr : 0;
+            selectedChar.str += this.getAdjustment('str');
+            selectedChar.dex += this.getAdjustment('dex');
+            selectedChar.con += this.getAdjustment('con');
+            selectedChar.int += this.getAdjustment('int');
+            selectedChar.wis += this.getAdjustment('wis');
+            selectedChar.chr += this.getAdjustment('chr');
             selectedChar.race = selectedRace;
             selectedChar.gender = selectedGender;
             selectedChar.completionStep++;
@@ -46,21 +46,33 @@ export default class ADD2RaceSelection extends Component {
         }
     }
 
+    getAdjustment(stat) {
+        const {adjustments} = this.state;
+        let value = 0;
+        adjustments.forEach(function(item) {
+            if(item.key === stat) {
+                value = item.value;
+            }
+        });
+        return value;
+    }
+
     render() {
         const {selectedChar} = this.props;
         const {adjustments} = this.state;
+
         let id = 0;
         const options = selectedChar.availableRaces && selectedChar.availableRaces.map(function(item) {
             return <option key={id++} value={item}>{item}</option>
         });
         return (
             <div>
-                <StatAdjustmentDisplay text={'STR: '} stat={selectedChar.str} adjustment={adjustments && adjustments.str}/>
-                <StatAdjustmentDisplay text={'DEX: '} stat={selectedChar.dex} adjustment={adjustments && adjustments.dex}/>
-                <StatAdjustmentDisplay text={'CON: '} stat={selectedChar.con} adjustment={adjustments && adjustments.con}/>
-                <StatAdjustmentDisplay text={'INT: '} stat={selectedChar.int} adjustment={adjustments && adjustments.int}/>
-                <StatAdjustmentDisplay text={'WIS: '} stat={selectedChar.wis} adjustment={adjustments && adjustments.wis}/>
-                <StatAdjustmentDisplay text={'CHR: '} stat={selectedChar.chr} adjustment={adjustments && adjustments.chr}/>
+                <StatAdjustmentDisplay text={'STR: '} stat={selectedChar.str} adjustment={adjustments && this.getAdjustment('str')}/>
+                <StatAdjustmentDisplay text={'DEX: '} stat={selectedChar.dex} adjustment={adjustments && this.getAdjustment('dex')}/>
+                <StatAdjustmentDisplay text={'CON: '} stat={selectedChar.con} adjustment={adjustments && this.getAdjustment('con')}/>
+                <StatAdjustmentDisplay text={'INT: '} stat={selectedChar.int} adjustment={adjustments && this.getAdjustment('int')}/>
+                <StatAdjustmentDisplay text={'WIS: '} stat={selectedChar.wis} adjustment={adjustments && this.getAdjustment('wis')}/>
+                <StatAdjustmentDisplay text={'CHR: '} stat={selectedChar.chr} adjustment={adjustments && this.getAdjustment('chr')}/>
                 Select race:
                 <select onChange={this.handleRaceChange}>
                     <option key={-1} value='' />

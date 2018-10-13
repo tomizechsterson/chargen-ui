@@ -146,9 +146,9 @@ export default class ADD2Characters extends Component {
         this.setState({newCharName: e.target.value});
     }
 
-    handleKeyPress = event => {
+    handleKeyPress = async event => {
         if(event.key === 'Enter')
-            this.handleCreate();
+            await this.handleCreate();
     };
 
     render() {

@@ -59,7 +59,7 @@ describe('ADD2Characters tests', () => {
     });
 
     describe('Updating Characters', () => {
-        it('updates state properly', () => {
+        it('updates state properly', async () => {
             const testData = getTestData();
             const component = mount(<ADD2Characters useTestData={true} serverGateway={baseMockGateway()}/>);
             component.setState({characterData: testData, selected: testData[0]});
@@ -67,10 +67,17 @@ describe('ADD2Characters tests', () => {
             component.setState({selected: testData[0]});
             const table = component.find(ADD2CharacterTable);
             table.find('tbody tr').at(0).simulate('click');
-//            expect(component.text()).toBe('blah');
-//            const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
-//            const saveButton = rollOnce.find('button').at(1);
-//            saveButton.simulate('click');
+            const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
+            const saveButton = rollOnce.find('input').at(1);
+
+            saveButton.simulate('click');
+
+            expect(component.state().characterData[0].str).toBe(3);
+            expect(component.state().characterData[0].dex).toBe(3);
+            expect(component.state().characterData[0].con).toBe(3);
+            expect(component.state().characterData[0].int).toBe(3);
+            expect(component.state().characterData[0].wis).toBe(3);
+            expect(component.state().characterData[0].chr).toBe(3);
         });
     });
 
@@ -90,9 +97,9 @@ describe('ADD2Characters tests', () => {
 
     const getTestData = () => {
         return [
-            {id: 1, name: 'test1'},
-            {id: 2, name: 'test2'},
-            {id: 3, name: 'test3'}
+            {id: 1, name: 'test1', str: 0, dex: 0, con: 0, int: 0, wis: 0, chr: 0, completionStep: 1},
+            {id: 2, name: 'test2', str: 0, dex: 0, con: 0, int: 0, wis: 0, chr: 0, completionStep: 1},
+            {id: 3, name: 'test3', str: 0, dex: 0, con: 0, int: 0, wis: 0, chr: 0, completionStep: 1}
         ];
     }
 });

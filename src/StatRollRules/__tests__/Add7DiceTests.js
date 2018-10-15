@@ -1,18 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import sinon from 'sinon';
 import Add7Dice from '../Add7Dice';
-import Add7DiceDisplay from '../Add7DiceDisplay';
-import ServerGateway from "../../ServerGateway";
 
 describe('Add7Dice tests', () => {
-    it('should render the top-level div and controls', () => {
-        const component = shallow(<Add7Dice/>);
-        expect(component.find('div')).toHaveLength(1);
-        expect(component.find('div button')).toHaveLength(2);
-        expect(component.find(Add7DiceDisplay)).toHaveLength(1);
-    });
-
     describe('Save Stats button', () => {
         let updateFunc, component;
 
@@ -55,27 +45,23 @@ describe('Add7Dice tests', () => {
     });
 
     describe('Roll Stats button', () => {
-        let xhr, requests, consoleError;
+        let component;
+        function mockGateway() {return {
+            rollStatsNew: () => {return [[1], [2], [3], [4], [5], [6], [1]]}
+        }}
+        function tick() {
+            return new Promise(resolve => {setTimeout(resolve, 0)});
+        }
         beforeEach(() => {
-            consoleError = jest.fn();
-            console.error = consoleError;
-            xhr = sinon.useFakeXMLHttpRequest();
-            requests = [];
-            xhr.onCreate = function(xhr) {
-                requests.push(xhr);
-            }.bind(this);
-        });
-        afterEach(() => {
-            xhr.restore();
+            component = shallow(<Add7Dice gateway={mockGateway()}/>);
         });
 
-        it('resets the stats of selectedChar in state to 8', () => {
-            const component = shallow(<Add7Dice gateway={new ServerGateway()}/>);
+        it('resets the stats of selectedChar in state to 8', async () => {
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3}});
 
             component.find('button').at(0).simulate('click');
+            await tick();
 
-            requests[0].respond(200, {'Content-Type': 'application/json'}, '{}');
             expect(component.state().selectedChar.str).toBe(8);
             expect(component.state().selectedChar.dex).toBe(8);
             expect(component.state().selectedChar.con).toBe(8);
@@ -84,16 +70,13 @@ describe('Add7Dice tests', () => {
             expect(component.state().selectedChar.chr).toBe(8);
         });
 
-        it('populates the expected roll objects with the response data', () => {
-            const component = shallow(<Add7Dice gateway={new ServerGateway()}/>);
+        it('populates the expected roll objects with the response data', async () => {
             component.setState({selectedChar: {}});
-            const responseData = [[1], [2], [3], [4], [5], [6], [1]];
-            const responseJson = JSON.stringify(responseData);
 
             component.find('button').at(0).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'application/json'}, responseJson);
-            const rollObjects = component.state().rolls;
+            await tick();
 
+            const rollObjects = component.state().rolls;
             assertRollObject(rollObjects[0], 0, false, 1);
             assertRollObject(rollObjects[1], 1, false, 2);
             assertRollObject(rollObjects[2], 2, false, 3);
@@ -101,16 +84,6 @@ describe('Add7Dice tests', () => {
             assertRollObject(rollObjects[4], 4, false, 5);
             assertRollObject(rollObjects[5], 5, false, 6);
             assertRollObject(rollObjects[6], 6, false, 1);
-        });
-
-        it('writes to console.error if add7 server call fails', () => {
-            const component = shallow(<Add7Dice gateway={new ServerGateway()}/>);
-
-            component.find('button').at(0).simulate('click');
-            requests[0].respond(500, '', 'test add7 error');
-
-            expect(consoleError).toHaveBeenCalledTimes(1);
-            expect(consoleError).toHaveBeenCalledWith('test add7 error');
         });
 
         const assertRollObject = (roll, expectedId, shouldBeAssigned, expectedValue) => {

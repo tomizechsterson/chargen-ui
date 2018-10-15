@@ -11,21 +11,18 @@ export default class Add7Dice extends Component {
         this.rollStats = this.rollStats.bind(this);
     }
 
-    rollStats() {
+    async rollStats() {
         const {gateway} = this.props;
         let currentChar = {...this.state.selectedChar};
         currentChar.str = currentChar.dex = currentChar.con =
             currentChar.int = currentChar.wis = currentChar.chr = 8;
         let statRolls = [];
 
-        gateway.rollStats('rollstats/AddSevenDice', function(response) {
-            for(let i = 0; i < response.length; i++) {
-                statRolls.push({id: i, assigned: false, value: response[i][0]});
-            }
-            this.setState({rolls: statRolls, selectedChar: currentChar});
-        }.bind(this), function(error) {
-            console.error(error);
-        });
+        const rolls = await gateway.rollStatsNew('rollstats/AddSevenDice');
+        for(let i = 0; i < rolls.length; i++) {
+            statRolls.push({id: i, assigned: false, value: rolls[i][0]});
+        }
+        this.setState({rolls: statRolls, selectedChar: currentChar});
     }
 
     handleUpdate() {

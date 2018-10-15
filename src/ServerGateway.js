@@ -32,6 +32,14 @@ export default class ServerGateway {
         this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + rollRule);
     };
 
+    rollStatsNew = async (rollRule) => {
+        const response = await fetch(Urls.ADD2Url() + rollRule, {headers: {'Content-type': 'application/json'}});
+        if(response.ok)
+            return await response.json();
+        else
+            console.error(response);
+    };
+
     getRaces = async (character) => {
         const c = character;
         const url = [];

@@ -42,30 +42,37 @@ describe('ADD2 Final Attributes Tests', () => {
 
     describe('Roll Vitals Buttons', () => {
         let component;
-        function mockGateway() {return {getHWA: () => {return [70, 150, 25]}, getHPGP: () => {return [7, 8]},
+        function mockGateway() {return {getHWA: () => {return [70, 150, 25]}, getHPGP: () => {return [7, 90]},
             getFinalAttributes: () => {return [1, 2, 3, 4, 5, 6]}}}
         beforeEach(() => {
             component = shallow(<ADD2FinalAttributes selectedChar={{}} gateway={mockGateway()}/>);
         });
 
+        function tick() {
+            return new Promise(resolve => {setTimeout(resolve, 0)})
+        }
+
         it('HWA button updates the height, weight, and age of the selected character', async () => {
             component.find('button').at(0).simulate('click');
+            await tick();
 
-//            expect(component.state().height).toBe(70);
-//            expect(component.state().weight).toBe(150);
-//            expect(component.state().age).toBe(25);
+            expect(component.state().height).toBe(70);
+            expect(component.state().weight).toBe(150);
+            expect(component.state().age).toBe(25);
         });
 
         it('Hp/Gp button updates the HP and starting funds of the selected character', async () => {
             component.find('button').at(1).simulate('click');
+            await tick();
 
-//            expect(component.state().hp).toBe(7);
-//            expect(component.state().funds).toBe(90);
+            expect(component.state().hp).toBe(7);
+            expect(component.state().funds).toBe(90);
         });
 
-        it('if move rate != 0, does not update the move rate and saving throws', () => {
+        it('if move rate != 0, does not update the move rate and saving throws', async () => {
             component.setState({moveRate: 1, paralyze: 9, rod: 9, petrification: 9, breath: 9, spell: 9});
             component.find('button').at(1).simulate('click');
+            await tick();
 
             expect(component.state().moveRate).toBe(1);
             expect(component.state().paralyze).toBe(9);

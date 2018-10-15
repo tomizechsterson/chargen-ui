@@ -12,7 +12,7 @@ export default class Assignment extends Component {
         this.handleUpdate = this.handleUpdate.bind(this);
     }
 
-    rollStats() {
+    async rollStats() {
         const {double, gateway} = this.props;
         let currentChar = {...this.state.selectedChar};
         currentChar.str = currentChar.dex = currentChar.con =
@@ -20,14 +20,11 @@ export default class Assignment extends Component {
         let statRolls = [];
         const serviceMethod = double ? 'assignmentDouble' : 'assignment';
 
-        gateway.rollStats('rollstats/' + serviceMethod, function(response) {
-            for(let i = 0; i < response.length; i++) {
-                statRolls.push({id: i, assigned: false, text: ' (' + response[i].join(' + ') + ')', value: response[i].reduce((a, b) => a + b, 0)});
-            }
-            this.setState({rolls: statRolls, selectedChar: currentChar});
-        }.bind(this), function(error) {
-            console.error(error);
-        });
+        const rolls = await gateway.rollStatsNew('rollstats/' + serviceMethod);
+        for(let i = 0; i < rolls.length; i++) {
+            statRolls.push({id: i, assigned: false, text: ' (' + rolls[i].join(' + ') + ')', value: rolls[i].reduce((a, b) => a + b, 0)});
+        }
+        this.setState({rolls: statRolls, selectedChar: currentChar});
     }
 
     handleUpdate() {

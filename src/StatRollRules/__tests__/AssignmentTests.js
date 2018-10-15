@@ -1,17 +1,10 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import sinon from 'sinon';
 import Assignment from '../Assignment';
 import AssignmentDisplay from "../AssignmentDisplay";
 import Assignment2xDisplay from "../Assignment2xDisplay";
-import ServerGateway from "../../ServerGateway";
 
 describe('Assignment component tests', () => {
-    it('renders a top-level div', () => {
-        const component = shallow(<Assignment/>);
-        expect(component.find('div')).toHaveLength(1);
-    });
-
     it('renders AssignmentDisplay if double prop is false', () => {
         const component = shallow(<Assignment double={false}/>);
         expect(component.find(AssignmentDisplay)).toHaveLength(1);
@@ -109,28 +102,26 @@ describe('Assignment component tests', () => {
     });
 
     describe('Roll Stats button', () => {
-        let xhr, requests, consoleError;
-
+        let component;
+        function mockGateway() {return {
+            rollStatsNew: (rollRule) => {return rollRule === 'rollstats/assignmentDouble'
+                ? [[1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6], [1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6]]
+                : [[1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6]]
+            }
+        }}
+        function tick() {
+            return new Promise(resolve => {setTimeout(resolve, 0)});
+        }
         beforeEach(() => {
-            consoleError = jest.fn();
-            console.error = consoleError;
-            xhr = sinon.useFakeXMLHttpRequest();
-            requests = [];
-            xhr.onCreate = function(xhr) {
-                requests.push(xhr);
-            }.bind(this);
-        });
-        afterEach(() => {
-            xhr.restore();
+            component = shallow(<Assignment gateway={mockGateway()}/>);
         });
 
-        it('resets the stats of the selectedChar in state on response status 200', () => {
-            const component = shallow(<Assignment gateway={new ServerGateway()}/>);
+        it('resets the stats of the selectedChar in state on response status 200', async () => {
             component.setState({selectedChar: {str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3}});
 
             component.find('input').at(0).simulate('click');
+            await tick();
 
-            requests[0].respond(200, {'Content-Type': 'application/json'}, '{}');
             expect(component.state().selectedChar.str).toBeUndefined();
             expect(component.state().selectedChar.dex).toBeUndefined();
             expect(component.state().selectedChar.con).toBeUndefined();
@@ -139,52 +130,37 @@ describe('Assignment component tests', () => {
             expect(component.state().selectedChar.chr).toBeUndefined();
         });
 
-        it('makes a request that ends with rollstats/assignment when double prop is false', () => {
-            const component = shallow(<Assignment double={false} gateway={new ServerGateway()}/>);
-            component.setState({selectedChar: {}});
+        it('the component has 6 rolls returned when double is false', async () => {
+            const component = shallow(<Assignment double={false} gateway={mockGateway()}/>);
 
             component.find('input').at(0).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'application/json'}, '{}');
+            await tick();
 
-            expect(requests[0].url).toEqual(expect.stringMatching(/rollstats\/assignment$/));
+            expect(component.state().rolls).toHaveLength(6);
         });
 
-        it('makes a request that ends with rollstats/assignmentDouble when double prop is true', () => {
-            const component = shallow(<Assignment double={true} gateway={new ServerGateway()}/>);
-            component.setState({selectedChar: {}});
+        it('the component has 12 rolls returned from the gateway when double is true', async () => {
+            const component = shallow(<Assignment double={true} gateway={mockGateway()}/>);
 
             component.find('input').at(0).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'application/json'}, '{}');
+            await tick();
 
-            expect(requests[0].url).toEqual(expect.stringMatching(/rollstats\/assignmentDouble$/));
+            expect(component.state().rolls).toHaveLength(12);
         });
 
-        it('populates the expected roll objects with the response data with status 200', () => {
-            const component = shallow(<Assignment gateway={new ServerGateway()}/>);
+        it('populates the expected roll objects with the response data', async () => {
             component.setState({selectedChar: {}});
-            const responseData = [[1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6]];
-            const responseJson = JSON.stringify(responseData);
 
             component.find('input').at(0).simulate('click');
-            requests[0].respond(200, {'Content-Type': 'application/json'}, responseJson);
+            await tick();
+
             const rollObjects = component.state().rolls;
-
             assertRollObject(rollObjects[0], 0, false, ' (1 + 1 + 1)', 3);
             assertRollObject(rollObjects[1], 1, false, ' (1 + 1 + 2)', 4);
             assertRollObject(rollObjects[2], 2, false, ' (1 + 1 + 3)', 5);
             assertRollObject(rollObjects[3], 3, false, ' (1 + 1 + 4)', 6);
             assertRollObject(rollObjects[4], 4, false, ' (1 + 1 + 5)', 7);
             assertRollObject(rollObjects[5], 5, false, ' (1 + 1 + 6)', 8);
-        });
-
-        it('writes to console.error if assignment server call fails', () => {
-            const component = shallow(<Assignment gateway={new ServerGateway()}/>);
-
-            component.find('input').at(0).simulate('click');
-            requests[0].respond(500, '', 'test assignment error');
-
-            expect(consoleError).toHaveBeenCalledTimes(1);
-            expect(consoleError).toHaveBeenCalledWith('test assignment error');
         });
 
         const assertRollObject = (roll, expectedId, shouldBeAssigned, expectedText, expectedValue) => {

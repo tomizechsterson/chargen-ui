@@ -18,19 +18,16 @@ export default class RollTwice extends Component {
         return total1 > total2 ? total1 : total2;
     }
 
-    rollStats() {
+    async rollStats() {
         const {selectedChar, gateway} = this.props;
-        gateway.rollStats('rollstats/rolltwice', function(response) {
-            selectedChar.str = RollTwice.getHigherRoll(response[0], response[1]);
-            selectedChar.dex = RollTwice.getHigherRoll(response[2], response[3]);
-            selectedChar.con = RollTwice.getHigherRoll(response[4], response[5]);
-            selectedChar.int = RollTwice.getHigherRoll(response[6], response[7]);
-            selectedChar.wis = RollTwice.getHigherRoll(response[8], response[9]);
-            selectedChar.chr = RollTwice.getHigherRoll(response[10], response[11]);
-            this.setState({rolls: response, selectedChar: selectedChar});
-        }.bind(this), function(error) {
-            console.error(error);
-        });
+        const stats = await gateway.rollStatsNew('rollstats/rolltwice');
+        selectedChar.str = RollTwice.getHigherRoll(stats[0], stats[1]);
+        selectedChar.dex = RollTwice.getHigherRoll(stats[2], stats[3]);
+        selectedChar.con = RollTwice.getHigherRoll(stats[4], stats[5]);
+        selectedChar.int = RollTwice.getHigherRoll(stats[6], stats[7]);
+        selectedChar.wis = RollTwice.getHigherRoll(stats[8], stats[9]);
+        selectedChar.chr = RollTwice.getHigherRoll(stats[10], stats[11]);
+        this.setState({rolls: stats, selectedChar: selectedChar});
     }
 
     handleUpdate() {

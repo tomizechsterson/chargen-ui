@@ -22,7 +22,7 @@ export default class RollFour extends Component {
 
     async rollStats() {
         const {selectedChar, gateway} = this.props;
-        const rolls = await gateway.rollStatsNew('rollstats/rollfour');
+        const rolls = await gateway.rollStats('rollstats/rollfour');
         selectedChar.str = RollFour.addThreeLargest(rolls[0]);
         selectedChar.dex = RollFour.addThreeLargest(rolls[1]);
         selectedChar.con = RollFour.addThreeLargest(rolls[2]);

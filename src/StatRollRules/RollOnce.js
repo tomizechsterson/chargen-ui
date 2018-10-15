@@ -13,7 +13,7 @@ export default class RollOnce extends Component {
 
     async rollStats() {
         const {selectedChar, gateway} = this.props;
-        const rolls = await gateway.rollStatsNew('rollstats/rollonce');
+        const rolls = await gateway.rollStats('rollstats/rollonce');
         selectedChar.str = rolls[0].reduce((a, b) => a + b, 0);
         selectedChar.dex = rolls[1].reduce((a, b) => a + b, 0);
         selectedChar.con = rolls[2].reduce((a, b) => a + b, 0);

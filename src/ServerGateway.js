@@ -23,7 +23,7 @@ export default class ServerGateway {
         await fetch(Urls.ADD2Url(), {method: 'post', headers: headers, body: JSON.stringify(character)});
     };
 
-    rollStatsNew = async (rollRule) => {
+    rollStats = async (rollRule) => {
         const response = await fetch(Urls.ADD2Url() + rollRule, {headers: {'Content-type': 'application/json'}});
         if(response.ok)
             return await response.json();

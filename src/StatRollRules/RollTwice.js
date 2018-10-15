@@ -20,7 +20,7 @@ export default class RollTwice extends Component {
 
     async rollStats() {
         const {selectedChar, gateway} = this.props;
-        const rolls = await gateway.rollStatsNew('rollstats/rolltwice');
+        const rolls = await gateway.rollStats('rollstats/rolltwice');
         selectedChar.str = RollTwice.getHigherRoll(rolls[0], rolls[1]);
         selectedChar.dex = RollTwice.getHigherRoll(rolls[2], rolls[3]);
         selectedChar.con = RollTwice.getHigherRoll(rolls[4], rolls[5]);

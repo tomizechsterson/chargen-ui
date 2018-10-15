@@ -18,7 +18,7 @@ export default class Add7Dice extends Component {
             currentChar.int = currentChar.wis = currentChar.chr = 8;
         let statRolls = [];
 
-        const rolls = await gateway.rollStatsNew('rollstats/AddSevenDice');
+        const rolls = await gateway.rollStats('rollstats/AddSevenDice');
         for(let i = 0; i < rolls.length; i++) {
             statRolls.push({id: i, assigned: false, value: rolls[i][0]});
         }

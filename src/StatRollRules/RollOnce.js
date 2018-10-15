@@ -13,14 +13,14 @@ export default class RollOnce extends Component {
 
     async rollStats() {
         const {selectedChar, gateway} = this.props;
-        const stats = await gateway.rollStatsNew('rollstats/rollonce');
-        selectedChar.str = stats[0].reduce((a, b) => a + b, 0);
-        selectedChar.dex = stats[1].reduce((a, b) => a + b, 0);
-        selectedChar.con = stats[2].reduce((a, b) => a + b, 0);
-        selectedChar.int = stats[3].reduce((a, b) => a + b, 0);
-        selectedChar.wis = stats[4].reduce((a, b) => a + b, 0);
-        selectedChar.chr = stats[5].reduce((a, b) => a + b, 0);
-        this.setState({rolls: stats, selectedChar: selectedChar});
+        const rolls = await gateway.rollStatsNew('rollstats/rollonce');
+        selectedChar.str = rolls[0].reduce((a, b) => a + b, 0);
+        selectedChar.dex = rolls[1].reduce((a, b) => a + b, 0);
+        selectedChar.con = rolls[2].reduce((a, b) => a + b, 0);
+        selectedChar.int = rolls[3].reduce((a, b) => a + b, 0);
+        selectedChar.wis = rolls[4].reduce((a, b) => a + b, 0);
+        selectedChar.chr = rolls[5].reduce((a, b) => a + b, 0);
+        this.setState({rolls: rolls, selectedChar: selectedChar});
     }
 
     handleUpdate() {

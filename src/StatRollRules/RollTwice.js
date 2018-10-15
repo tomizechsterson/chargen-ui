@@ -20,14 +20,14 @@ export default class RollTwice extends Component {
 
     async rollStats() {
         const {selectedChar, gateway} = this.props;
-        const stats = await gateway.rollStatsNew('rollstats/rolltwice');
-        selectedChar.str = RollTwice.getHigherRoll(stats[0], stats[1]);
-        selectedChar.dex = RollTwice.getHigherRoll(stats[2], stats[3]);
-        selectedChar.con = RollTwice.getHigherRoll(stats[4], stats[5]);
-        selectedChar.int = RollTwice.getHigherRoll(stats[6], stats[7]);
-        selectedChar.wis = RollTwice.getHigherRoll(stats[8], stats[9]);
-        selectedChar.chr = RollTwice.getHigherRoll(stats[10], stats[11]);
-        this.setState({rolls: stats, selectedChar: selectedChar});
+        const rolls = await gateway.rollStatsNew('rollstats/rolltwice');
+        selectedChar.str = RollTwice.getHigherRoll(rolls[0], rolls[1]);
+        selectedChar.dex = RollTwice.getHigherRoll(rolls[2], rolls[3]);
+        selectedChar.con = RollTwice.getHigherRoll(rolls[4], rolls[5]);
+        selectedChar.int = RollTwice.getHigherRoll(rolls[6], rolls[7]);
+        selectedChar.wis = RollTwice.getHigherRoll(rolls[8], rolls[9]);
+        selectedChar.chr = RollTwice.getHigherRoll(rolls[10], rolls[11]);
+        this.setState({rolls: rolls, selectedChar: selectedChar});
     }
 
     handleUpdate() {

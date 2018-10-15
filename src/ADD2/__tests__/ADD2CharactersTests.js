@@ -22,6 +22,14 @@ describe('ADD2Characters tests', () => {
         expect(component.find('button').length).toBe(2);
     });
 
+    describe('Cover componentWillUnmount', () => {
+        it('properly calls lifecycle method to cover one-liner inside', () => {
+            const component = shallow(<ADD2Characters useTestData={true} serverGateway={baseMockGateway()} />);
+            expect(component.isUnmounted).toBeFalsy();
+            component.instance().componentWillUnmount();
+        });
+    });
+
     describe('Selecting Characters', () => {
         it('selects when none is selected', () => {
             const testData = getTestData();

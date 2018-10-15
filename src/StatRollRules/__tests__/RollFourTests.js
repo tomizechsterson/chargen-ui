@@ -1,15 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import sinon from 'sinon';
 import RollFour from '../RollFour';
-import ServerGateway from "../../ServerGateway";
 
 describe('RollFour tests', () => {
-    it('renders the top-level div', () => {
-        const component = shallow(<RollFour/>);
-        expect(component.find('div')).toHaveLength(1);
-    });
-
     describe('Save Stats button', () => {
         it('does not call onUpdate if there are no rolls', () => {
             const updateFunc = jest.fn();
@@ -35,28 +28,21 @@ describe('RollFour tests', () => {
     });
 
     describe('Roll Stats button', () => {
-        let xhr, requests, consoleError;
+        let component;
+        function mockGateway() {return {
+            rollStatsNew: () => {return [[1, 1, 1, 1], [1, 1, 1, 2], [1, 1, 1, 3], [1, 1, 1, 4], [1, 1, 1, 5], [1, 1, 1, 6]]}
+        }}
+        function tick() {
+            return new Promise(resolve => {setTimeout(resolve, 0)});
+        }
         beforeEach(() => {
-            consoleError = jest.fn();
-            console.error = consoleError;
-            xhr = sinon.useFakeXMLHttpRequest();
-            requests = [];
-            xhr.onCreate = function(xhr) {
-                requests.push(xhr);
-            }.bind(this);
-        });
-        afterEach(() => {
-            xhr.restore();
+            component = shallow(<RollFour selectedChar={{id: 1}} gateway={mockGateway()}/>);
         });
 
-        it('sets state appropriately with return value of request', () => {
-            const component = shallow(<RollFour selectedChar={{id: 1}} gateway={new ServerGateway()}/>);
-            const data = [[1, 1, 1, 1], [1, 1, 1, 2], [1, 1, 1, 3], [1, 1, 1, 4], [1, 1, 1, 5], [1, 1, 1, 6]];
-            const dataJson = JSON.stringify(data);
-
+        it('sets state appropriately with return value of request', async () => {
             component.find('input').at(0).simulate('click');
+            await tick();
 
-            requests[0].respond(200, {'Content-Type': 'application/json'}, dataJson);
             expect(component.state().selectedChar.id).toBe(1);
             expect(component.state().selectedChar.str).toBe(3);
             expect(component.state().selectedChar.dex).toBe(4);
@@ -65,16 +51,6 @@ describe('RollFour tests', () => {
             expect(component.state().selectedChar.wis).toBe(7);
             expect(component.state().selectedChar.chr).toBe(8);
             expect(component.state().rolls).toEqual([[1, 1, 1, 1], [2, 1, 1, 1], [3, 1, 1, 1], [4, 1, 1, 1], [5, 1, 1, 1], [6, 1, 1, 1]]);
-        });
-
-        it('writes to console.error if rollFour server call fails', () => {
-            const component = shallow(<RollFour gateway={new ServerGateway()}/>);
-
-            component.find('input').at(0).simulate('click');
-            requests[0].respond(500, '', 'test rollFour error');
-
-            expect(consoleError).toHaveBeenCalledTimes(1);
-            expect(consoleError).toHaveBeenCalledWith('test rollFour error');
         });
     });
 });

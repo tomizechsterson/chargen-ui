@@ -20,19 +20,16 @@ export default class RollFour extends Component {
         return total;
     }
 
-    rollStats() {
+    async rollStats() {
         const {selectedChar, gateway} = this.props;
-        gateway.rollStats('rollstats/rollfour', function(response) {
-            selectedChar.str = RollFour.addThreeLargest(response[0]);
-            selectedChar.dex = RollFour.addThreeLargest(response[1]);
-            selectedChar.con = RollFour.addThreeLargest(response[2]);
-            selectedChar.int = RollFour.addThreeLargest(response[3]);
-            selectedChar.wis = RollFour.addThreeLargest(response[4]);
-            selectedChar.chr = RollFour.addThreeLargest(response[5]);
-            this.setState({rolls: response, selectedChar: selectedChar});
-        }.bind(this), function(error) {
-            console.error(error);
-        });
+        const rolls = await gateway.rollStatsNew('rollstats/rollfour');
+        selectedChar.str = RollFour.addThreeLargest(rolls[0]);
+        selectedChar.dex = RollFour.addThreeLargest(rolls[1]);
+        selectedChar.con = RollFour.addThreeLargest(rolls[2]);
+        selectedChar.int = RollFour.addThreeLargest(rolls[3]);
+        selectedChar.wis = RollFour.addThreeLargest(rolls[4]);
+        selectedChar.chr = RollFour.addThreeLargest(rolls[5]);
+        this.setState({rolls: rolls, selectedChar: selectedChar});
     }
 
     handleUpdate() {

@@ -30,7 +30,7 @@ describe('RollOnce tests', () => {
     describe('Roll Stats Button', () => {
         let component;
         function mockGateway() {return {
-            rollStatsNew: () => {return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]]}
+            rollStats: () => {return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]]}
         }}
         function tick() {
             return new Promise(resolve => {setTimeout(resolve, 0)});

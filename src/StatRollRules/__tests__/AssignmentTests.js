@@ -104,7 +104,7 @@ describe('Assignment component tests', () => {
     describe('Roll Stats button', () => {
         let component;
         function mockGateway() {return {
-            rollStatsNew: (rollRule) => {return rollRule === 'rollstats/assignmentDouble'
+            rollStats: (rollRule) => {return rollRule === 'rollstats/assignmentDouble'
                 ? [[1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6], [1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6]]
                 : [[1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 1, 4], [1, 1, 5], [1, 1, 6]]
             }

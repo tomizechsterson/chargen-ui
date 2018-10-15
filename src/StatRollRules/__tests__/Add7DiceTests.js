@@ -47,7 +47,7 @@ describe('Add7Dice tests', () => {
     describe('Roll Stats button', () => {
         let component;
         function mockGateway() {return {
-            rollStatsNew: () => {return [[1], [2], [3], [4], [5], [6], [1]]}
+            rollStats: () => {return [[1], [2], [3], [4], [5], [6], [1]]}
         }}
         function tick() {
             return new Promise(resolve => {setTimeout(resolve, 0)});

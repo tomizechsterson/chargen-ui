@@ -1,11 +1,6 @@
 import Urls from './ApiUrls';
-import ServerCall from './ServerCall';
 
 export default class ServerGateway {
-    constructor() {
-        this.serverCall = new ServerCall();
-    }
-
     getCharacters = async () => {
         const response = await fetch(Urls.ADD2Url(), {headers: {'Content-type': 'application/json'}});
         if(response.ok)
@@ -26,10 +21,6 @@ export default class ServerGateway {
     createCharacter = async (character) => {
         const headers = new Headers({'Content-type': 'application/json'});
         await fetch(Urls.ADD2Url(), {method: 'post', headers: headers, body: JSON.stringify(character)});
-    };
-
-    rollStats = (rollRule, onResponse, onError) => {
-        this.serverCall.doGet(onResponse, onError, Urls.ADD2Url() + rollRule);
     };
 
     rollStatsNew = async (rollRule) => {

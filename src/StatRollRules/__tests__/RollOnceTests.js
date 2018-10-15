@@ -3,11 +3,6 @@ import {shallow} from 'enzyme';
 import RollOnce from '../RollOnce';
 
 describe('RollOnce tests', () => {
-    it('renders a top-level div tag', () => {
-        const component = shallow(<RollOnce/>);
-        expect(component.find('div')).toHaveLength(1);
-    });
-
     describe('Save Stats button', () => {
         it('if there are no rolls, onUpdate is not called', () => {
             const updateFunc = jest.fn();

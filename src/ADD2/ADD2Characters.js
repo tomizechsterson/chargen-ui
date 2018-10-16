@@ -48,7 +48,7 @@ export default class ADD2Characters extends Component {
 
     async handleDelete(id) {
         const {useTestData, serverGateway} = this.props;
-        const {characterData, selected} = this.state;
+        const {characterData} = this.state;
         const index = characterData.findIndex(function (o) {
             return o.id === id;
         });
@@ -58,8 +58,7 @@ export default class ADD2Characters extends Component {
         if(window.confirm('Are you sure you want to delete ' + charToDelete.name + ', the ' + charToDelete.race + ' ' + charToDelete.className + '?')) {
             characterData.splice(index, 1);
 
-            if(charToDelete.id === selected.id)
-                this.setState({selected: null});
+            this.setState({selected: null});
 
             if (!useTestData)
                 await serverGateway.deleteCharacter(id);

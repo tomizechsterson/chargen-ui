@@ -58,6 +58,7 @@ describe('ADD2Characters tests', () => {
             const component = shallow(<ADD2Characters useTestData={false} serverGateway={baseMockGateway()}/>);
             component.setState({characterData: [], newCharName: 'newChar'});
             const newNameInput = component.find('input');
+            newNameInput.simulate('keyPress', {key: 'a'});
             newNameInput.simulate('keyPress', {key: 'Enter'});
 
             expect(component.state().characterData).toHaveLength(1);
@@ -150,7 +151,7 @@ describe('ADD2Characters tests', () => {
 
         it('updates state properly for step 3', async () => {
             const testData = getTestData();
-            const component = mount(<ADD2Characters useTestData={false} serverGateway={mockGateway()}/>);
+            const component = mount(<ADD2Characters useTestData={true} serverGateway={mockGateway()}/>);
             component.setState({characterData: testData, selected: testData[2]});
             const table = component.find(ADD2CharacterTable);
             table.find('tbody tr').at(2).simulate('click');
@@ -168,13 +169,40 @@ describe('ADD2Characters tests', () => {
         it('Removes from state', () => {
             const testData = getTestData();
             window.confirm = jest.fn(() => true);
+            const component = shallow(<ADD2Characters useTestData={true} serverGateway={baseMockGateway()}/>);
+            component.setState({characterData: testData, selected: testData[0]});
+            const deleteButton = component.find('button').at(1);
+            expect(component.state().characterData).toHaveLength(3);
+
+            deleteButton.simulate('click');
+
+            expect(component.state().characterData).toHaveLength(2);
+        });
+
+        it('Removes from state and calls gateway method', () => {
+            const testData = getTestData();
+            window.confirm = jest.fn(() => true);
             const component = shallow(<ADD2Characters useTestData={false} serverGateway={baseMockGateway()}/>);
             component.setState({characterData: testData, selected: testData[0]});
             const deleteButton = component.find('button').at(1);
             expect(component.state().characterData).toHaveLength(3);
+
             deleteButton.simulate('click');
 
             expect(component.state().characterData).toHaveLength(2);
+        });
+
+        it('Does not delete if cancel is clicked', () => {
+            const testData = getTestData();
+            window.confirm = jest.fn(() => false);
+            const component = shallow(<ADD2Characters useTestData={true} serverGateway={baseMockGateway()}/>);
+            component.setState({characterData: testData, selected: testData[0]});
+            const deleteButton = component.find('button').at(1);
+            expect(component.state().characterData).toHaveLength(3);
+
+            deleteButton.simulate('click');
+
+            expect(component.state().characterData).toHaveLength(3);
         });
     });
 

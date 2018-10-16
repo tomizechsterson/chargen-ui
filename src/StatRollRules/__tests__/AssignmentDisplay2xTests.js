@@ -120,6 +120,13 @@ describe('Assignment2xDisplay tests', () => {
                 assertStatAssignment(component, component.instance().props.selectedChar.chr);
             });
 
+            it('invalid stat', () => {
+                const testRolls = [{id: 1, value: 3, assigned: false}];
+                const component = shallow(<Assignment2xDisplay selectedChar={{}} rolls={testRolls}/>);
+                component.setState({selectedRoll: testRolls[0], selectedStat: 'WRONG'});
+                component.find('input').at(0).simulate('click');
+            });
+
             const assignStat = (stat) => {
                 const testRolls = [{id: 1, value: 3, assigned: false}];
                 const component = shallow(<Assignment2xDisplay selectedChar={{}} rolls={testRolls}/>);

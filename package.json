@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
     "react-router-dom": "^4.2.2",
     "react-scripts": "^1.1.5"
   },
@@ -16,9 +16,9 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
-    "enzyme": "^3.4.3",
-    "enzyme-adapter-react-16": "^1.2.0",
-    "sinon": "^6.2.0"
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "sinon": "^6.3.5"
   },
   "jest": {
     "collectCoverageFrom": [

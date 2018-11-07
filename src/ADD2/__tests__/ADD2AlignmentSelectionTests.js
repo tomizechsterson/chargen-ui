@@ -29,33 +29,23 @@ describe('ADD2 Alignment Selection Tests', () => {
         expect(component.text()).toContain('test2');
     });
 
-    it('alignment drop down changes state to selected alignment', () => {
-        const component = shallow(<ADD2AlignmentSelection selectedChar={{availableAlignments: []}}/>);
-        const dropDown = component.find('select');
+    describe('alignment drop down', () => {
+        it('calls update function when a valid alignment is selected', () => {
+            const updateFunc = jest.fn();
+            const component = shallow(<ADD2AlignmentSelection selectedChar={{availableAlignments: []}} onUpdate={updateFunc}/>);
+            const dropDown = component.find('select');
 
-        dropDown.simulate('change', {target: {value: 'test1'}});
-        expect(component.state().selectedAlignment).toBe('test1');
-    });
-
-    describe('Save Button', () => {
-        let updateFunc, testChar, component;
-        beforeEach(() => {
-            updateFunc = jest.fn();
-            testChar = {completionStep: 4, availableAlignments: []};
-            component = shallow(<ADD2AlignmentSelection onUpdate={updateFunc} selectedChar={testChar}/>);
-        });
-
-        it('does not call onUpdate if no alignment is selected', () => {
-            component.find('button').simulate('click');
-            expect(updateFunc).toHaveBeenCalledTimes(0);
-        });
-
-        it('calls onUpdate with the expected alignment and increments completionStep', () => {
-            component.setState({selectedAlignment: 'testAlignment'});
-            component.find('button').simulate('click');
-
+            dropDown.simulate('change', {target: {value: 'test1'}});
             expect(updateFunc).toHaveBeenCalledTimes(1);
-            expect(updateFunc).toHaveBeenCalledWith({completionStep: 5, alignment: 'testAlignment', availableAlignments: []});
+        });
+
+        it('does not call update function if no alignment selected (blank entry)', () => {
+            const updateFunc = jest.fn();
+            const component = shallow(<ADD2AlignmentSelection selectedChar={{availableAlignments: []}} onUpdate={updateFunc}/>);
+            const dropDown = component.find('select');
+
+            dropDown.simulate('change', {target: {value: ''}});
+            expect(updateFunc).toHaveBeenCalledTimes(0);
         });
     });
 });

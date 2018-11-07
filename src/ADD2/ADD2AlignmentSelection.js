@@ -3,27 +3,21 @@ import React, {Component} from 'react';
 export default class ADD2AlignmentSelection extends Component {
     constructor(props) {
         super(props);
-        this.state = {selectedAlignment: ''};
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     handleChange(e) {
-        this.setState({selectedAlignment: e.target.value});
+        if(e.target.value) {
+            const {selectedChar, onUpdate} = this.props;
+            ADD2AlignmentSelection.saveCharacter(selectedChar, e.target.value, onUpdate);
+        }
     }
 
-    handleUpdate() {
-        const {selectedAlignment} = this.state;
-        const {selectedChar, onUpdate} = this.props;
-
-        if(!selectedAlignment)
-            alert('must select an alignment to save');
-        else {
-            selectedChar.alignment = selectedAlignment;
-            selectedChar.completionStep++;
-            onUpdate(selectedChar);
-        }
+    static saveCharacter(selectedChar, alignment, onUpdate) {
+        selectedChar.alignment = alignment;
+        selectedChar.completionStep++;
+        onUpdate(selectedChar);
     }
 
     render() {
@@ -47,7 +41,6 @@ export default class ADD2AlignmentSelection extends Component {
                     <option key={-1} value=''/>
                     {options}
                 </select>
-                <button onClick={this.handleUpdate}>Save</button>
             </div>
         );
     }

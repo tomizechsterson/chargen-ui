@@ -29,7 +29,7 @@ describe('ADD2 Class Selection Tests', () => {
     });
 
     describe('Class Drop Down', () => {
-        it('changes state to selected class', () => {
+        it('calls update function if a valid class was selected', () => {
             const updateFunc = jest.fn();
             const component = shallow(<ADD2ClassSelection selectedChar={{availableClasses: []}} onUpdate={updateFunc}/>);
             const classDropDown = component.find('select');

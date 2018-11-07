@@ -158,7 +158,6 @@ describe('ADD2Characters tests', () => {
             const classSelection = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2ClassSelection);
             classSelection.find('select').simulate('change', {target: {value: 'testClass'}});
 
-            classSelection.find('button').at(0).simulate('click');
             await tick();
 
             expect(component.state().characterData[2].className).toBe('testClass');

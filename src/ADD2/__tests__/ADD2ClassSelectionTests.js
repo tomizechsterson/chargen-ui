@@ -30,33 +30,21 @@ describe('ADD2 Class Selection Tests', () => {
 
     describe('Class Drop Down', () => {
         it('changes state to selected class', () => {
-            const component = shallow(<ADD2ClassSelection selectedChar={{availableClasses: []}}/>);
+            const updateFunc = jest.fn();
+            const component = shallow(<ADD2ClassSelection selectedChar={{availableClasses: []}} onUpdate={updateFunc}/>);
             const classDropDown = component.find('select');
 
             classDropDown.simulate('change', {target: {value: 'test1'}});
-            expect(component.state().selectedClass).toBe('test1');
-        });
-    });
-
-    describe('Save Button', () => {
-        let updateFunc, component;
-        beforeEach(() => {
-            updateFunc = jest.fn();
-            component = shallow(<ADD2ClassSelection onUpdate={updateFunc} selectedChar={{completionStep: 3, availableClasses: []}}/>);
-        });
-
-        it('does not call onUpdate if no class is selected', () => {
-            component.find('button').simulate('click');
-
-            expect(updateFunc).toHaveBeenCalledTimes(0);
-        });
-
-        it('calls onUpdate with the expected class and increments completionStep', () => {
-            component.setState({selectedClass: 'testClass'});
-            component.find('button').simulate('click');
-
             expect(updateFunc).toHaveBeenCalledTimes(1);
-            expect(updateFunc).toHaveBeenCalledWith({completionStep: 4, className: 'testClass', availableClasses: []});
+        });
+
+        it('does not call update function if no class is selected (selected blank entry)', () => {
+            const updateFunc = jest.fn();
+            const component = shallow(<ADD2ClassSelection selectedChar={{availableClasses: []}} onUpdate={updateFunc}/>);
+            const classDropDown = component.find('select');
+
+            classDropDown.simulate('change', {target: {value: ''}});
+            expect(updateFunc).toHaveBeenCalledTimes(0);
         });
     });
 });

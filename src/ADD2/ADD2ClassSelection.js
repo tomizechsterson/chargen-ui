@@ -3,27 +3,21 @@ import React, {Component} from 'react';
 export default class ADD2ClassSelection extends Component {
     constructor(props) {
         super(props);
-        this.state = {selectedClass: ''};
 
         this.handleClassChange = this.handleClassChange.bind(this);
-        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     handleClassChange(e) {
-        this.setState({selectedClass: e.target.value});
+        if(e.target.value) {
+            const {selectedChar, onUpdate} = this.props;
+            ADD2ClassSelection.saveCharacter(selectedChar, e.target.value, onUpdate);
+        }
     }
 
-    handleUpdate() {
-        const {selectedClass} = this.state;
-        const {selectedChar, onUpdate} = this.props;
-
-        if (!selectedClass)
-            alert('must select a class to save');
-        else {
-            selectedChar.className = selectedClass;
-            selectedChar.completionStep++;
-            onUpdate(selectedChar);
-        }
+    static saveCharacter(selectedChar, selectedClass, onUpdate) {
+        selectedChar.className = selectedClass;
+        selectedChar.completionStep++;
+        onUpdate(selectedChar);
     }
 
     render() {
@@ -46,7 +40,6 @@ export default class ADD2ClassSelection extends Component {
                     <option key={-1} value=''/>
                     {options}
                 </select>
-                <button onClick={this.handleUpdate}>Save</button>
             </div>
         );
     }

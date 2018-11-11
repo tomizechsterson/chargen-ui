@@ -45,6 +45,14 @@ describe('ADD2RaceSelection tests', () => {
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
 
+        it('clears out selected race and stat adjustments if the blank entry is seleted', () => {
+            component.setState({selectedRace: 'test', adjustments: [{}]});
+            component.find('select').simulate('change', {target: {value: ''}});
+
+            expect(component.instance().state.selectedRace).toBe('');
+            expect(component.instance().state.adjustments).toBeUndefined();
+        });
+
         it('calls onUpdate once with the expected race and gender and increments completionStep', () => {
             component.setState({selectedRace: 'testRace', adjustments: [{}]});
             component.find('input').at(1).simulate('change', {target: {value: 'F'}});

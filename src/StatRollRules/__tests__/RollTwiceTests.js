@@ -4,8 +4,9 @@ import RollTwice from '../RollTwice';
 
 describe('RollTwice tests', () => {
     describe('Save Stats button', () => {
-        /*it('if there are no rolls, onUpdate is not called', () => {
+        it('if there are no rolls, onUpdate is not called', () => {
             const updateFunc = jest.fn();
+            window.alert = jest.fn();
             const component = shallow(<RollTwice onUpdate={updateFunc}/>);
             component.setState({rolls: []});
 
@@ -13,7 +14,7 @@ describe('RollTwice tests', () => {
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
-*/
+
         it('if there are rolls, onUpdate is called once and completionStep is incremented', () => {
             const updateFunc = jest.fn();
             const testChar = {completionStep: 0};

@@ -116,10 +116,11 @@ describe('Add7DiceDisplay tests', () => {
             component.setState({selectedStat: 'test', selectedRoll: {}});
             expect(component.find('button').at(6).html()).not.toContain('disabled=""');
         });
-/*
+
         describe('Does not allow stats to exceed 18', () => {
             let component, testRolls;
             beforeEach(() => {
+                window.alert = jest.fn();
                 testRolls = [{value: 4}];
                 component = shallow(<Add7DiceDisplay rolls={testRolls} selectedChar={{str: 15, dex: 15, con: 15, int: 15, wis: 15, chr: 15}}/>);
             });
@@ -165,7 +166,7 @@ describe('Add7DiceDisplay tests', () => {
 
                 expect(component.instance().props.selectedChar.chr).toBe(15);
             });
-        });*/
+        });
 
         describe('Adds to stat and clears selected roll', () => {
             it('str', () => {

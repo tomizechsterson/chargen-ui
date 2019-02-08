@@ -4,7 +4,8 @@ import RollOnce from '../RollOnce';
 
 describe('RollOnce tests', () => {
     describe('Save Stats button', () => {
-        /*it('if there are no rolls, onUpdate is not called', () => {
+        it('if there are no rolls, onUpdate is not called', () => {
+            window.alert = jest.fn();
             const updateFunc = jest.fn();
             const component = shallow(<RollOnce onUpdate={updateFunc}/>);
             component.setState({rolls: []});
@@ -12,7 +13,7 @@ describe('RollOnce tests', () => {
             component.find('input').at(1).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
-        });*/
+        });
 
         it('if there are rolls, onUpdate is called once and completionStep is incremented', () => {
             const updateFunc = jest.fn();

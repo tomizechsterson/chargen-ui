@@ -32,13 +32,14 @@ describe('Add7Dice tests', () => {
             expect(propsChar.chr).toBe(8);
             expect(propsChar.completionStep).toBe(2);
         });
-/*
+
         it('does not call onUpdate if all rolls are not assigned', () => {
+            window.alert = jest.fn();
             component.setState({rolls: [{assigned: false}, {assigned: true}]});
             component.find('button').at(1).simulate('click');
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
-*/
+
         const getTestChar = () => {
             return {str: 3, dex: 4, con: 5, int: 6, wis: 7, chr: 8};
         };

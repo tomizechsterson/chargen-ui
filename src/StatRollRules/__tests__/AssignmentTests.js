@@ -32,9 +32,10 @@ describe('Assignment component tests', () => {
 
         beforeEach(() => {
             updateFunc = jest.fn();
+            window.alert = jest.fn();
             component = shallow(<Assignment onUpdate={updateFunc}/>);
         });
-/*
+
         it('does not call onUpdate if str is not assigned', () => {
             component.setState({selectedChar: {str: undefined, dex: 3, con: 3, int: 3, wis: 3, chr: 3}});
             component.find('input').at(1).simulate('click');
@@ -70,7 +71,7 @@ describe('Assignment component tests', () => {
             component.find('input').at(1).simulate('click');
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
-*/
+
         it('copies stats to selectedChar in props if all stats are assigned', () => {
             component = shallow(<Assignment selectedChar={{}} onUpdate={updateFunc}/>);
             component.setState({selectedChar: {str: 3, dex: 4, con: 5, int: 6, wis: 7, chr: 8}});

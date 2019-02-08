@@ -4,7 +4,8 @@ import RollFour from '../RollFour';
 
 describe('RollFour tests', () => {
     describe('Save Stats button', () => {
-        /*it('does not call onUpdate if there are no rolls', () => {
+        it('does not call onUpdate if there are no rolls', () => {
+            window.alert = jest.fn();
             const updateFunc = jest.fn();
             const component = shallow(<RollFour onUpdate={updateFunc}/>);
             component.setState({rolls: []});
@@ -13,7 +14,7 @@ describe('RollFour tests', () => {
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
-*/
+
         it('calls onUpdate once and increments completion step, if there are rolls', () => {
             const updateFunc = jest.fn();
             const testChar = {completionStep: 0};

@@ -31,10 +31,11 @@ describe('ADD2RaceSelection tests', () => {
         let updateFunc, component;
         beforeEach(() => {
             updateFunc = jest.fn();
+            window.alert = jest.fn();
             component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{completionStep: 2, str: 4, dex: 4, con: 4, int: 4, wis: 4, chr: 4, availableRaces: []}}/>);
             component.setState({adjustments: [{}]});
         });
-/*
+
         it('does not call onUpdate if no race is selected', () => {
             component.find('button').at(0).simulate('click');
 
@@ -48,7 +49,7 @@ describe('ADD2RaceSelection tests', () => {
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
-*/
+
         it('clears out selected race and stat adjustments if the blank entry is seleted', () => {
             component.setState({selectedRace: 'test', adjustments: [{}]});
             component.find('select').simulate('change', {target: {value: ''}});

@@ -132,7 +132,7 @@ describe('DD35 Character Table Tests', () => {
         it('calls the server with the expected id', () => {
             const component = shallow(<DD35CharacterTable gateway={mockGateway()}/>);
             component.setState({characterData: [{id: 1}, {id: 2}]});
-            
+
         });
     });
 });

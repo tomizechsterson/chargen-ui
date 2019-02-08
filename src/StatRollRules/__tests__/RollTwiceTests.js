@@ -1,14 +1,10 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import RollTwice from '../RollTwice';
-describe('RollTwice tests placeholder', () => {
-    it('does nothing', () => {
 
-    });
-});
-/*describe('RollTwice tests', () => {
+describe('RollTwice tests', () => {
     describe('Save Stats button', () => {
-        it('if there are no rolls, onUpdate is not called', () => {
+        /*it('if there are no rolls, onUpdate is not called', () => {
             const updateFunc = jest.fn();
             const component = shallow(<RollTwice onUpdate={updateFunc}/>);
             component.setState({rolls: []});
@@ -17,7 +13,7 @@ describe('RollTwice tests placeholder', () => {
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
-
+*/
         it('if there are rolls, onUpdate is called once and completionStep is incremented', () => {
             const updateFunc = jest.fn();
             const testChar = {completionStep: 0};
@@ -60,4 +56,4 @@ describe('RollTwice tests placeholder', () => {
                 [2, 3, 3], [2, 2, 3], [2, 2, 2], [1, 2, 2], [1, 1, 2], [1, 1, 1]]);
         });
     });
-});*/
+});

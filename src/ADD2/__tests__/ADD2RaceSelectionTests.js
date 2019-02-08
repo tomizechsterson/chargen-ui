@@ -6,7 +6,7 @@ describe('ADD2RaceSelection placeholder', () => {
 
     });
 });
-/*describe('ADD2RaceSelection tests', () => {
+describe('ADD2RaceSelection tests', () => {
     it('renders the available races', () => {
         const testChar = {availableRaces: ['race1', 'race2']};
         const component = shallow(<ADD2RaceSelection selectedChar={testChar}/>);
@@ -34,7 +34,7 @@ describe('ADD2RaceSelection placeholder', () => {
             component = shallow(<ADD2RaceSelection onUpdate={updateFunc} selectedChar={{completionStep: 2, str: 4, dex: 4, con: 4, int: 4, wis: 4, chr: 4, availableRaces: []}}/>);
             component.setState({adjustments: [{}]});
         });
-
+/*
         it('does not call onUpdate if no race is selected', () => {
             component.find('button').at(0).simulate('click');
 
@@ -48,7 +48,7 @@ describe('ADD2RaceSelection placeholder', () => {
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
-
+*/
         it('clears out selected race and stat adjustments if the blank entry is seleted', () => {
             component.setState({selectedRace: 'test', adjustments: [{}]});
             component.find('select').simulate('change', {target: {value: ''}});
@@ -92,4 +92,4 @@ describe('ADD2RaceSelection placeholder', () => {
             expect(component.instance().props.selectedChar.chr).toBe(9);
         });
     });
-});*/
+});

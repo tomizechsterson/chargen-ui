@@ -2,12 +2,8 @@ import React from 'react';
 import {shallow, mount} from 'enzyme';
 import Add7DiceDisplay from '../Add7DiceDisplay';
 import RollSelector from '../RollSelector';
-describe('Add7DiceDisplay tests', () => {
-    it('does nothing', () => {
 
-    });
-});
-/*describe('Add7DiceDisplay tests', () => {
+describe('Add7DiceDisplay tests', () => {
     let component, defaultChar;
     beforeEach(() => {
         defaultChar = {str: 8, dex: 8, con: 8, int: 8, wis: 8, chr: 8};
@@ -120,7 +116,7 @@ describe('Add7DiceDisplay tests', () => {
             component.setState({selectedStat: 'test', selectedRoll: {}});
             expect(component.find('button').at(6).html()).not.toContain('disabled=""');
         });
-
+/*
         describe('Does not allow stats to exceed 18', () => {
             let component, testRolls;
             beforeEach(() => {
@@ -169,7 +165,7 @@ describe('Add7DiceDisplay tests', () => {
 
                 expect(component.instance().props.selectedChar.chr).toBe(15);
             });
-        });
+        });*/
 
         describe('Adds to stat and clears selected roll', () => {
             it('str', () => {
@@ -265,4 +261,4 @@ describe('Add7DiceDisplay tests', () => {
             expect(component.state().selectedRoll).toBeUndefined();
         });
     });
-});*/
+});

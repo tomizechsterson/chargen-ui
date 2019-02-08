@@ -1,14 +1,10 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import RollOnce from '../RollOnce';
-describe('RollOnce tests placeholder', () => {
-    it('does nothing', () => {
 
-    });
-});
-/*describe('RollOnce tests', () => {
+describe('RollOnce tests', () => {
     describe('Save Stats button', () => {
-        it('if there are no rolls, onUpdate is not called', () => {
+        /*it('if there are no rolls, onUpdate is not called', () => {
             const updateFunc = jest.fn();
             const component = shallow(<RollOnce onUpdate={updateFunc}/>);
             component.setState({rolls: []});
@@ -16,7 +12,7 @@ describe('RollOnce tests placeholder', () => {
             component.find('input').at(1).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
-        });
+        });*/
 
         it('if there are rolls, onUpdate is called once and completionStep is incremented', () => {
             const updateFunc = jest.fn();
@@ -56,4 +52,4 @@ describe('RollOnce tests placeholder', () => {
             expect(component.state().rolls).toEqual([[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]]);
         });
     });
-});*/
+});

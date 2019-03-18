@@ -16,6 +16,6 @@ export default class ServerGatewayDD35 {
     };
 
     deleteCharacter = async (id) => {
-        await fetch (Urls.DD35Url() + id, {method: 'delete', headers: {'Content-type': 'application/json'}});
+        await fetch(Urls.DD35Url() + id, {method: 'delete', headers: {'Content-type': 'application/json'}});
     };
 }

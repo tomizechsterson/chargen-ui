@@ -127,6 +127,7 @@ describe('DD35 Character Table Tests', () => {
 
             rows.at(0).find('button').at(1).simulate('click');
             expect(component.state().characterData).toHaveLength(1);
+            expect(component.state().characterData[0].id).toBe(2);
         });
 
         it('calls the server with the expected id', () => {

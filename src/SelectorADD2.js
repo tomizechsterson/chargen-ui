@@ -1,6 +1,6 @@
 import React from 'react';
 import ADD2Characters from './ADD2/ADD2Characters';
-import ServerGatewayADD2 from './Gateways/ServerGatewayADD2';
+import ServerGatewayADD2 from './DataAccess/ServerGatewayADD2';
 
 const SelectorADD2 = () => {
     const internalTestData = [

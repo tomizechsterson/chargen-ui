@@ -1,6 +1,6 @@
 import React from 'react';
-import DD35Characters from "./DD35/DD35Characters";
-import ServerGatewayDD35 from "./DataAccess/ServerGatewayDD35";
+import DD35Characters from "../DD35/DD35Characters";
+import ServerGatewayDD35 from "../DataAccess/ServerGatewayDD35";
 
 const SelectorDD35 = () => {
     return (

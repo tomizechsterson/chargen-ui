@@ -1,9 +1,9 @@
 import React from 'react';
 import {Route, NavLink, BrowserRouter} from 'react-router-dom';
 import './App.css';
-import SelectorHome from './SelectorHome';
-import SelectorADD2 from './SelectorADD2';
-import SelectorDD35 from './SelectorDD35';
+import SelectorHome from './GameSelection/SelectorHome';
+import SelectorADD2 from './GameSelection/SelectorADD2';
+import SelectorDD35 from './GameSelection/SelectorDD35';
 
 const App = () => (
     <BrowserRouter>

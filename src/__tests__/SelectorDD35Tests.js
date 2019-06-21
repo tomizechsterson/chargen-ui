@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import SelectorDD35 from '../SelectorDD35';
+import SelectorDD35 from '../GameSelection/SelectorDD35';
 import DD35Characters from "../DD35/DD35Characters";
 
 describe('SelectorDD35 Tests', () => {

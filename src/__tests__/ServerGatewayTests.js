@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import ServerGateway from "../ServerGateway";
+import ServerGatewayADD2 from "../Gateways/ServerGatewayADD2";
 
 describe('Server Gateway Tests', () => {
     let gateway;
@@ -14,7 +14,7 @@ describe('Server Gateway Tests', () => {
         return Promise.resolve(mockResponse);
     }
     beforeEach(() => {
-        gateway = new ServerGateway();
+        gateway = new ServerGatewayADD2();
         sinon.stub(window, 'fetch');
         console.error = errorFunc;
     });

@@ -1,4 +1,4 @@
-import Urls from './ApiUrls';
+import Urls from '../ApiUrls';
 
 export default class ServerGatewayDD35 {
     get = async () => {

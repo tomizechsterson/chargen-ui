@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import ServerGatewayDD35 from "../DataAccess/ServerGatewayDD35";
+import ServerGatewayDD35 from "../ServerGatewayDD35";
 
 describe('Server Gateway DD35 Tests', () => {
     let gateway;

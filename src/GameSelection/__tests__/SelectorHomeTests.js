@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import SelectorHome from '../GameSelection/SelectorHome';
+import SelectorHome from '../SelectorHome';
 
 describe('SelectorHome Tests', () => {
     it('renders the expected top-level div and component', () => {

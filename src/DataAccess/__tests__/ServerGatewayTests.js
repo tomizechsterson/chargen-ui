@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import ServerGatewayADD2 from "../DataAccess/ServerGatewayADD2";
+import ServerGatewayADD2 from "../ServerGatewayADD2";
 
 describe('Server Gateway Tests', () => {
     let gateway;

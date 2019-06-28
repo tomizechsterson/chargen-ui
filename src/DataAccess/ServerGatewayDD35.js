@@ -18,4 +18,27 @@ export default class ServerGatewayDD35 {
     deleteCharacter = async (id) => {
         await fetch(Urls.DD35Url() + id, {method: 'delete', headers: {'Content-type': 'application/json'}});
     };
+
+    getLocal = () => {
+        return localStorage.getItem('list');
+    };
+
+    createLocal = (character) => {
+        let list = JSON.parse(localStorage.getItem('list'));
+        if(list) {
+            const newList = list.concat(character);
+            localStorage.setItem('list', JSON.stringify(newList));
+        }
+        else {
+            const newList = [];
+            newList.push(character);
+            localStorage.setItem('list', JSON.stringify(newList));
+        }
+    };
+
+    deleteLocal = (id) => {
+        const list = [...JSON.parse(localStorage.getItem('list'))];
+        const updatedList = list.filter(item => item.id !== id);
+        localStorage.setItem('list', JSON.stringify(updatedList));
+    };
 }

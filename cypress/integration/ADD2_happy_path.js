@@ -19,6 +19,7 @@ describe('AD&D 2nd Edition Happy Path Without Stubbing', () => {
             const text = option.text;
             cy.get('[data-cy=classSelect]').select(text);
         });
+        cy.get('[data-cy=alignmentSelect').select('Lawful Good');
 
         cy.get('button').contains('Delete').click();
     });

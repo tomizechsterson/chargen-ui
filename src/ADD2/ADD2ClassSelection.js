@@ -36,7 +36,7 @@ export default class ADD2ClassSelection extends Component {
                 CHR: {selectedChar.chr} <br/>
                 Race: {selectedChar.race} Gender: {selectedChar.gender} <br/>
                 Select class:
-                <select onChange={this.handleClassChange}>
+                <select id='classSelect' onChange={this.handleClassChange}>
                     <option key={-1} value=''/>
                     {options}
                 </select>

@@ -31,7 +31,7 @@ export default class ADD2StatRoll extends Component {
         return(
             <div>
                 <label>Stat rolling rule:</label>
-                <select id='statRollSelect' value={rollRule} onChange={this.handleRollRuleChange}>
+                <select data-cy='statRollSelect' value={rollRule} onChange={this.handleRollRuleChange}>
                     <option value='rollOnce'>Roll Once</option>
                     <option value='rollTwice'>Roll Twice</option>
                     <option value='assignment'>Stat Assignment</option>

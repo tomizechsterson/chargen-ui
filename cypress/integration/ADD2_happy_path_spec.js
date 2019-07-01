@@ -1,5 +1,5 @@
 describe('AD&D 2nd Edition Happy Path Without Stubbing', () => {
-    it('Can create an AD&D 2nd Edition character', () => {
+    it('Can create and delete an AD&D 2nd Edition character', () => {
         cy.visit('/');
         cy.get('.selectorHeader > li > a[href="/add2"]').click();
         cy.url().should('includes', '/add2');

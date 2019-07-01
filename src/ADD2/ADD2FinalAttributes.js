@@ -83,9 +83,9 @@ export default class ADD2FinalAttributes extends Component {
                 Petrification, Polymorph: {petrification} <br/>
                 Breath Weapon: {breath} <br/>
                 Spell: {spell} <br/>
-                <button onClick={this.handleHWA}>Roll Height/Weight/Age</button>
-                <button onClick={this.handleHPGP}>Roll HP/GP</button>
-                <button onClick={this.handleUpdate}>Save</button>
+                <button data-cy='rollVitalsButton' onClick={this.handleHWA}>Roll Height/Weight/Age</button>
+                <button data-cy='rollHpGpButton' onClick={this.handleHPGP}>Roll HP/GP</button>
+                <button data-cy='finalSaveButton' onClick={this.handleUpdate}>Save</button>
             </div>
         );
     }

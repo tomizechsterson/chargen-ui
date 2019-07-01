@@ -62,6 +62,8 @@ describe('ADD2Characters tests', () => {
             newNameInput.simulate('keyPress', {key: 'Enter'});
 
             expect(component.state().characterData).toHaveLength(1);
+            expect(component.state().characterData[0].id).toBe(1);
+            expect(component.state().characterData[0].name).toBe('newChar');
         });
 
         it('adds a character to state with id != 1 when collection already has data', () => {
@@ -72,6 +74,8 @@ describe('ADD2Characters tests', () => {
             newNameInput.simulate('keyPress', {key: 'Enter'});
 
             expect(component.state().characterData).toHaveLength(4);
+            expect(component.state().characterData[3].id).toBe(4);
+            expect(component.state().characterData[3].name).toBe('newChar');
         });
 
         it('changes state based on changes to the name input', () => {

@@ -14,6 +14,7 @@ Cypress.Commands.add('finishCharacter', () => {
     cy.contains('Select race');
     cy.get('[data-cy=raceSelect]').select('Human');
     cy.get('[type="radio"]').check('M');
+    cy.get('[type="radio"]').check('F');
     cy.get('button').contains('Save').click();
     cy.contains('Select class');
     cy.get('[data-cy=classSelect]').then(($select) => {

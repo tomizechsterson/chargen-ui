@@ -8,9 +8,9 @@ const AssignmentControl = (props) => {
     if(rolls.length === 1) {
         const roll = rolls[0];
         return (
-            <div>
+            <div data-cy={'singleAssignmentSelector' + stat}>
                 <input type='button' onClick={() => onSelectStat(stat)} value={stat} /> {charStat}
-                {roll && <input type='button' onClick={() => onSelectRoll(roll)} value={roll.value} disabled={roll.assigned} />}
+                {roll && <input data-cy={'roll' + roll.id} type='button' onClick={() => onSelectRoll(roll)} value={roll.value} disabled={roll.assigned} />}
                 {roll && <span style={rollStyle}>{roll.text}</span>}
             </div>
         );

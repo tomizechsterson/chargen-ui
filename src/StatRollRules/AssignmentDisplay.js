@@ -84,7 +84,7 @@ export default class AssignmentDisplay extends Component {
             selectedRollText = selectedRoll.value;
 
         return (
-            <div>
+            <div data-cy='statAssignmentDiv'>
                 Selected Stat: {selectedStat}, Selected Roll: {selectedRollText} <br/>
 
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}

@@ -24,8 +24,7 @@ describe('Stat Assignment', () => {
         cy.visit('/add2');
         cy.location('pathname').should('eq', '/add2');
         cy.createTestCharacter();
-        cy.get('[data-cy=statRollSelect]').select('assignment');
-        cy.get('input[value="Roll Stats"]').click();
+        cy.chooseRollRuleAndRollStats('assignment');
         cy.get('[data-cy=statAssignmentDiv]').contains('Selected Stat: , Selected Roll: ');
         selectRolls();
         cy.get('input[value="Reset"]').click();

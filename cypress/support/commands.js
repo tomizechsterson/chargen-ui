@@ -4,6 +4,11 @@ Cypress.Commands.add('createTestCharacter', () => {
     cy.get('tbody > tr').contains('cypress test').parent().contains('No').click();
 });
 
+Cypress.Commands.add('chooseRollRuleAndRollStats', (rule) => {
+    cy.get('[data-cy=statRollSelect]').select(rule);
+    cy.get('input[value="Roll Stats"]').click();
+});
+
 Cypress.Commands.add('finishCharacter', () => {
     cy.get('input[value="Save Stats"]').click();
     cy.contains('Select race');

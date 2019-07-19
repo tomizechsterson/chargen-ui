@@ -4,8 +4,7 @@ describe('AD&D 2nd Edition Happy Path Without Stubbing', () => {
         cy.get('.selectorHeader > li > a[href="/add2"]').click();
         cy.url().should('includes', '/add2');
         cy.createTestCharacter();
-        cy.get('[data-cy=statRollSelect]').select('rollTwice');
-        cy.get('input[value="Roll Stats"]').click();
+        cy.chooseRollRuleAndRollStats('rollTwice');
         cy.get('[style="color: rgb(153, 153, 153);"]');
         cy.finishCharacter();
     });

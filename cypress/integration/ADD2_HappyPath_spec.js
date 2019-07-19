@@ -6,6 +6,10 @@ describe('AD&D 2nd Edition Happy Path Without Stubbing', () => {
         cy.createTestCharacter();
         cy.chooseRollRuleAndRollStats('rollTwice');
         cy.get('[style="color: rgb(153, 153, 153);"]');
+        cy.chooseRollRuleAndRollStats('rollOnce');
+        cy.get('[style="color: rgb(153, 153, 153);"]');
+        cy.chooseRollRuleAndRollStats('roll4');
+        cy.get('[style="color: rgb(153, 153, 153);"]');
         cy.finishCharacter();
     });
 });

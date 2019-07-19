@@ -23,7 +23,11 @@ Cypress.Commands.add('finishCharacter', () => {
         cy.get('[data-cy=classSelect]').select(text);
     });
     cy.contains('Select alignment');
-    cy.get('[data-cy=alignmentSelect').select('Lawful Good');
+    cy.get('[data-cy=alignmentSelect').then(($select) => {
+        const option = $select[0][1];
+        const text = option.text;
+        cy.get('[data-cy=alignmentSelect]').select(text);
+    });
     cy.contains('Saving Throws');
     cy.get('[data-cy=rollVitalsButton').click();
     cy.get('[data-cy=rollHpGpButton').click();

@@ -86,7 +86,7 @@ export default class Assignment2xDisplay extends Component {
             selectedRollText = selectedRoll.value;
 
         return (
-            <div>
+            <div data-cy='statAssignment2xDiv'>
                 Selected Stat: {selectedStat}, Selected Roll: {selectedRollText} <br/>
 
                 <AssignmentControl onSelectStat={this.handleSelectStat} onSelectRoll={this.handleSelectRoll}

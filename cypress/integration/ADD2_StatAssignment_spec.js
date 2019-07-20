@@ -1,4 +1,28 @@
 describe('Stat Assignment', () => {
+    it('Can do stat assignment successfully', () => {
+        cy.visit('/add2');
+        cy.location('pathname').should('eq', '/add2');
+        cy.createTestCharacter();
+        cy.chooseRollRuleAndRollStats('assignment');
+        cy.get('[data-cy=statAssignmentDiv]').contains('Selected Stat: , Selected Roll: ');
+        selectRolls('statAssignmentDiv', 'singleAssignmentSelector');
+        cy.get('input[value="Reset"]').click();
+        selectRolls('statAssignmentDiv', 'singleAssignmentSelector');
+        cy.finishCharacter();
+    });
+
+    it('Can do double stat assignment successfully', () => {
+        cy.visit('/add2');
+        cy.location('pathname').should('eq', '/add2');
+        cy.createTestCharacter();
+        cy.chooseRollRuleAndRollStats('assignment2x');
+        cy.get('[data-cy=statAssignment2xDiv]').contains('Selected Stat: , Selected Roll: ');
+        selectRolls2x('statAssignment2xDiv', 'doubleAssignmentSelector');
+        cy.get('input[value="Reset"]').click();
+        selectRolls2x('statAssignment2xDiv', 'doubleAssignmentSelector');
+        cy.finishCharacter();
+    });
+
     const selectRolls = (statDiv, selectorDiv) => {
         selectRoll('STR', 0, statDiv, selectorDiv);
         selectRoll('DEX', 1, statDiv, selectorDiv);
@@ -28,28 +52,4 @@ describe('Stat Assignment', () => {
             cy.get(`[data-cy=${selectorDiv}${stat}]`).contains(`${val}`);
         });
     };
-
-    it('Can do stat assignment successfully', () => {
-        cy.visit('/add2');
-        cy.location('pathname').should('eq', '/add2');
-        cy.createTestCharacter();
-        cy.chooseRollRuleAndRollStats('assignment');
-        cy.get('[data-cy=statAssignmentDiv]').contains('Selected Stat: , Selected Roll: ');
-        selectRolls('statAssignmentDiv', 'singleAssignmentSelector');
-        cy.get('input[value="Reset"]').click();
-        selectRolls('statAssignmentDiv', 'singleAssignmentSelector');
-        cy.finishCharacter();
-    });
-
-    it('Can do double stat assignment successfully', () => {
-        cy.visit('/add2');
-        cy.location('pathname').should('eq', '/add2');
-        cy.createTestCharacter();
-        cy.chooseRollRuleAndRollStats('assignment2x');
-        cy.get('[data-cy=statAssignment2xDiv]').contains('Selected Stat: , Selected Roll: ');
-        selectRolls2x('statAssignment2xDiv', 'doubleAssignmentSelector');
-        cy.get('input[value="Reset"]').click();
-        selectRolls2x('statAssignment2xDiv', 'doubleAssignmentSelector');
-        cy.finishCharacter();
-    });
 });

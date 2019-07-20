@@ -119,8 +119,8 @@ describe('ADD2Characters tests', () => {
             const table = component.find(ADD2CharacterTable);
             table.find('tbody tr').at(0).simulate('click');
             const rollOnce = component.find(ADD2CharacterDetails).find(ADD2CharacterCreation).find(ADD2StatRoll).find(RollOnce);
-            const rollButton = rollOnce.find('input').at(0);
-            const saveButton = rollOnce.find('input').at(1);
+            const rollButton = rollOnce.find('button').at(0);
+            const saveButton = rollOnce.find('button').at(1);
 
             rollButton.simulate('click');
             await tick();

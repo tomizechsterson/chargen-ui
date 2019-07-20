@@ -6,11 +6,11 @@ Cypress.Commands.add('createTestCharacter', () => {
 
 Cypress.Commands.add('chooseRollRuleAndRollStats', (rule) => {
     cy.get('[data-cy=statRollSelect]').select(rule);
-    cy.get('input[value="Roll Stats"]').click();
+    cy.get('button').contains('Roll Stats').click();
 });
 
 Cypress.Commands.add('finishCharacter', () => {
-    cy.get('input[value="Save Stats"]').click();
+    cy.get('button').contains('Save Stats').click();
     cy.contains('Select race');
     cy.get('[data-cy=raceSelect]').select('Human');
     cy.get('[type="radio"]').check('M');

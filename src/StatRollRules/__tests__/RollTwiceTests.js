@@ -10,7 +10,7 @@ describe('RollTwice tests', () => {
             const component = shallow(<RollTwice onUpdate={updateFunc}/>);
             component.setState({rolls: []});
 
-            component.find('input').at(1).simulate('click');
+            component.find('button').at(1).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(0);
         });
@@ -22,7 +22,7 @@ describe('RollTwice tests', () => {
             component.setState({rolls: [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3],
                     [2, 3, 3], [2, 2, 3], [2, 2, 2], [1, 2, 2], [1, 1, 2], [1, 1, 1]]});
 
-            component.find('input').at(1).simulate('click');
+            component.find('button').at(1).simulate('click');
 
             expect(updateFunc).toHaveBeenCalledTimes(1);
             expect(updateFunc).toHaveBeenCalledWith({completionStep: 1});
@@ -43,7 +43,7 @@ describe('RollTwice tests', () => {
         });
 
         it('sets state appropriately with return value of request', async () => {
-            component.find('input').at(0).simulate('click');
+            component.find('button').at(0).simulate('click');
             await tick();
 
             expect(component.state().selectedChar.id).toBe(1);

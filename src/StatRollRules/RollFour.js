@@ -46,10 +46,10 @@ export default class RollFour extends Component {
     render() {
         return (
             <div>
-                <input type='button' onClick={this.rollStats} value='Roll Stats' /><br/>
+                <button onClick={this.rollStats}>Roll Stats</button><br/>
                 <p>Only the three highest rolls are added to the ability score</p>
                 <RollFourDisplay selectedChar={this.state.selectedChar} rolls={this.state.rolls} />
-                <input type='button' onClick={this.handleUpdate} value='Save Stats' />
+                <button onClick={this.handleUpdate}>Save Stats</button>
             </div>
         );
     }

@@ -44,10 +44,10 @@ export default class RollTwice extends Component {
     render() {
         return (
             <div>
-                <input type='button' onClick={this.rollStats} value='Roll Stats' /><br/>
+                <button onClick={this.rollStats}>Roll Stats</button><br/>
                 <p>The higher of two rolls is selected for each ability score</p>
                 <RollTwiceDisplay selectedChar={this.state.selectedChar} rolls={this.state.rolls} />
-                <input type='button' onClick={this.handleUpdate} value='Save Stats' />
+                <button onClick={this.handleUpdate}>Save Stats</button>
             </div>
         );
     }

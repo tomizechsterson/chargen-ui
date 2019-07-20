@@ -51,11 +51,11 @@ export default class Assignment extends Component {
         const pText = double ? 'Roll 12 and assign 6 to stats' : 'Assign 6 rolls to stats';
         return (
             <div>
-                <input type='button' onClick={this.rollStats} value='Roll Stats' /><br/>
+                <button onClick={this.rollStats}>Roll Stats</button><br/>
                 <p>{pText}</p>
                 {double && <Assignment2xDisplay selectedChar={selectedChar} rolls={rolls} />}
                 {!double && <AssignmentDisplay selectedChar={selectedChar} rolls={rolls} />}
-                <input type='button' onClick={this.handleUpdate} value='Save Stats' />
+                <button onClick={this.handleUpdate}>Save Stats</button>
             </div>
         );
     }

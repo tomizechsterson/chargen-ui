@@ -7,7 +7,7 @@ const RollSelector = (props) => {
     });
 
     return (
-        <div>
+        <div data-cy='add7Rolls'>
             {buttons}
         </div>
     );

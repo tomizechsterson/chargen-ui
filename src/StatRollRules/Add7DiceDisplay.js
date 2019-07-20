@@ -83,14 +83,14 @@ export default class Add7DiceDisplay extends Component {
             selectedRollText = selectedRoll.value;
 
         return (
-            <div>
+            <div data-cy='statAssignmentDiv'>
                 Selected Stat: {selectedStat}, Selected Roll: {selectedRollText} <br/>
-                <button onClick={() => this.handleSelectStat('STR')}>STR</button> {selectedChar.str} <br/>
-                <button onClick={() => this.handleSelectStat('DEX')}>DEX</button> {selectedChar.dex} <br/>
-                <button onClick={() => this.handleSelectStat('CON')}>CON</button> {selectedChar.con} <br/>
-                <button onClick={() => this.handleSelectStat('INT')}>INT</button> {selectedChar.int} <br/>
-                <button onClick={() => this.handleSelectStat('WIS')}>WIS</button> {selectedChar.wis} <br/>
-                <button onClick={() => this.handleSelectStat('CHR')}>CHR</button> {selectedChar.chr} <br/>
+                <button data-cy='add7Stat' onClick={() => this.handleSelectStat('STR')}>STR</button> {selectedChar.str} <br/>
+                <button data-cy='add7Stat' onClick={() => this.handleSelectStat('DEX')}>DEX</button> {selectedChar.dex} <br/>
+                <button data-cy='add7Stat' onClick={() => this.handleSelectStat('CON')}>CON</button> {selectedChar.con} <br/>
+                <button data-cy='add7Stat' onClick={() => this.handleSelectStat('INT')}>INT</button> {selectedChar.int} <br/>
+                <button data-cy='add7Stat' onClick={() => this.handleSelectStat('WIS')}>WIS</button> {selectedChar.wis} <br/>
+                <button data-cy='add7Stat' onClick={() => this.handleSelectStat('CHR')}>CHR</button> {selectedChar.chr} <br/>
                 <RollSelector rolls={rolls} onSelectRoll={this.handleSelectRoll}/>
                 <button onClick={() => this.handleAssign()} disabled={this.disableAssignButton()}>Assign</button>
                 <button onClick={() => this.handleReset()} disabled={this.disableResetButton()}>Reset</button>

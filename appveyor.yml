@@ -3,16 +3,12 @@ image: Ubuntu
 #environment:
 #  nodejs_version: "6"
 
-#cache:
-#  - node_modules
+cache:
+  - node_modules
 
 install:
-  - node --version
-  - npm --version
   - nvm install 14.15.0
   - nvm use 14.15.0
-  - node --version
-  - npm --version
   - npm install
 
 test_script:

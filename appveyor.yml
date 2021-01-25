@@ -13,11 +13,9 @@ install:
 test_script:
   - node --version
   - npm --version
-  - npm test -- --coverage --coverageReporters=text-lcov > lcov.info
+  - npm test -- --ci --watchAll=false
 
 after_test:
-  - node ./node_modules/coveralls/bin/coveralls.js < lcov.info
-  - del lcov.info
   - npm run build
 
 build: off

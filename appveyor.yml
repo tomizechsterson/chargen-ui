@@ -8,6 +8,8 @@ environment:
 #  - node_modules
 
 install:
+  - node --version
+  - npm --version
   - npm install
 
 test_script:

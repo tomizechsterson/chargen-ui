@@ -1,8 +1,7 @@
-environment:
-  nodejs_version: "6"
-  COVERALLS_SERVICE_NAME: appveyor
-  COVERALLS_REPO_TOKEN:
-    secure: mEHmpM1N9cDrTrOpvxPtlfLYt8TgstG0TZu84on70/Tf34tWn2sER4Ys34MC1cVm
+image: Ubuntu
+
+#environment:
+#  nodejs_version: "6"
 
 #cache:
 #  - node_modules

@@ -16,7 +16,7 @@ test_script:
 after_test:
   - npm run build
 
-build: off
+build: false
 
 artifacts:
   - path: build\

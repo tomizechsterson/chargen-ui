@@ -10,6 +10,9 @@ environment:
 install:
   - node --version
   - npm --version
+  - nvm use 14.15.0
+  - node --version
+  - npm --version
   - npm install
 
 test_script:

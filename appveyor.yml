@@ -4,8 +4,8 @@ environment:
   COVERALLS_REPO_TOKEN:
     secure: mEHmpM1N9cDrTrOpvxPtlfLYt8TgstG0TZu84on70/Tf34tWn2sER4Ys34MC1cVm
 
-cache:
-  - node_modules
+#cache:
+#  - node_modules
 
 install:
   - npm install

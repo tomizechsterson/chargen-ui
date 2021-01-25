@@ -9,6 +9,7 @@ image: Ubuntu
 install:
   - node --version
   - npm --version
+  - nvm install 14.15.0
   - nvm use 14.15.0
   - node --version
   - npm --version

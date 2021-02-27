@@ -34,8 +34,8 @@ Be sure to have the latest versions of these installed:
   - This will pull down the latest version of the code and copy it into the `chargen-ui` folder
 - Navigate into this folder with your terminal of choice
 - Run `npm install` to pull down all the dev dependencies
-- You will also need the services from the [CharGen](https://github.com/tomizechsterson/CharGen) project running on their default port in order for any features beyond creating and deleting characters to work (i.e. rolling stats, selecting race/class). Just follow the steps in that project's readme to get them downloaded and running.
-- As an option, you can use the services from the [chargen-nancy](https://github.com/tomizechsterson/chargen-nancy) project instead. Just make sure to update the URL's found in the `ApiUrls.js` file to point to the address on which they listen for requests.
+- You will also need the services from the [CharGen][1] project running on their default port in order for any features beyond creating and deleting characters to work (i.e. rolling stats, selecting race/class). Just follow the steps in that project's readme to get them downloaded and running.
+- As an option, you can use the services from the [chargen-nancy][2] project instead. Just make sure to update the URL's found in the `ApiUrls.js` file to point to the address on which they listen for requests.
  
 At this point, you should have everything you need to fire up your IDE of choice and start tinkering around. If not, feel free to open an issue and I'll see what I can do.
 
@@ -49,7 +49,7 @@ Simply run `npm start` in your terminal of choice at the root of the project, an
  
 Simply run `npm test` in the project's root folder and that will start up the test runner. By default, it will monitor for changed files and run the tests that are related to them after they're saved. This can be changed by following the on-screen instructions.
  
-You can also run `npm test -- --coverage` to see the current test coverage (yes, there is an extra `--` in there). See [this article](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#coverage-reporting) for more details
+You can also run `npm test -- --coverage` to see the current test coverage (yes, there is an extra `--` in there). See [this article][3] for more details
  
 ## Contributing
  
@@ -58,3 +58,7 @@ If you'd like to contribute, feel free to open a PR with the changes you'd like 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+[1]: https://github.com/tomizechsterson/CharGen
+[2]: https://github.com/tomizechsterson/chargen-nancy
+[3]:https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#coverage-reporting

@@ -18,8 +18,8 @@ export default class ADD2Characters extends Component {
     }
 
     async componentDidMount() {
-        const {serverGateway} = this.props;
-        const data = await serverGateway.getCharacters();
+        const {useTestData, testData, serverGateway} = this.props;
+        const data = useTestData ? testData : await serverGateway.getCharacters();
         if(!this.isUnmounted)
             this.setState({characterData: data});
     }
@@ -101,7 +101,7 @@ export default class ADD2Characters extends Component {
         }
 
         if(newCharName.trim() && newNameIsUnique(newCharName)) {
-            let newId = 0;
+            let newId;
             const characters = characterData;
             if(characters.length === 0)
                 newId = 1;

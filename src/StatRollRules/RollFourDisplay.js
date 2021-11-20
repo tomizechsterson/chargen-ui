@@ -33,4 +33,4 @@ const RollFourDisplay = (props) => {
         </p>
     );
 };
-export default RollFourDisplay
+export default RollFourDisplay;

@@ -36,7 +36,7 @@ export default class ADD2AlignmentSelection extends Component {
         WIS: {selectedChar.wis} <br/>
         CHR: {selectedChar.chr} <br/>
         Race: {selectedChar.race} Gender: {selectedChar.gender} Class: {selectedChar.className} <br/>
-        Select alignment:
+        Select Alignment:
         <select data-cy='alignmentSelect' onChange={ this.handleChange }>
           <option key={ -1 } value=''/>
           {options}

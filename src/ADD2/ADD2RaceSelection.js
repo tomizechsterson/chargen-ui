@@ -99,7 +99,7 @@ export default class ADD2RaceSelection extends Component {
           stat={ selectedChar.chr }
           adjustment={ adjustments && this.getAdjustment('chr') }
         />
-        Select race:
+        Select Race:
         <select data-cy='raceSelect' onChange={ this.handleRaceChange }>
           <option key={ -1 } value=''/>
           {options}

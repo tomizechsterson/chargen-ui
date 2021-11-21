@@ -8,6 +8,7 @@ describe('ADD2 Character Details Component', () => {
     const { queryByText } = render(<ADD2CharacterDetails selectedChar={ completedChar() } />);
 
     expect(queryByText(/Character Details/)).toBeInTheDocument();
+    expect(queryByText(/Test Completed Character/)).toBeInTheDocument();
     expect(queryByText(/Character Creation/)).not.toBeInTheDocument();
     expect(queryByText(/No character selected/)).not.toBeInTheDocument();
   });
@@ -17,6 +18,7 @@ describe('ADD2 Character Details Component', () => {
 
     expect(queryByText(/Character Details/)).not.toBeInTheDocument();
     expect(queryByText(/Character Creation/)).toBeInTheDocument();
+    expect(queryByText(/New Character/)).toBeInTheDocument();
     expect(queryByText(/No character selected/)).not.toBeInTheDocument();
   });
 

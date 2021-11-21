@@ -104,7 +104,12 @@ const internalTestData = [
     spell: 0,
     hp: 0,
     moveRate: 0,
-    funds: 0
+    funds: 0,
+    availableAlignments: [
+      'Lawful Good', 'Lawful Neutral', 'Lawful Evil',
+      'Neutral Good', 'True Neutral', 'Neutral Evil',
+      'Chaotic Good', 'Chaotic Neutral', 'Chaotic Evil'
+    ]
   },
   {
     id: 5,

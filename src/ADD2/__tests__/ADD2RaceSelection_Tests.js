@@ -7,8 +7,8 @@ import ADD2RaceSelection from "../ADD2RaceSelection";
 describe('Race Selection Component', () => {
   it('Displays error message if Save is clicked before race is selected', () => {
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    const { getByText } = render(<ADD2RaceSelection selectedChar={ testChar() } />);
-    const saveButton = getByText('Save');
+    const { getByRole } = render(<ADD2RaceSelection selectedChar={ testChar() } />);
+    const saveButton = getByRole('button', { name: /Save/ });
 
     userEvent.click(saveButton);
 
@@ -23,9 +23,9 @@ describe('Race Selection Component', () => {
       }
     }
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    const { getByText, getByRole } = render(<ADD2RaceSelection selectedChar={ testChar() } gateway={ mockGateway() } />);
+    const { getByRole } = render(<ADD2RaceSelection selectedChar={ testChar() } gateway={ mockGateway() } />);
     const raceDropDown = getByRole('combobox');
-    const saveButton = getByText('Save');
+    const saveButton = getByRole('button', { name: /Save/ });
 
     userEvent.selectOptions(raceDropDown, 'Test Race');
     userEvent.click(saveButton);
@@ -50,8 +50,8 @@ describe('Race Selection Component', () => {
         />
       );
     const raceDropDown = getByRole('combobox');
-    const genderRadioButton = getByText('Male');
-    const saveButton = getByText('Save');
+    const genderRadioButton = getByRole('radio', { name: /Male/ });
+    const saveButton = getByRole('button', { name: /Save/ });
 
     userEvent.selectOptions(raceDropDown, 'Test Race');
     await waitFor(() => getByText(/Test Race/));

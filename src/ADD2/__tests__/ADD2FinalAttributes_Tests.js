@@ -7,8 +7,8 @@ import ADD2FinalAttributes from "../ADD2FinalAttributes";
 describe('Final Attributes Component', () => {
   it('Displays error message if Save is clicked too soon',() => {
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    const { getByText } = render(<ADD2FinalAttributes selectedChar={ testChar() } />);
-    const saveButton = getByText('Save');
+    const { getByRole } = render(<ADD2FinalAttributes selectedChar={ testChar() } />);
+    const saveButton = getByRole('button', { name: /Save/ });
 
     userEvent.click(saveButton);
 
@@ -25,10 +25,17 @@ describe('Final Attributes Component', () => {
         getFinalAttributes: () => { return [99, 99, 99, 99, 99, 99] }
       }
     }
-    const { getByText } = render(<ADD2FinalAttributes selectedChar={ testChar() } onUpdate={ onUpdateFn } gateway={ mockGateway() } />);
-    const hwaButton = getByText('Roll Height/Weight/Age');
-    const hpgpButton = getByText('Roll HP/GP');
-    const saveButton = getByText('Save');
+    const { getByText, getByRole } =
+      render(
+        <ADD2FinalAttributes
+          selectedChar={ testChar() }
+          onUpdate={ onUpdateFn }
+          gateway={ mockGateway() }
+        />
+      );
+    const hwaButton = getByRole('button', { name: /Roll Height\/Weight\/Age/ });
+    const hpgpButton = getByRole('button', { name: /Roll HP\/GP/ });
+    const saveButton = getByRole('button', { name: /Save/ });
 
     userEvent.click(hwaButton);
 

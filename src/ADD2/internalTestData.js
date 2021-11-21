@@ -75,7 +75,10 @@ const internalTestData = [
     spell: 0,
     hp: 0,
     moveRate: 0,
-    funds: 0
+    funds: 0,
+    availableClasses: [
+      'Fighter', 'Cleric', 'Mage', 'Rogue'
+    ]
   },
   {
     id: 4,

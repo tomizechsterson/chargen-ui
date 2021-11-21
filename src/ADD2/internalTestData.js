@@ -49,7 +49,10 @@ const internalTestData = [
     spell: 0,
     hp: 0,
     moveRate: 0,
-    funds: 0
+    funds: 0,
+    availableRaces: [
+      'Human', 'Elf', 'Gnome', 'Dwarf'
+    ]
   },
   {
     id: 3,

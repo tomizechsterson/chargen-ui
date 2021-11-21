@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ADD2DisplayCompleted from "../ADD2DisplayCompleted";
+import ADD2DisplayCompleted from '../ADD2DisplayCompleted';
 
 describe('When a character is completed', () => {
   it('displays the expected info', () => {
-    const {getByText} = render(<ADD2DisplayCompleted selectedChar={testChar()} />);
+    const { getByText } = render(<ADD2DisplayCompleted selectedChar={ testChar() } />);
 
     expect(getByText('Test Character')).toBeInTheDocument();
     expect(getByText(/Race: Test Race/)).toBeInTheDocument();

@@ -1,25 +1,25 @@
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 th, td {
-    border: 1px solid #dddddd;
-    padding: 5px;
+  border: 1px solid #dddddd;
+  padding: 5px;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 tr:hover {
-    background-color: #A0A0Ae;
+  background-color: #A0A0Ae;
 }
 
 th {
-    text-align: left;
-    background-color: #60605e;
-    color: white;
-    padding-top: 7px;
-    padding-bottom: 7px;
+  text-align: left;
+  background-color: #60605e;
+  color: white;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }

@@ -4,17 +4,17 @@ import VitalsDisplay from '../GeneralDisplays/VitalsDisplay';
 import SavingThrowsDisplay from '../GeneralDisplays/SavingThrowsDisplay';
 
 const ADD2DisplayCompleted = (props) => {
-    const {selectedChar} = props;
-    return (
-        <div>
-            <h2>Character Details</h2>
-            <div>
-                <h4>{selectedChar.name}</h4>
-                <VitalsDisplay selectedChar={selectedChar}/>
-                <StatsDisplay selectedChar={selectedChar}/>
-                <SavingThrowsDisplay selectedChar={selectedChar}/>
-            </div>
-        </div>
-    );
+  const { selectedChar } = props;
+  return (
+    <div>
+      <h2>Character Details</h2>
+      <div>
+        <h4>{selectedChar.name}</h4>
+        <VitalsDisplay selectedChar={ selectedChar }/>
+        <StatsDisplay selectedChar={ selectedChar }/>
+        <SavingThrowsDisplay selectedChar={ selectedChar }/>
+      </div>
+    </div>
+  );
 };
 export default ADD2DisplayCompleted;

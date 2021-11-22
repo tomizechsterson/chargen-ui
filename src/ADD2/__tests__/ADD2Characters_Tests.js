@@ -1,19 +1,25 @@
 import React from 'react';
-import {rest} from 'msw';
-import {setupServer} from 'msw/node';
-import { render, waitFor, screen } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2Characters from '../ADD2Characters';
 
 describe('ADD2Characters', () => {
-  it('Adds a character to the list', async () => {
-    render(<ADD2Characters useTestData={true} testData={[]} />);
-    userEvent.type(screen.getByRole('textbox'), 'test');
-    expect(screen.getByRole('textbox')).toHaveValue('test');
+  it('displays message if no characters have been created', () => {
+    const { getByText } = render(<ADD2Characters useTestData={ true } testData={ [] } />);
 
-    userEvent.click(screen.getByText('Create'));
+    expect(getByText(/No characters have been created. Enter a name in the field above and click Create to begin/)).toBeInTheDocument();
+  });
 
-    expect(screen.getAllByRole('row')[1]).toHaveTextContent('test');
+  it('Adds a character to the table', async () => {
+    const { getByRole, queryAllByRole } = render(<ADD2Characters useTestData={ true } testData={ [] } />);
+    expect(queryAllByRole('row').length).toBe(0);
+    userEvent.type(getByRole('textbox'), 'test');
+    expect(getByRole('textbox')).toHaveValue('test');
+
+    userEvent.click(getByRole('button', { name: /Create/ }));
+
+    expect(queryAllByRole('row').length).toBe(2); // This appears to count the header row
+    expect(getByRole('row', { name: /test/})).toBeInTheDocument();
   });
 });

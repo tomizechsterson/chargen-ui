@@ -22,14 +22,14 @@ describe('ADD2 Character Table component', () => {
   });
 
   it('selects the expected character when clicking a row', () => {
-    const updateFn = jest.fn();
-    const { getByRole } = render(<ADD2CharacterTable characters={ testData() } onSelect={ updateFn } />);
+    const selectFn = jest.fn();
+    const { getByRole } = render(<ADD2CharacterTable characters={ testData() } onSelect={ selectFn } />);
 
     const characterToClick = getByRole('row', { name: /Test Step 1/ });
     userEvent.click(characterToClick);
 
-    expect(updateFn).toHaveBeenCalledTimes(1);
-    expect(updateFn).toHaveBeenCalledWith(1);
+    expect(selectFn).toHaveBeenCalledTimes(1);
+    expect(selectFn).toHaveBeenCalledWith(1);
   });
 });
 

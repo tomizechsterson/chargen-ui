@@ -139,8 +139,9 @@ export default class ADD2Characters extends Component {
 
       if (!useTestData)
         await serverGateway.createCharacter(newChar);
-    } else
+    } else {
       this.setState({ newCharName: '' });
+    }
   }
 
   handleNewNameChange(e) {

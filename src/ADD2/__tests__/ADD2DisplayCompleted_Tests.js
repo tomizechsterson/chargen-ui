@@ -5,7 +5,7 @@ import ADD2DisplayCompleted from '../ADD2DisplayCompleted';
 
 describe('When a character is completed', () => {
   it('displays the expected info', () => {
-    const { getByText } = render(<ADD2DisplayCompleted selectedChar={ testChar() } />);
+    const { getByText } = render(<ADD2DisplayCompleted selectedChar={ testChar } />);
 
     expect(getByText('Test Character')).toBeInTheDocument();
     expect(getByText(/Race: Test Race/)).toBeInTheDocument();
@@ -30,10 +30,8 @@ describe('When a character is completed', () => {
     expect(getByText(/Breath Weapon: 99/)).toBeInTheDocument();
     expect(getByText(/Spell: 99/)).toBeInTheDocument();
   });
-});
 
-const testChar = () => {
-  return {
+  const testChar = {
     id: 1,
     name: 'Test Character',
     completionStep: 6,
@@ -59,4 +57,4 @@ const testChar = () => {
     moveRate: 99,
     funds: 9999
   };
-};
+});

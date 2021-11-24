@@ -38,6 +38,7 @@ export default class RollOnce extends Component {
       <div>
         <button onClick={ this.rollStats }>Roll Stats</button>
         <br/>
+        <p>Standard Stat Rolling. Roll once per stat and that's it.</p>
         <RollOnceDisplay selectedChar={ this.state.selectedChar } rolls={ this.state.rolls }/>
         <button onClick={ this.handleUpdate }>Save Stats</button>
       </div>

@@ -7,10 +7,9 @@ import ADD2FinalAttributes from "../ADD2FinalAttributes";
 describe('Final Attributes Component', () => {
   it('Displays error message if Save is clicked too soon',() => {
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    const { getByRole } = render(<ADD2FinalAttributes selectedChar={ testChar() } />);
-    const saveButton = getByRole('button', { name: /Save/ });
+    const { getByRole } = render(<ADD2FinalAttributes selectedChar={ testChar } />);
 
-    userEvent.click(saveButton);
+    userEvent.click(getByRole('button', { name: /Save/ }));
 
     expect(alertMock).toHaveBeenCalledTimes(1);
     expect(alertMock).toHaveBeenCalledWith('must roll for all attributes to save');
@@ -28,23 +27,20 @@ describe('Final Attributes Component', () => {
     const { getByText, getByRole } =
       render(
         <ADD2FinalAttributes
-          selectedChar={ testChar() }
+          selectedChar={ testChar }
           onUpdate={ onUpdateFn }
           gateway={ mockGateway() }
         />
       );
-    const hwaButton = getByRole('button', { name: /Roll Height\/Weight\/Age/ });
-    const hpgpButton = getByRole('button', { name: /Roll HP\/GP/ });
-    const saveButton = getByRole('button', { name: /Save/ });
 
-    userEvent.click(hwaButton);
+    userEvent.click(getByRole('button', { name: /Roll Height\/Weight\/Age/ }));
 
     await waitFor(() => getByText(/Age: 99/));
     expect(getByText(/Age: 99/)).toBeInTheDocument();
     expect(getByText(/Height: 8'3"/)).toBeInTheDocument();
     expect(getByText(/Weight: 999/)).toBeInTheDocument();
 
-    userEvent.click(hpgpButton);
+    userEvent.click(getByRole('button', { name: /Roll HP\/GP/ }));
 
     await waitFor(() => getByText(/HP: 99/));
     expect(getByText(/HP: 99/)).toBeInTheDocument();
@@ -56,15 +52,13 @@ describe('Final Attributes Component', () => {
     expect(getByText(/Breath Weapon: 99/)).toBeInTheDocument();
     expect(getByText(/Spell: 99/)).toBeInTheDocument();
 
-    userEvent.click(saveButton);
+    userEvent.click(getByRole('button', { name: /Save/ }));
 
     expect(onUpdateFn).toBeCalledTimes(1);
-    expect(onUpdateFn).toBeCalledWith(completedChar());
+    expect(onUpdateFn).toBeCalledWith(completedChar);
   });
-});
 
-const testChar = () => {
-  return {
+  const testChar = {
     id: 1,
     name: 'Test Character',
     completionStep: 5,
@@ -90,10 +84,8 @@ const testChar = () => {
     moveRate: 0,
     funds: 0
   };
-};
 
-const completedChar = () => {
-  return {
+  const completedChar = {
     id: 1,
     name: 'Test Character',
     completionStep: 6,
@@ -119,4 +111,4 @@ const completedChar = () => {
     moveRate: 99,
     funds: 9999
   };
-};
+});

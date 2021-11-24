@@ -12,29 +12,24 @@ describe('ADD2 Character Table component', () => {
   });
 
   it('displays the correct completion status', () => {
-    const { getByRole } = render(<ADD2CharacterTable characters={ testData() } />);
+    const { getByRole } = render(<ADD2CharacterTable characters={ testData } />);
 
-    const incompleteChar = getByRole('row', { name: /Test Step 1/ });
-    const completeChar = getByRole('row', { name: /Test Completed/ });
-
-    expect(incompleteChar).toHaveTextContent(/No/);
-    expect(completeChar).toHaveTextContent(/Yes/);
+    expect(getByRole('row', { name: /Test Incomplete/ })).toHaveTextContent(/No/);
+    expect(getByRole('row', { name: /Test Completed/ })).toHaveTextContent(/Yes/);
   });
 
   it('selects the expected character when clicking a row', () => {
     const selectFn = jest.fn();
-    const { getByRole } = render(<ADD2CharacterTable characters={ testData() } onSelect={ selectFn } />);
+    const { getByRole } = render(<ADD2CharacterTable characters={ testData } onSelect={ selectFn } />);
 
-    userEvent.click(getByRole('row', { name: /Test Step 1/ }));
+    userEvent.click(getByRole('row', { name: /Test Incomplete/ }));
 
     expect(selectFn).toHaveBeenCalledTimes(1);
     expect(selectFn).toHaveBeenCalledWith(1);
   });
-});
 
-const testData = () => {
-  return [
-    { id: 1, name: 'Test Step 1', completionStep: 1 },
+  const testData = [
+    { id: 1, name: 'Test Incomplete', completionStep: 1 },
     { id: 2, name: 'Test Completed', race: 'Test Race', className: 'Test Class', completionStep: 6 }
   ];
-};
+});

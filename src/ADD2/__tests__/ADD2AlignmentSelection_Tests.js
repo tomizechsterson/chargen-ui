@@ -7,18 +7,15 @@ import ADD2AlignmentSelection from "../ADD2AlignmentSelection";
 describe('ADD2AlignmentSelection Component', () => {
   it('Allows selection of alignment', () => {
     const onUpdateFn = jest.fn();
-    const { getByRole } = render(<ADD2AlignmentSelection selectedChar={ testChar() } onUpdate={ onUpdateFn } />);
-    const alignmentDropDown = getByRole('combobox');
+    const { getByRole } = render(<ADD2AlignmentSelection selectedChar={ testChar } onUpdate={ onUpdateFn } />);
 
-    userEvent.selectOptions(alignmentDropDown, 'Test Alignment');
+    userEvent.selectOptions(getByRole('combobox'), 'Test Alignment');
 
     expect(onUpdateFn).toBeCalledTimes(1);
-    expect(onUpdateFn).toBeCalledWith(updatedChar());
+    expect(onUpdateFn).toBeCalledWith(updatedChar);
   });
-});
 
-const testChar = () => {
-  return {
+  const testChar = {
     id: 1,
     name: 'Test Character',
     completionStep: 4,
@@ -47,10 +44,8 @@ const testChar = () => {
       'Test Alignment'
     ]
   };
-};
 
-const updatedChar = () => {
-  return {
+  const updatedChar = {
     id: 1,
     name: 'Test Character',
     completionStep: 5,
@@ -79,4 +74,4 @@ const updatedChar = () => {
       'Test Alignment'
     ]
   };
-};
+});

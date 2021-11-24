@@ -5,7 +5,7 @@ import ADD2CharacterDetails from "../ADD2CharacterDetails";
 
 describe('ADD2 Character Details Component', () => {
   it('Displays details when character is completed', () => {
-    const { queryByText } = render(<ADD2CharacterDetails selectedChar={ completedChar() } />);
+    const { queryByText } = render(<ADD2CharacterDetails selectedChar={ completedChar } />);
 
     expect(queryByText(/Character Details/)).toBeInTheDocument();
     expect(queryByText(/Test Completed Character/)).toBeInTheDocument();
@@ -14,7 +14,7 @@ describe('ADD2 Character Details Component', () => {
   });
 
   it('displays Character Creation when character is in progress', () => {
-    const { queryByText } = render(<ADD2CharacterDetails selectedChar={ inProgressChar() } />);
+    const { queryByText } = render(<ADD2CharacterDetails selectedChar={ inProgressChar } />);
 
     expect(queryByText(/Character Details/)).not.toBeInTheDocument();
     expect(queryByText(/Character Creation/)).toBeInTheDocument();
@@ -29,10 +29,8 @@ describe('ADD2 Character Details Component', () => {
     expect(queryByText(/Character Creation/)).not.toBeInTheDocument();
     expect(queryByText(/No character selected/)).toBeInTheDocument();
   });
-});
 
-const completedChar = () => {
-  return {
+  const completedChar = {
     id: 1,
     name: 'Test Completed Character',
     completionStep: 6,
@@ -58,10 +56,8 @@ const completedChar = () => {
     moveRate: 99,
     funds: 9999
   };
-};
 
-const inProgressChar = () => {
-  return {
+  const inProgressChar = {
     id: 1,
     name: 'New Character',
     completionStep: 1,
@@ -87,4 +83,4 @@ const inProgressChar = () => {
     moveRate: 0,
     funds: 0
   };
-};
+});

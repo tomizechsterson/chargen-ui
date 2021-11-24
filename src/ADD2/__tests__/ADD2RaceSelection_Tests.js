@@ -7,10 +7,9 @@ import ADD2RaceSelection from "../ADD2RaceSelection";
 describe('Race Selection Component', () => {
   it('Displays error message if Save is clicked before race is selected', () => {
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    const { getByRole } = render(<ADD2RaceSelection selectedChar={ testChar() } />);
-    const saveButton = getByRole('button', { name: /Save/ });
+    const { getByRole } = render(<ADD2RaceSelection selectedChar={ testChar } />);
 
-    userEvent.click(saveButton);
+    userEvent.click(getByRole('button', { name: /Save/ }));
 
     expect(alertMock).toHaveBeenCalledTimes(1);
     expect(alertMock).toHaveBeenCalledWith('must select a race to save');
@@ -23,12 +22,10 @@ describe('Race Selection Component', () => {
       }
     }
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    const { getByRole } = render(<ADD2RaceSelection selectedChar={ testChar() } gateway={ mockGateway() } />);
-    const raceDropDown = getByRole('combobox');
-    const saveButton = getByRole('button', { name: /Save/ });
+    const { getByRole } = render(<ADD2RaceSelection selectedChar={ testChar } gateway={ mockGateway() } />);
 
-    userEvent.selectOptions(raceDropDown, 'Test Race');
-    userEvent.click(saveButton);
+    userEvent.selectOptions(getByRole('combobox'), 'Test Race');
+    userEvent.click(getByRole('button', { name: /Save/ }));
 
     expect(alertMock).toHaveBeenCalledTimes(1);
     expect(alertMock).toHaveBeenCalledWith('must select a gender to save');
@@ -44,29 +41,24 @@ describe('Race Selection Component', () => {
     const { getByText, getByRole, getByLabelText } =
       render(
         <ADD2RaceSelection
-          selectedChar={ testChar() }
+          selectedChar={ testChar }
           onUpdate={ onUpdateFn }
           gateway={ mockGateway() }
         />
       );
-    const raceDropDown = getByRole('combobox');
-    const genderRadioButton = getByRole('radio', { name: /Male/ });
-    const saveButton = getByRole('button', { name: /Save/ });
 
-    userEvent.selectOptions(raceDropDown, 'Test Race');
+    userEvent.selectOptions(getByRole('combobox'), 'Test Race');
     await waitFor(() => getByText(/Test Race/));
-    userEvent.click(genderRadioButton);
+    userEvent.click(getByRole('radio', { name: /Male/ }));
     await waitFor(() => getByText(/Male/));
     expect(getByLabelText(/Male/)).toBeChecked();
-    userEvent.click(saveButton);
+    userEvent.click(getByRole('button', { name: /Save/ }));
 
     expect(onUpdateFn).toBeCalledTimes(1);
-    expect(onUpdateFn).toBeCalledWith(updatedChar());
+    expect(onUpdateFn).toBeCalledWith(updatedChar);
   });
-});
 
-const testChar = () => {
-  return {
+  const testChar = {
     id: 1,
     name: 'Test Character',
     completionStep: 2,
@@ -95,10 +87,8 @@ const testChar = () => {
       'Test Race'
     ]
   };
-};
 
-const updatedChar = () => {
-  return {
+  const updatedChar = {
     id: 1,
     name: 'Test Character',
     completionStep: 3,
@@ -127,4 +117,4 @@ const updatedChar = () => {
       'Test Race'
     ]
   };
-};
+});

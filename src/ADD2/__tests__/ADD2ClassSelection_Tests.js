@@ -7,18 +7,15 @@ import ADD2ClassSelection from "../ADD2ClassSelection";
 describe('ADD2ClassSelection Component', () => {
   it('Allows selection of a class', () => {
     const onUpdateFn = jest.fn();
-    const { getByRole } = render(<ADD2ClassSelection selectedChar={ testChar() } onUpdate={ onUpdateFn } />);
-    const classDropDown = getByRole('combobox');
+    const { getByRole } = render(<ADD2ClassSelection selectedChar={ testChar } onUpdate={ onUpdateFn } />);
 
-    userEvent.selectOptions(classDropDown, 'Test Class');
+    userEvent.selectOptions(getByRole('combobox'), 'Test Class');
 
     expect(onUpdateFn).toBeCalledTimes(1);
-    expect(onUpdateFn).toBeCalledWith(updatedChar());
+    expect(onUpdateFn).toBeCalledWith(updatedChar);
   });
-});
 
-const testChar = () => {
-  return {
+  const testChar = {
     id: 1,
     name: 'Test Character',
     completionStep: 3,
@@ -47,10 +44,8 @@ const testChar = () => {
       'Test Class'
     ]
   };
-};
 
-const updatedChar = () => {
-  return {
+  const updatedChar = {
     id: 1,
     name: 'Test Character',
     completionStep: 4,
@@ -79,4 +74,4 @@ const updatedChar = () => {
       'Test Class'
     ]
   };
-};
+});

@@ -34,7 +34,7 @@ describe('Race Selection Component', () => {
   it('Allows saving after race and gender are selected', async () => {
     function mockGateway() {
       return {
-        getAdjustments: () => { return [{ 'key': 'str', 'value': 1 }, { 'key': 'dex', 'value': -1 }] }
+        getAdjustments: () => { return [{ 'key': 'str', 'value': 99 }, { 'key': 'dex', 'value': -99 }] }
       }
     }
     const onUpdateFn = jest.fn();
@@ -49,6 +49,8 @@ describe('Race Selection Component', () => {
 
     userEvent.selectOptions(getByRole('combobox'), 'Test Race');
     await waitFor(() => getByText(/Test Race/));
+    expect(getByText(/( 99 )/)).toBeInTheDocument();
+    expect(getByText(/( -99 )/)).toBeInTheDocument();
     userEvent.click(getByRole('radio', { name: /Male/ }));
     await waitFor(() => getByText(/Male/));
     expect(getByLabelText(/Male/)).toBeChecked();
@@ -92,8 +94,8 @@ describe('Race Selection Component', () => {
     id: 1,
     name: 'Test Character',
     completionStep: 3,
-    str: 11,
-    dex: 9,
+    str: 109,
+    dex: -89,
     con: 10,
     int: 10,
     wis: 10,

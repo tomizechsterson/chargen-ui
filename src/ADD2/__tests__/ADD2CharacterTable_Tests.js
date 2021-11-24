@@ -25,8 +25,7 @@ describe('ADD2 Character Table component', () => {
     const selectFn = jest.fn();
     const { getByRole } = render(<ADD2CharacterTable characters={ testData() } onSelect={ selectFn } />);
 
-    const characterToClick = getByRole('row', { name: /Test Step 1/ });
-    userEvent.click(characterToClick);
+    userEvent.click(getByRole('row', { name: /Test Step 1/ }));
 
     expect(selectFn).toHaveBeenCalledTimes(1);
     expect(selectFn).toHaveBeenCalledWith(1);

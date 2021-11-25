@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2ClassSelection from "../ADD2ClassSelection";
@@ -7,9 +7,9 @@ import ADD2ClassSelection from "../ADD2ClassSelection";
 describe('ADD2ClassSelection Component', () => {
   it('Allows selection of a class', () => {
     const onUpdateFn = jest.fn();
-    const { getByRole } = render(<ADD2ClassSelection selectedChar={ testChar } onUpdate={ onUpdateFn } />);
+    render(<ADD2ClassSelection selectedChar={ testChar } onUpdate={ onUpdateFn } />);
 
-    userEvent.selectOptions(getByRole('combobox'), 'Test Class');
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Test Class');
 
     expect(onUpdateFn).toBeCalledTimes(1);
     expect(onUpdateFn).toBeCalledWith(updatedChar);

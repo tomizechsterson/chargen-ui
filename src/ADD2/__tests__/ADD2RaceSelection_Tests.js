@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2RaceSelection from "../ADD2RaceSelection";
@@ -7,9 +7,9 @@ import ADD2RaceSelection from "../ADD2RaceSelection";
 describe('Race Selection Component', () => {
   it('Displays error message if Save is clicked before race is selected', () => {
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    const { getByRole } = render(<ADD2RaceSelection selectedChar={ testChar } />);
+    render(<ADD2RaceSelection selectedChar={ testChar } />);
 
-    userEvent.click(getByRole('button', { name: /Save/ }));
+    userEvent.click(screen.getByRole('button', { name: /Save/ }));
 
     expect(alertMock).toHaveBeenCalledTimes(1);
     expect(alertMock).toHaveBeenCalledWith('must select a race to save');
@@ -22,10 +22,10 @@ describe('Race Selection Component', () => {
       }
     }
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    const { getByRole } = render(<ADD2RaceSelection selectedChar={ testChar } gateway={ mockGateway() } />);
+    render(<ADD2RaceSelection selectedChar={ testChar } gateway={ mockGateway() } />);
 
-    userEvent.selectOptions(getByRole('combobox'), 'Test Race');
-    userEvent.click(getByRole('button', { name: /Save/ }));
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Test Race');
+    userEvent.click(screen.getByRole('button', { name: /Save/ }));
 
     expect(alertMock).toHaveBeenCalledTimes(1);
     expect(alertMock).toHaveBeenCalledWith('must select a gender to save');
@@ -38,23 +38,22 @@ describe('Race Selection Component', () => {
       }
     }
     const onUpdateFn = jest.fn();
-    const { getByText, getByRole, getByLabelText } =
-      render(
-        <ADD2RaceSelection
-          selectedChar={ testChar }
-          onUpdate={ onUpdateFn }
-          gateway={ mockGateway() }
-        />
-      );
+    render(
+      <ADD2RaceSelection
+        selectedChar={ testChar }
+        onUpdate={ onUpdateFn }
+        gateway={ mockGateway() }
+      />
+    );
 
-    userEvent.selectOptions(getByRole('combobox'), 'Test Race');
-    await waitFor(() => getByText(/Test Race/));
-    expect(getByText(/( 99 )/)).toBeInTheDocument();
-    expect(getByText(/( -99 )/)).toBeInTheDocument();
-    userEvent.click(getByRole('radio', { name: /Male/ }));
-    await waitFor(() => getByText(/Male/));
-    expect(getByLabelText(/Male/)).toBeChecked();
-    userEvent.click(getByRole('button', { name: /Save/ }));
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Test Race');
+    await waitFor(() => screen.getByText(/Test Race/));
+    expect(screen.getByText(/( 99 )/)).toBeInTheDocument();
+    expect(screen.getByText(/( -99 )/)).toBeInTheDocument();
+    userEvent.click(screen.getByRole('radio', { name: /Male/ }));
+    await waitFor(() => screen.getByText(/Male/));
+    expect(screen.getByLabelText(/Male/)).toBeChecked();
+    userEvent.click(screen.getByRole('button', { name: /Save/ }));
 
     expect(onUpdateFn).toBeCalledTimes(1);
     expect(onUpdateFn).toBeCalledWith(updatedChar);

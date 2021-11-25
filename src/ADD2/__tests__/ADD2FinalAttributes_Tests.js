@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2FinalAttributes from "../ADD2FinalAttributes";
@@ -7,9 +7,9 @@ import ADD2FinalAttributes from "../ADD2FinalAttributes";
 describe('Final Attributes Component', () => {
   it('Displays error message if Save is clicked too soon',() => {
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    const { getByRole } = render(<ADD2FinalAttributes selectedChar={ testChar } />);
+    render(<ADD2FinalAttributes selectedChar={ testChar } />);
 
-    userEvent.click(getByRole('button', { name: /Save/ }));
+    userEvent.click(screen.getByRole('button', { name: /Save/ }));
 
     expect(alertMock).toHaveBeenCalledTimes(1);
     expect(alertMock).toHaveBeenCalledWith('must roll for all attributes to save');
@@ -24,35 +24,35 @@ describe('Final Attributes Component', () => {
         getFinalAttributes: () => { return [99, 99, 99, 99, 99, 99] }
       }
     }
-    const { getByText, getByRole } =
-      render(
-        <ADD2FinalAttributes
-          selectedChar={ testChar }
-          onUpdate={ onUpdateFn }
-          gateway={ mockGateway() }
-        />
-      );
 
-    userEvent.click(getByRole('button', { name: /Roll Height\/Weight\/Age/ }));
+    render(
+      <ADD2FinalAttributes
+        selectedChar={ testChar }
+        onUpdate={ onUpdateFn }
+        gateway={ mockGateway() }
+      />
+    );
 
-    await waitFor(() => getByText(/Age: 99/));
-    expect(getByText(/Age: 99/)).toBeInTheDocument();
-    expect(getByText(/Height: 8'3"/)).toBeInTheDocument();
-    expect(getByText(/Weight: 999/)).toBeInTheDocument();
+    userEvent.click(screen.getByRole('button', { name: /Roll Height\/Weight\/Age/ }));
 
-    userEvent.click(getByRole('button', { name: /Roll HP\/GP/ }));
+    await waitFor(() => screen.getByText(/Age: 99/));
+    expect(screen.getByText(/Age: 99/)).toBeInTheDocument();
+    expect(screen.getByText(/Height: 8'3"/)).toBeInTheDocument();
+    expect(screen.getByText(/Weight: 999/)).toBeInTheDocument();
 
-    await waitFor(() => getByText(/HP: 99/));
-    expect(getByText(/HP: 99/)).toBeInTheDocument();
-    expect(getByText(/Funds: 9999/)).toBeInTheDocument();
-    expect(getByText(/Movement Rate: 99/)).toBeInTheDocument();
-    expect(getByText(/Paralyzation, Poison, Death Magic: 99/)).toBeInTheDocument();
-    expect(getByText(/Rod, Staff, Wand: 99/)).toBeInTheDocument();
-    expect(getByText(/Petrification, Polymorph: 99/)).toBeInTheDocument();
-    expect(getByText(/Breath Weapon: 99/)).toBeInTheDocument();
-    expect(getByText(/Spell: 99/)).toBeInTheDocument();
+    userEvent.click(screen.getByRole('button', { name: /Roll HP\/GP/ }));
 
-    userEvent.click(getByRole('button', { name: /Save/ }));
+    await waitFor(() => screen.getByText(/HP: 99/));
+    expect(screen.getByText(/HP: 99/)).toBeInTheDocument();
+    expect(screen.getByText(/Funds: 9999/)).toBeInTheDocument();
+    expect(screen.getByText(/Movement Rate: 99/)).toBeInTheDocument();
+    expect(screen.getByText(/Paralyzation, Poison, Death Magic: 99/)).toBeInTheDocument();
+    expect(screen.getByText(/Rod, Staff, Wand: 99/)).toBeInTheDocument();
+    expect(screen.getByText(/Petrification, Polymorph: 99/)).toBeInTheDocument();
+    expect(screen.getByText(/Breath Weapon: 99/)).toBeInTheDocument();
+    expect(screen.getByText(/Spell: 99/)).toBeInTheDocument();
+
+    userEvent.click(screen.getByRole('button', { name: /Save/ }));
 
     expect(onUpdateFn).toBeCalledTimes(1);
     expect(onUpdateFn).toBeCalledWith(completedChar);

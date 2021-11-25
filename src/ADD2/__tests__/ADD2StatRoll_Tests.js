@@ -1,54 +1,54 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2StatRoll from "../ADD2StatRoll";
 
 describe('ADD2StatRoll Component', () => {
   it('defaults to the Roll Once rule', () => {
-    const { getByText } = render(<ADD2StatRoll />);
+    render(<ADD2StatRoll />);
 
-    expect(getByText(/Standard Stat Rolling. Roll once per stat and that's it./)).toBeInTheDocument();
+    expect(screen.getByText(/Standard Stat Rolling. Roll once per stat and that's it./)).toBeInTheDocument();
   });
 
   it('can select the Roll Twice rule', () => {
-    const { getByText, getByRole } = render(<ADD2StatRoll />);
+    render(<ADD2StatRoll />);
 
-    userEvent.selectOptions(getByRole('combobox'), 'Roll Twice');
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Roll Twice');
 
-    expect(getByText(/The higher of two rolls is selected for each ability score/)).toBeInTheDocument();
+    expect(screen.getByText(/The higher of two rolls is selected for each ability score/)).toBeInTheDocument();
   });
 
   it('can select the Stat Assignment rule', () => {
-    const { getByText, getByRole } = render(<ADD2StatRoll />);
+    render(<ADD2StatRoll />);
 
-    userEvent.selectOptions(getByRole('combobox'), 'Stat Assignment');
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Stat Assignment');
 
-    expect(getByText(/Assign 6 rolls to stats/)).toBeInTheDocument();
+    expect(screen.getByText(/Assign 6 rolls to stats/)).toBeInTheDocument();
   });
 
   it('can select the Double Stat Assignment rule', () => {
-    const { getByText, getByRole } = render(<ADD2StatRoll />);
+    render(<ADD2StatRoll />);
 
-    userEvent.selectOptions(getByRole('combobox'), 'Double Stat Assignment');
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Double Stat Assignment');
 
-    expect(getByText(/Roll 12 and assign 6 to stats/)).toBeInTheDocument();
+    expect(screen.getByText(/Roll 12 and assign 6 to stats/)).toBeInTheDocument();
   });
 
   it('can select the Roll 4 Dice rule', () => {
-    const { getByText, getByRole } = render(<ADD2StatRoll />);
+    render(<ADD2StatRoll />);
 
-    userEvent.selectOptions(getByRole('combobox'), 'Roll 4 dice');
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Roll 4 dice');
 
-    expect(getByText(/Only the three highest rolls are added to the ability score/)).toBeInTheDocument();
+    expect(screen.getByText(/Only the three highest rolls are added to the ability score/)).toBeInTheDocument();
   });
 
   it('can select the Add 7 Dice to 8 rule', () => {
-    const { getByText, getByRole } = render(<ADD2StatRoll selectedChar={testChar}/>);
+    render(<ADD2StatRoll selectedChar={testChar}/>);
 
-    userEvent.selectOptions(getByRole('combobox'), 'Add 7 Dice to 8');
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Add 7 Dice to 8');
 
-    expect(getByText(/All stats start at 8, and 7 dice are added/)).toBeInTheDocument();
+    expect(screen.getByText(/All stats start at 8, and 7 dice are added/)).toBeInTheDocument();
   });
 
   const testChar = {

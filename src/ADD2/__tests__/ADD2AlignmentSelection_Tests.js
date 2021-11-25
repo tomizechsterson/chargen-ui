@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2AlignmentSelection from "../ADD2AlignmentSelection";
@@ -7,9 +7,9 @@ import ADD2AlignmentSelection from "../ADD2AlignmentSelection";
 describe('ADD2AlignmentSelection Component', () => {
   it('Allows selection of alignment', () => {
     const onUpdateFn = jest.fn();
-    const { getByRole } = render(<ADD2AlignmentSelection selectedChar={ testChar } onUpdate={ onUpdateFn } />);
+    render(<ADD2AlignmentSelection selectedChar={ testChar } onUpdate={ onUpdateFn } />);
 
-    userEvent.selectOptions(getByRole('combobox'), 'Test Alignment');
+    userEvent.selectOptions(screen.getByRole('combobox'), 'Test Alignment');
 
     expect(onUpdateFn).toBeCalledTimes(1);
     expect(onUpdateFn).toBeCalledWith(updatedChar);

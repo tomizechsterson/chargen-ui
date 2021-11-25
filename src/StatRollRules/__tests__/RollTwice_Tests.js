@@ -2,24 +2,27 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import RollOnce from '../RollOnce';
+import RollTwice from "../RollTwice";
 
-describe('Roll Once Component', () => {
+describe('Roll Twice Component', () => {
   function mockGateway() {
     return {
-      rollStats: () => { return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]] }
+      rollStats: () => {
+        return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3],
+          [3, 3, 3], [3, 3, 4], [3, 4, 4], [4, 4, 4], [4, 4, 5], [4, 5, 5]]
+      }
     }
   }
 
   it('renders expected initial state', () => {
-    render(<RollOnce />);
+    render(<RollTwice />);
 
     expect(screen.getByRole('button', { name: /Roll Stats/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Save Stats/ })).toBeInTheDocument();
   });
 
   it('displays an error message if save is clicked before rolling', () => {
-    render(<RollOnce />);
+    render(<RollTwice />);
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
 
     userEvent.click(screen.getByRole('button', { name: /Save Stats/ }));
@@ -29,29 +32,29 @@ describe('Roll Once Component', () => {
   });
 
   it('displays the expected output after rolling stats', async () => {
-    render(<RollOnce selectedChar={ testChar } gateway={ mockGateway() }/>);
+    render(<RollTwice selectedChar={ testChar } gateway={ mockGateway() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
-    await waitFor(() => screen.getByText(/STR: 3/));
-    expect(screen.getByTestId('strRoll')).toHaveTextContent('(1 + 1 + 1)');
-    expect(screen.getByText(/DEX: 4/));
-    expect(screen.getByTestId('dexRoll')).toHaveTextContent('(1 + 1 + 2)');
-    expect(screen.getByText(/CON: 5/));
-    expect(screen.getByTestId('conRoll')).toHaveTextContent('(1 + 2 + 2)');
-    expect(screen.getByText(/INT: 6/));
-    expect(screen.getByTestId('intRoll')).toHaveTextContent('(2 + 2 + 2)');
-    expect(screen.getByText(/WIS: 7/));
-    expect(screen.getByTestId('wisRoll')).toHaveTextContent('(2 + 2 + 3)');
-    expect(screen.getByText(/CHR: 8/));
-    expect(screen.getByTestId('chrRoll')).toHaveTextContent('(2 + 3 + 3)');
+    await waitFor(() => screen.getByText(/STR: 4/));
+    expect(screen.getByTestId('strRoll')).toHaveTextContent('(3: 1 + 1 + 1), (4: 1 + 1 + 2)');
+    expect(screen.getByText(/DEX: 6/));
+    expect(screen.getByTestId('dexRoll')).toHaveTextContent('(5: 1 + 2 + 2), (6: 2 + 2 + 2)');
+    expect(screen.getByText(/CON: 8/));
+    expect(screen.getByTestId('conRoll')).toHaveTextContent('(7: 2 + 2 + 3), (8: 2 + 3 + 3)');
+    expect(screen.getByText(/INT: 10/));
+    expect(screen.getByTestId('intRoll')).toHaveTextContent('(9: 3 + 3 + 3), (10: 3 + 3 + 4)');
+    expect(screen.getByText(/WIS: 12/));
+    expect(screen.getByTestId('wisRoll')).toHaveTextContent('(11: 3 + 4 + 4), (12: 4 + 4 + 4)');
+    expect(screen.getByText(/CHR: 14/));
+    expect(screen.getByTestId('chrRoll')).toHaveTextContent('(13: 4 + 4 + 5), (14: 4 + 5 + 5)');
   });
 
   it('updates character as expected', async () => {
     const updateFn = jest.fn();
-    render(<RollOnce selectedChar={ testChar } gateway={ mockGateway() } onUpdate={ updateFn }/>);
+    render(<RollTwice selectedChar={ testChar } gateway={ mockGateway() } onUpdate={ updateFn } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
-    await waitFor(() => screen.getByText(/STR: 3/));
+    await waitFor(() => screen.getByText(/STR: 4/));
     userEvent.click(screen.getByRole('button', { name: /Save Stats/ }));
 
     await waitFor(() => expect(updateFn).toHaveBeenCalledTimes(1));
@@ -89,12 +92,12 @@ describe('Roll Once Component', () => {
     id: 1,
     name: 'Test Character',
     completionStep: 2,
-    str: 3,
-    dex: 4,
-    con: 5,
-    int: 6,
-    wis: 7,
-    chr: 8,
+    str: 4,
+    dex: 6,
+    con: 8,
+    int: 10,
+    wis: 12,
+    chr: 14,
     race: 'none',
     gender: 'n',
     height: 0,

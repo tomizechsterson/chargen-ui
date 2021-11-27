@@ -35,17 +35,17 @@ describe('Roll Twice Component', () => {
     render(<RollTwice selectedChar={ testChar } gateway={ mockGateway() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
-    await waitFor(() => screen.getByText(/STR: 4/));
+    await waitFor(() => expect(screen.getByText(/STR: 4/)).toBeInTheDocument());
     expect(screen.getByTestId('strRoll')).toHaveTextContent('(3: 1 + 1 + 1), (4: 1 + 1 + 2)');
-    expect(screen.getByText(/DEX: 6/));
+    expect(screen.getByText(/DEX: 6/)).toBeInTheDocument();
     expect(screen.getByTestId('dexRoll')).toHaveTextContent('(5: 1 + 2 + 2), (6: 2 + 2 + 2)');
-    expect(screen.getByText(/CON: 8/));
+    expect(screen.getByText(/CON: 8/)).toBeInTheDocument();
     expect(screen.getByTestId('conRoll')).toHaveTextContent('(7: 2 + 2 + 3), (8: 2 + 3 + 3)');
-    expect(screen.getByText(/INT: 10/));
+    expect(screen.getByText(/INT: 10/)).toBeInTheDocument();
     expect(screen.getByTestId('intRoll')).toHaveTextContent('(9: 3 + 3 + 3), (10: 3 + 3 + 4)');
-    expect(screen.getByText(/WIS: 12/));
+    expect(screen.getByText(/WIS: 12/)).toBeInTheDocument();
     expect(screen.getByTestId('wisRoll')).toHaveTextContent('(11: 3 + 4 + 4), (12: 4 + 4 + 4)');
-    expect(screen.getByText(/CHR: 14/));
+    expect(screen.getByText(/CHR: 14/)).toBeInTheDocument();
     expect(screen.getByTestId('chrRoll')).toHaveTextContent('(13: 4 + 4 + 5), (14: 4 + 5 + 5)');
   });
 
@@ -54,7 +54,7 @@ describe('Roll Twice Component', () => {
     render(<RollTwice selectedChar={ testChar } gateway={ mockGateway() } onUpdate={ updateFn } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
-    await waitFor(() => screen.getByText(/STR: 4/));
+    await waitFor(() => expect(screen.getByText(/STR: 4/)).toBeInTheDocument());
     userEvent.click(screen.getByRole('button', { name: /Save Stats/ }));
 
     await waitFor(() => expect(updateFn).toHaveBeenCalledTimes(1));

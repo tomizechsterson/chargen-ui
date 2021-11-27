@@ -99,7 +99,7 @@ export default class AssignmentDisplay extends Component {
 
         <AssignmentControl
           onSelectStat={ this.handleSelectStat }
-          onSelectRoll={this.handleSelectRoll}
+          onSelectRoll={ this.handleSelectRoll }
           stat={ 'STR' }
           charStat={ selectedChar.str }
           rolls={ [strRoll] }

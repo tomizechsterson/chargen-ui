@@ -26,8 +26,8 @@ export default class Assignment2xDisplay extends Component {
   }
 
   handleAssign() {
-    const { selectedStat, selectedRoll } = this.state;
     const { selectedChar, rolls } = this.props;
+    const { selectedStat, selectedRoll } = this.state;
 
     if (selectedStat === 'STR')
       selectedChar.str = selectedRoll.value;

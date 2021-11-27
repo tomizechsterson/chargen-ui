@@ -58,6 +58,22 @@ describe('Assignment roll rule component', () => {
     expect(screen.getByTestId('CHR_roll')).toHaveTextContent('(2 + 3 + 3)');
   });
 
+  it('allows selecting and deselecting rolls and stats', async () => {
+    render(<Assignment double={ false } gateway={ mockGateway() } />);
+    userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
+    await waitFor(() => expect(screen.getByText(/Selected Stat: , Selected Roll:/)).toBeInTheDocument());
+
+    userEvent.click(screen.getByRole('button', { name: /CHR/ }));
+    userEvent.click(screen.getByRole('button', { name: /8/ }));
+
+    expect(screen.getByText(/Selected Stat: CHR, Selected Roll: 8/)).toBeInTheDocument();
+
+    userEvent.click(screen.getByRole('button', { name: /CHR/ }));
+    userEvent.click(screen.getByRole('button', { name: /8/ }));
+
+    expect(screen.getByText(/Selected Stat: , Selected Roll:/)).toBeInTheDocument()
+  });
+
   it('enables Assign button after selecting a stat and roll', async () => {
     render(<Assignment double={ false } gateway={ mockGateway() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
@@ -69,7 +85,7 @@ describe('Assignment roll rule component', () => {
     expect(screen.getByRole('button', { name: /Assign/ })).toBeEnabled();
   });
 
-  it('enables Reset button and disables roll button after assigning a roll to a stat', async () => {
+  it('enables Reset button and disables assigned roll button after assigning a roll to a stat', async () => {
     render(<Assignment double={ false } gateway={ mockGateway() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'STR' })));

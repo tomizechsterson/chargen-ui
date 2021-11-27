@@ -25,6 +25,7 @@ export default class Assignment2xDisplay extends Component {
       this.setState({ selectedRoll: roll });
   }
 
+  // noinspection DuplicatedCode
   handleAssign() {
     const { selectedChar, rolls } = this.props;
     const { selectedStat, selectedRoll } = this.state;
@@ -88,6 +89,7 @@ export default class Assignment2xDisplay extends Component {
       conRoll1 = undefined, conRoll2 = undefined, intRoll1 = undefined, intRoll2 = undefined,
       wisRoll1 = undefined, wisRoll2 = undefined, chrRoll1 = undefined, chrRoll2 = undefined;
     if (rolls.length > 0) {
+      // noinspection DuplicatedCode
       strRoll1 = rolls[0];
       strRoll2 = rolls[1];
       dexRoll1 = rolls[2];

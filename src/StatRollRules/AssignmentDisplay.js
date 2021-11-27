@@ -81,6 +81,7 @@ export default class AssignmentDisplay extends Component {
     let strRoll = undefined, dexRoll = undefined, conRoll = undefined,
       intRoll = undefined, wisRoll = undefined, chrRoll = undefined;
     if (rolls.length > 0) {
+      // noinspection DuplicatedCode
       strRoll = rolls[0];
       dexRoll = rolls[1];
       conRoll = rolls[2];

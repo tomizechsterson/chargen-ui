@@ -27,7 +27,7 @@ const AssignmentControl = (props) => {
         }
         {
           roll &&
-          <span style={ rollStyle }>{ roll.text }</span>
+          <span data-testid={`${stat}_roll`} style={ rollStyle }>{ roll.text }</span>
         }
       </div>
     );

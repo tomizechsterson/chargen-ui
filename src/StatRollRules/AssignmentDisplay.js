@@ -96,6 +96,7 @@ export default class AssignmentDisplay extends Component {
 
     return (
       <div data-cy='statAssignmentDiv'>
+        <p>Assign 6 rolls to stats</p>
         Selected Stat: {selectedStat}, Selected Roll: {selectedRollText} <br/>
 
         <AssignmentControl

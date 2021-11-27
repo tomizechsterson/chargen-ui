@@ -5,6 +5,7 @@ import '@testing-library/jest-dom';
 import RollTwice from "../RollTwice";
 
 describe('Roll Twice Component', () => {
+  // noinspection DuplicatedCode
   function mockGateway() {
     return {
       rollStats: () => {

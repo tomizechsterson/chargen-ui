@@ -110,6 +110,7 @@ export default class Assignment2xDisplay extends Component {
 
     return (
       <div data-cy='statAssignment2xDiv'>
+        <p>Roll 12 and assign 6 to stats</p>
         Selected Stat: {selectedStat}, Selected Roll: {selectedRollText} <br/>
 
         <AssignmentControl

@@ -18,6 +18,7 @@ describe('Assignment roll rule component', () => {
 
     expect(screen.getByRole('button', { name: /Roll Stats/ })).toBeInTheDocument();
     expect(screen.getByText(/Assign 6 rolls to stats/)).toBeInTheDocument();
+    // noinspection DuplicatedCode
     expect(screen.getByText(/Selected Stat: , Selected Roll:/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /STR/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /DEX/ })).toBeInTheDocument();
@@ -168,7 +169,7 @@ describe('Assignment roll rule component', () => {
 
   const testChar = {
     id: 1,
-    name: 'New Character',
+    name: 'Test Character',
     completionStep: 1,
     str: 0,
     dex: 0,
@@ -180,7 +181,7 @@ describe('Assignment roll rule component', () => {
 
   const updatedChar = {
     id: 1,
-    name: 'New Character',
+    name: 'Test Character',
     completionStep: 2,
     str: 8,
     dex: 7,

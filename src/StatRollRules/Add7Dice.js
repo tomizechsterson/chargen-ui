@@ -27,11 +27,14 @@ export default class Add7Dice extends Component {
 
   handleUpdate() {
     const { rolls, selectedChar } = this.state;
-    if (rolls.some((r) => {
+    if (rolls.length === 0) {
+      alert('must roll stats and assign all to save');
+    } else if (rolls.some((r) => {
       return !r.assigned
     })) {
-      alert('must use all rolls to save');
+      alert('must assign all rolls to save');
     } else {
+      // noinspection DuplicatedCode
       this.props.selectedChar.str = selectedChar.str;
       this.props.selectedChar.dex = selectedChar.dex;
       this.props.selectedChar.con = selectedChar.con;

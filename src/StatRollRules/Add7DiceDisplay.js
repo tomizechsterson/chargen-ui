@@ -33,13 +33,13 @@ export default class Add7DiceDisplay extends Component {
       selectedChar.str += selectedRoll.value;
     else if (selectedStat === 'DEX' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
       selectedChar.dex += selectedRoll.value;
-    else if (selectedStat === 'CON' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
+    else if (selectedStat === 'CON' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.con, selectedRoll.value))
       selectedChar.con += selectedRoll.value;
-    else if (selectedStat === 'INT' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
+    else if (selectedStat === 'INT' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.int, selectedRoll.value))
       selectedChar.int += selectedRoll.value;
-    else if (selectedStat === 'WIS' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
+    else if (selectedStat === 'WIS' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.wis, selectedRoll.value))
       selectedChar.wis += selectedRoll.value;
-    else if (selectedStat === 'CHR' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.dex, selectedRoll.value))
+    else if (selectedStat === 'CHR' && !Add7DiceDisplay.statWillExceedThreshold(selectedChar.chr, selectedRoll.value))
       selectedChar.chr += selectedRoll.value;
     else
       exceeds18 = true;

@@ -2,24 +2,26 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import RollOnce from '../RollOnce';
+import RollFour from "../RollFour";
 
-describe('Roll Once Component', () => {
+describe('Roll Four Component', () => {
   function mockGateway() {
     return {
-      rollStats: () => { return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]] }
+      rollStats: () => {
+        return [[1, 1, 1, 1], [1, 1, 1, 2], [1, 1, 1, 3], [1, 1, 1, 4], [1, 1, 1, 5], [1, 1, 1, 6]]
+      }
     }
   }
 
   it('renders expected initial state', () => {
-    render(<RollOnce />);
+    render(<RollFour />);
 
     expect(screen.getByRole('button', { name: /Roll Stats/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Save Stats/ })).toBeInTheDocument();
   });
 
   it('displays an error message if save is clicked before rolling', () => {
-    render(<RollOnce />);
+    render(<RollFour />);
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
 
     userEvent.click(screen.getByRole('button', { name: /Save Stats/ }));
@@ -29,29 +31,29 @@ describe('Roll Once Component', () => {
   });
 
   it('displays the expected output after rolling stats', async () => {
-    render(<RollOnce selectedChar={ testChar } gateway={ mockGateway() }/>);
+    render(<RollFour selectedChar={ testChar } gateway={ mockGateway() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
     await waitFor(() => expect(screen.getByText(/STR: 3/)).toBeInTheDocument());
-    expect(screen.getByTestId('strRoll')).toHaveTextContent('(1 + 1 + 1)');
+    expect(screen.getByTestId('strRoll')).toHaveTextContent('(1 + 1 + 1 + 1)');
     expect(screen.getByText(/DEX: 4/)).toBeInTheDocument();
-    expect(screen.getByTestId('dexRoll')).toHaveTextContent('(1 + 1 + 2)');
+    expect(screen.getByTestId('dexRoll')).toHaveTextContent('(2 + 1 + 1 + 1)');
     expect(screen.getByText(/CON: 5/)).toBeInTheDocument();
-    expect(screen.getByTestId('conRoll')).toHaveTextContent('(1 + 2 + 2)');
+    expect(screen.getByTestId('conRoll')).toHaveTextContent('(3 + 1 + 1 + 1)');
     expect(screen.getByText(/INT: 6/)).toBeInTheDocument();
-    expect(screen.getByTestId('intRoll')).toHaveTextContent('(2 + 2 + 2)');
+    expect(screen.getByTestId('intRoll')).toHaveTextContent('(4 + 1 + 1 + 1)');
     expect(screen.getByText(/WIS: 7/)).toBeInTheDocument();
-    expect(screen.getByTestId('wisRoll')).toHaveTextContent('(2 + 2 + 3)');
+    expect(screen.getByTestId('wisRoll')).toHaveTextContent('(5 + 1 + 1 + 1)');
     expect(screen.getByText(/CHR: 8/)).toBeInTheDocument();
-    expect(screen.getByTestId('chrRoll')).toHaveTextContent('(2 + 3 + 3)');
+    expect(screen.getByTestId('chrRoll')).toHaveTextContent('(6 + 1 + 1 + 1)');
   });
 
   it('updates character as expected', async () => {
     const updateFn = jest.fn();
-    render(<RollOnce selectedChar={ testChar } gateway={ mockGateway() } onUpdate={ updateFn }/>);
+    render(<RollFour selectedChar={ testChar } gateway={ mockGateway() } onUpdate={ updateFn } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
-    await waitFor(() => expect(screen.getByText(/STR: 3/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/DEX: 4/)).toBeInTheDocument());
     userEvent.click(screen.getByRole('button', { name: /Save Stats/ }));
 
     await waitFor(() => expect(updateFn).toHaveBeenCalledTimes(1));

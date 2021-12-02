@@ -19,24 +19,24 @@ export default class ServerGatewayDD35 {
   };
 
   getLocal = () => {
-    return localStorage.getItem('list');
+    return localStorage.getItem('localCharacters');
   };
 
   createLocal = (character) => {
-    let list = JSON.parse(localStorage.getItem('list'));
+    let list = JSON.parse(localStorage.getItem('localCharacters'));
     if (list) {
       const newList = list.concat(character);
-      localStorage.setItem('list', JSON.stringify(newList));
+      localStorage.setItem('localCharacters', JSON.stringify(newList));
     } else {
       const newList = [];
       newList.push(character);
-      localStorage.setItem('list', JSON.stringify(newList));
+      localStorage.setItem('localCharacters', JSON.stringify(newList));
     }
   };
 
   deleteLocal = (id) => {
-    const list = [...JSON.parse(localStorage.getItem('list'))];
+    const list = [...JSON.parse(localStorage.getItem('localCharacters'))];
     const updatedList = list.filter(item => item.id !== id);
-    localStorage.setItem('list', JSON.stringify(updatedList));
+    localStorage.setItem('localCharacters', JSON.stringify(updatedList));
   };
 }

@@ -1,3 +1,7 @@
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: sq6fzsonRyN8gAzFIQjU+vgkkY0sb6YVwCRl9YaHcD4AuNyZCE1rHnjs8WFTq8oj
+
 image: Ubuntu
 
 cache:

@@ -4,8 +4,8 @@ cache:
   - node_modules
 
 install:
-  - nvm install 14.15.0
-  - nvm use 14.15.0
+  - nvm install 16.13.0
+  - nvm use 16.13.0
   - npm install
 
 test_script:

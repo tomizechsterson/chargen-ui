@@ -21,8 +21,6 @@
     "@testing-library/user-event": "^13.5.0",
     "coveralls": "^3.1.1",
     "cypress": "^9.0.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.14.0",
     "msw": "^0.35.0",
     "sinon": "^6.3.5"
   },

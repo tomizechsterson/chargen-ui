@@ -35,9 +35,9 @@ Be sure to have the latest versions of these installed:
 - Navigate into this folder with your terminal of choice
 - Run `npm install` to pull down all the dev dependencies
 - You will also need the services from the [CharGen][1] project running on their default port in order for any features beyond creating and deleting characters to work (i.e. rolling stats, selecting race/class). Just follow the steps in that project's readme to get them downloaded and running.
-- As an option, you can use the services from the [chargen-nancy][2] project instead. Just make sure to update the URL's found in the `ApiUrls.js` file to point to the address on which they listen for requests.
+- As an option, you can use the services from the [chargen-nancy][2] project instead. Just make sure to update the URLs found in the `ApiUrls.js` file to point to the address on which they listen for requests.
  
-At this point, you should have everything you need to fire up your IDE of choice and start tinkering around. If not, feel free to open an issue and I'll see what I can do.
+At this point, you should have everything you need to fire up your IDE of choice and start tinkering around. If not, feel free to open an issue, and I'll see what I can do.
 
 ### Running the App
 
@@ -49,7 +49,7 @@ Simply run `npm start` in your terminal of choice at the root of the project, an
  
 Simply run `npm test` in the project's root folder and that will start up the test runner. By default, it will monitor for changed files and run the tests that are related to them after they're saved. This can be changed by following the on-screen instructions.
  
-You can also run `npm test -- --coverage` to see the current test coverage (yes, there is an extra `--` in there). See [this article][3] for more details
+You can also run `npm run coverage` to see the current test coverage.
  
 ## Contributing
  

@@ -8,8 +8,9 @@ export default class DD35CharacterTable extends Component {
   }
 
   async componentDidMount() {
-    const { gateway } = this.props;
-    const data = await gateway.get();
+    const { gateway, useService, localSeedData } = this.props;
+    const data = useService ? await gateway.get() : localSeedData;
+
     if (!this.isUnmounted)
       this.setState({ characterData: data });
   }
@@ -20,7 +21,7 @@ export default class DD35CharacterTable extends Component {
 
   async handleCreate() {
     const { newCharName, characterData } = this.state;
-    const { gateway } = this.props;
+    const { gateway, useService } = this.props;
 
     function newNameIsUnique(name) {
       const index = characterData.findIndex(function(c) {
@@ -41,22 +42,28 @@ export default class DD35CharacterTable extends Component {
       const newCharList = characters.concat([newChar]);
       this.setState({ characterData: newCharList, newCharName: '' });
 
-      await gateway.createCharacter(newChar);
+      if(useService)
+        await gateway.createCharacter(newChar);
     } else
       this.setState({ newCharName: '' });
   }
 
   async handleDelete(id) {
     const { characterData } = this.state;
-    const { gateway } = this.props;
+    const { gateway, useService } = this.props;
     const index = characterData.findIndex(function(c) {
       return c.id === id;
     });
 
-    characterData.splice(index, 1);
-    this.setState({ characterData: characterData });
+    const charToDelete = characterData[index];
 
-    await gateway.deleteCharacter(id);
+    if (window.confirm(`Are you sure you want to delete ${charToDelete.name}?`)) {
+      characterData.splice(index, 1);
+      this.setState({ characterData: characterData });
+
+      if(useService)
+        await gateway.deleteCharacter(id);
+    }
   }
 
   handleNewNameChange(e) {

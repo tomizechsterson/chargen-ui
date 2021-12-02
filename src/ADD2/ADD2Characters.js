@@ -54,7 +54,7 @@ export default class ADD2Characters extends Component {
 
     const charToDelete = characterData[index];
 
-    if (window.confirm('Are you sure you want to delete ' + charToDelete.name + ', the ' + charToDelete.race + ' ' + charToDelete.className + '?')) {
+    if (window.confirm(`Are you sure you want to delete ${charToDelete.name}, the ${charToDelete.race} ${charToDelete.className}?`)) {
       characterData.splice(index, 1);
 
       this.setState({ selected: null });

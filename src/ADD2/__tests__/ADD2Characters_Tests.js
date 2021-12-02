@@ -11,7 +11,7 @@ describe('ADD2Characters', () => {
     expect(screen.queryByRole('button', { name: /Delete/ })).not.toBeInTheDocument();
   });
 
-  it('Adds a character to the table via button and enter key', async () => {
+  it('Adds a character to the table via button and enter key', () => {
     render(<ADD2Characters useTestData={ true } testData={ [] } />);
     expect(screen.queryAllByRole('row').length).toBe(0);
     userEvent.type(screen.getByRole('textbox'), 'test');
@@ -26,6 +26,47 @@ describe('ADD2Characters', () => {
 
     expect(screen.queryAllByRole('row').length).toBe(3); // This counts the header row
     expect(screen.getByRole('row', { name: /newTest/})).toBeInTheDocument();
+  });
+
+  it('prevents adding a new character if only spaces or blank with button and enter key', () => {
+    render(<ADD2Characters useTestData={ true } testData={ [] } />);
+    expect(screen.queryAllByRole('row').length).toBe(0);
+
+    userEvent.click(screen.getByRole('button', { name: /Create/ }));
+
+    expect(screen.queryAllByRole('row').length).toBe(0);
+
+    userEvent.type(screen.getByRole('textbox'), '    ');
+    expect(screen.getByRole('textbox')).toHaveValue('    ');
+
+    userEvent.click(screen.getByRole('button', { name: /Create/ }));
+
+    expect(screen.queryAllByRole('row').length).toBe(0);
+    expect(screen.getByRole('textbox')).toHaveValue('');
+
+    userEvent.type(screen.getByRole('textbox'), '{enter}');
+
+    expect(screen.queryAllByRole('row').length).toBe(0);
+
+    userEvent.type(screen.getByRole('textbox'), '    {enter}');
+
+    expect(screen.queryAllByRole('row').length).toBe(0);
+    expect(screen.getByRole('textbox')).toHaveValue('');
+  });
+
+  it('prevents adding a character with duplicate name', () => {
+    render(<ADD2Characters useTestData={ true } testData={ [] } />);
+    expect(screen.queryAllByRole('row').length).toBe(0);
+
+    userEvent.type(screen.getByRole('textbox'), 'test{enter}');
+    expect(screen.getByRole('row', { name: /test/ })).toBeInTheDocument();
+    expect(screen.queryAllByRole('row').length).toBe(2);
+
+    userEvent.type(screen.getByRole('textbox'), 'test');
+    userEvent.click(screen.getByRole('button', { name: /Create/ }));
+
+    expect(screen.getByRole('textbox')).toHaveValue('');
+    expect(screen.queryAllByRole('row').length).toBe(2);
   });
 
   it('displays delete button after a character is selected', () => {

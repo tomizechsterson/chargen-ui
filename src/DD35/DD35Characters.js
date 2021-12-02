@@ -21,7 +21,7 @@ export default class DD35Characters extends Component {
 
   render() {
     const { selectedChar } = this.state;
-    const { gateway } = this.props;
+    const { gateway, useService, localSeedData } = this.props;
 
     return (
       <div>
@@ -37,6 +37,8 @@ export default class DD35Characters extends Component {
           <DD35CharacterTable
             onSelect={ this.handleSelect }
             gateway={ gateway }
+            useService={ useService }
+            localSeedData={ localSeedData }
           />
         }
       </div>

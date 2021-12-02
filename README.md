@@ -7,7 +7,7 @@ This project is a UI frontend that allows the user to go through the process of 
 
 - [ReactJS](https://reactjs.org/)
 - [Jest](https://jestjs.io/en/)
-- [Enzyme](http://airbnb.io/enzyme/)
+- [Testing Library](https://testing-library.com/)
 - [Sinon](https://sinonjs.org/)
 - More JavaScript in general, especially with ES6 and ES2017
   - Specifically async/await and promises

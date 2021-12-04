@@ -250,6 +250,10 @@ The min and max stats for the races are as follows:
 
 `get: /races/{str}/{dex}/{con}/{int}/{wis}/{chr}`
 
+Example:
+
+`get: /races/9/9/9/9/9/9`
+
 Response:
 
 ```
@@ -259,11 +263,12 @@ Response:
   "Half-Elf",
   "Human"
 ]
+// Note that Dwarf and Halfling are excluded due to Con minimums not being met
 ```
 
 ## Get Stat Adjustments
 
-Most races in this game have associated stat afjustments when you select them:
+Most races in this game have associated stat adjustments when you select them:
 
 | Race     | Adjustments      |
 |----------|------------------|
@@ -274,7 +279,7 @@ Most races in this game have associated stat afjustments when you select them:
 | Halfling | dex + 1, str - 1 |
 | Human    | N/A              |
 
-`get: /statadjust/elf`
+`get: /statadjust/Elf`
 
 Response:
 
@@ -313,6 +318,10 @@ Multi-Class Combos by Race:
 | Halfling | Fighter/Thief                                                                                                                                                                             |
 | Human    | None                                                                                                                                                                                      |
 
+`get: /classes/{race}/{str}/{dex}/{con}/{int}/{wis}/{chr}`
+
+Example:
+
 `get: /classes/Elf/9/9/9/9/9/9`
 
 Response:
@@ -334,16 +343,16 @@ Response:
 
 Once class is known, the available alignments can be queried
 
-| Class   | Allowed Alignments                                                     |
-|---------|------------------------------------------------------------------------|
-| Paladin | Lawful Good                                                            |
-| Druid   | True Neutral                                                           |
-| Ranger  | Lawful Good, Neutral Good, Chaotic Good                                |
-| Bard    | Lawful Neutal, Neutal Good, True Neutral, Neutral Evil, Chaotic Neutal |
-| Fighter | All                                                                    |
-| Mage    | All                                                                    |
-| Cleric  | All                                                                    |
-| Thief   | All                                                                    |
+| Class   | Allowed Alignments                                                        |
+|---------|---------------------------------------------------------------------------|
+| Paladin | Lawful Good                                                               |
+| Druid   | True Neutral                                                              |
+| Ranger  | Lawful Good, Neutral Good, Chaotic Good                                   |
+| Bard    | Lawful Neutral, Neutral Good, True Neutral, Neutral Evil, Chaotic Neutral |
+| Fighter | All                                                                       |
+| Mage    | All                                                                       |
+| Cleric  | All                                                                       |
+| Thief   | All                                                                       |
 
 `get; /alignment/Ranger`
 
@@ -376,7 +385,7 @@ Once race and gender have been chosen, the starting height, weight, and age can 
 | Human    | Male   | 60          | 140         | 15       | 2d10       | 6d10       | 1d4     |
 |          | Female | 59          | 100         | 15       | 2d10       | 6d10       | 1d4     |
 
-`get: /hwa/elf/m`
+`get: /hwa/Elf/m`
 
 Response:
 
@@ -411,6 +420,10 @@ As the final stage, we use the class(es) and race to determine the movement rate
 `get: /final/{race}/{className}/{classTwo}/{classThree}`
 
 *note: classTwo and classThree are optional*
+
+Example:
+
+`get: /final/Half-Elf/Fighter/Cleric`
 
 Response:
 

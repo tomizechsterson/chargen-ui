@@ -7,7 +7,9 @@ This document spells out the required API contracts for this UI to work. It's sp
 ## Get All Characters
 
 `get: /`
+
 Response:
+
 ```
 [
 	{
@@ -75,7 +77,9 @@ Response:
 ## Get a Character by Id
 
 `get: /1`
+
 Response:
+
 ```
 {
   "id": 1,
@@ -111,7 +115,9 @@ Response:
 ## Create a New Character
 
 `post: /`
+
 Request Body:
+
 ```
 {"id":7,"name":"asdfasdfaaa","completionStep":1,"str":0,"dex":0,"con":0,"int":0,"wis":0,"chr":0,"race":"none","gender":"n","height":0,"weight":0,"age":0,"className":"none","alignment":"none","paralyze":0,"rod":0,"petrification":0,"breath":0,"spell":0,"hp":0,"moveRate":0,"funds":0}
 ```
@@ -119,7 +125,9 @@ Request Body:
 ## Update a Character
 
 `put: /5`
+
 Request Body:
+
 ```
 {"id":5,"name":"asdfasdf","str":8,"dex":8,"con":14,"int":11,"wis":4,"chr":8,"race":"none","availableRaces":["Dwarf","Elf","Gnome","Half-Elf","Halfling","Human"],"gender":"n","height":0,"weight":0,"age":0,"className":"none","availableClasses":[],"alignment":"none","availableAlignments":[],"hp":0,"paralyze":0,"rod":0,"petrification":0,"breath":0,"spell":0,"moveRate":0,"funds":0,"completionStep":2}
 ```
@@ -133,7 +141,9 @@ Request Body:
 There are 6 different rules that can be used to determine initial stats
 
 `get: /rollstats/rollonce`
+
 Response:
+
 ```
 [
   [ 3, 2, 5 ],
@@ -146,7 +156,9 @@ Response:
 ```
 
 `get: /rollstats/rolltwice`
+
 Response:
+
 ```
 [
   [ 3, 3, 6 ],
@@ -165,7 +177,9 @@ Response:
 ```
 
 `get: /rollstats/assignment`
+
 Response:
+
 ```
 [
   [ 4, 6, 4 ],
@@ -178,7 +192,9 @@ Response:
 ```
 
 `get: /rollstats/assignmentdouble`
+
 Response:
+
 ```
 [
   [ 5, 5, 6 ],
@@ -197,7 +213,9 @@ Response:
 ```
 
 `get: /rollstats/rollfour`
+
 Response:
+
 ```
 [
   [ 3, 6, 3, 4 ],
@@ -210,7 +228,9 @@ Response:
 ```
 
 `get: /rollstats/addsevendice`
+
 Response:
+
 `[ [ 3 ], [ 3 ], [ 6 ], [ 2 ], [ 5 ], [ 3 ], [ 6 ] ]`
 
 ## Get Available Races
@@ -229,7 +249,9 @@ The min and max stats for the races are as follows:
 | Human    | 3 - 18 | 3 - 18 | 3 - 18  | 3 - 18 | 3 - 18 | 3 - 18 |
 
 `get: /races/{str}/{dex}/{con}/{int}/{wis}/{chr}`
+
 Response:
+
 ```
 [
   "Elf",
@@ -253,7 +275,9 @@ Most races in this game have associated stat afjustments when you select them:
 | Human    | N/A              |
 
 `get: /statadjust/elf`
+
 Response:
+
 ```
 {
   "dex": 1,
@@ -290,7 +314,9 @@ Multi-Class Combos by Race:
 | Human    | None                                                                                                                                                                                      |
 
 `get: /classes/Elf/9/9/9/9/9/9`
+
 Response:
+
 ```
 [
   "Fighter",
@@ -320,7 +346,9 @@ Once class is known, the available alignments can be queried
 | Thief   | All                                                                    |
 
 `get; /alignment/Ranger`
+
 Response:
+
 ```
 [
   "Lawful Good",
@@ -349,11 +377,15 @@ Once race and gender have been chosen, the starting height, weight, and age can 
 |          | Female | 59          | 100         | 15       | 2d10       | 6d10       | 1d4     |
 
 `get: /hwa/elf/m`
+
 Response:
+
 ```
 [ 64, 99, 121 ]
 ```
+
 This response is used as follows:
+
 `[ height, weight, age ]`
 
 ## Get Initial HP and GP
@@ -361,11 +393,15 @@ This response is used as follows:
 Need to roll for starting HP and funds
 
 `get: /hpgp/Fighter`
+
 Response:
+
 ```
 [ 3, 100 ]
 ```
+
 The response is used as follows:
+
 `[ Initial HP, Initial GP ]`
 
 ## Get Final Attributes
@@ -373,13 +409,17 @@ The response is used as follows:
 As the final stage, we use the class(es) and race to determine the movement rate and initial saving throw values
 
 `get: /final/{race}/{className}/{classTwo}/{classThree}`
+
 *note: classTwo and classThree are optional*
 
 Response:
+
 ```
 [ 12, 14, 16, 15, 17, 17 ]
 ```
+
 The values are used as follows:
+
 `[ moveRate, paralyze, rod, petrification, breath, spell ]`
 
 # DD35
@@ -389,7 +429,9 @@ The values are used as follows:
 ## Get All Characters
 
 `get: /`
+
 Response:
+
 ```
 [
   {
@@ -406,7 +448,9 @@ Response:
 ## Create a Character
 
 `post: /`
+
 Payload:
+
 ```
 {"id":3,"name":"test"}
 ```

@@ -8,8 +8,8 @@ export default class DD35CharacterTable extends Component {
   }
 
   async componentDidMount() {
-    const { gateway, useService, localSeedData } = this.props;
-    const data = useService ? await gateway.get() : localSeedData;
+    const { gateway } = this.props;
+    const data = await gateway.get();
 
     if (!this.isUnmounted)
       this.setState({ characterData: data });
@@ -21,7 +21,7 @@ export default class DD35CharacterTable extends Component {
 
   async handleCreate() {
     const { newCharName, characterData } = this.state;
-    const { gateway, useService } = this.props;
+    const { gateway } = this.props;
 
     function newNameIsUnique(name) {
       const index = characterData.findIndex(function(c) {
@@ -42,15 +42,14 @@ export default class DD35CharacterTable extends Component {
       const newCharList = characters.concat([newChar]);
       this.setState({ characterData: newCharList, newCharName: '' });
 
-      if(useService)
-        await gateway.createCharacter(newChar);
+      await gateway.createCharacter(newChar);
     } else
       this.setState({ newCharName: '' });
   }
 
   async handleDelete(id) {
     const { characterData } = this.state;
-    const { gateway, useService } = this.props;
+    const { gateway } = this.props;
     const index = characterData.findIndex(function(c) {
       return c.id === id;
     });
@@ -61,8 +60,7 @@ export default class DD35CharacterTable extends Component {
       characterData.splice(index, 1);
       this.setState({ characterData: characterData });
 
-      if(useService)
-        await gateway.deleteCharacter(id);
+      await gateway.deleteCharacter(id);
     }
   }
 

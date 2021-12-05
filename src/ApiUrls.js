@@ -5,8 +5,8 @@ export default class Urls {
       : 'https://add2ent-dev.azurewebsites.net/api/add2character/';
   };
 
-  static DD35Url = () => {
-    return process.env.NODE_ENV === 'development'
+  static DD35Url = (env) => {
+    return env === 'development'
       ? 'http://localhost:5002/api/DD35Character/'
       : 'https://dd35ent-dev.azurewebsites.net/api/';
   }

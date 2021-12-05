@@ -17,12 +17,10 @@ describe('ApiUrls tests', () => {
     });
 
     it('returns the right url in dev for DD35', () => {
-        process.env.NODE_ENV = 'development';
-        expect(Urls.DD35Url()).toContain('localhost');
+        expect(Urls.DD35Url('development')).toContain('localhost');
     });
 
     it('returns the right url in prod for DD35', () => {
-        process.env.NODE_ENV = 'production';
-        expect(Urls.DD35Url()).toContain('dd35ent');
+        expect(Urls.DD35Url('production')).toContain('dd35ent');
     });
 });

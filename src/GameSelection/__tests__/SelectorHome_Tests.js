@@ -7,6 +7,6 @@ describe('SelectorHome tests', () => {
   it('renders the default text', () => {
     render(<SelectorHome />);
 
-    expect(screen.getByText(/To get started, select a game above./)).toBeInTheDocument();
+    expect(screen.getByText(/To get started, select a data store below, and select a game above./)).toBeInTheDocument();
   });
 });

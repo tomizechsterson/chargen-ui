@@ -11,7 +11,7 @@ Cypress.Commands.add('chooseRollRuleAndRollStats', (rule) => {
 
 Cypress.Commands.add('finishCharacter', () => {
     cy.get('button').contains('Save Stats').click();
-    cy.contains('Select race');
+    cy.contains('Select Race');
     cy.get('[data-cy=raceSelect]').select('Human');
     cy.get('[type="radio"]').check('M');
     cy.get('[type="radio"]').check('F');

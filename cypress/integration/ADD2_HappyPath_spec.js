@@ -1,4 +1,4 @@
-describe('AD&D 2nd Edition Happy Path Without Stubbing', () => {
+describe('AD&D 2nd Edition Happy Path', () => {
     it('Can create and delete an AD&D 2nd Edition character', () => {
         cy.visit('/');
         cy.get('.selectorHeader > li > a[href="/add2"]').click();

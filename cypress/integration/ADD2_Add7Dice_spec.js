@@ -39,7 +39,7 @@ describe('Add 7 Dice', () => {
             let lastIsAssigned = false;
 
             cy.get('[data-cy=statAssignmentDiv] > [data-cy=add7Stat]').each(($el) => {
-                const statValue = parseInt($el[0].nextSibling.nextSibling.textContent);
+                const statValue = parseInt($el[0].nextSibling.textContent);
                 const total = lastRollValue + statValue;
                 if(total < 19 && !lastIsAssigned)
                 {

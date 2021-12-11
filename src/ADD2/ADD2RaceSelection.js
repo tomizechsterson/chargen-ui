@@ -50,13 +50,7 @@ export default class ADD2RaceSelection extends Component {
 
   getAdjustment(stat) {
     const { adjustments } = this.state;
-    let value = 0;
-    adjustments.forEach(function(item) {
-      if (item.key === stat) {
-        value = item.value;
-      }
-    });
-    return value;
+    return adjustments.hasOwnProperty(stat) ? adjustments[stat] : 0;
   }
 
   render() {

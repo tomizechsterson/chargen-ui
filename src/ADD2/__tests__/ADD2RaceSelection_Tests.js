@@ -18,7 +18,7 @@ describe('Race Selection Component', () => {
   it('Displays error message if Save is clicked before gender is selected', () => {
     function mockGateway() {
       return {
-        getAdjustments: () => { return [{ 'key': 'str', 'value': 1 }, { 'key': 'dex', 'value': -1 }] }
+        getAdjustments: () => { return { 'str': 99, 'dex': -99 } }
       }
     }
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
@@ -34,7 +34,8 @@ describe('Race Selection Component', () => {
   it('Allows saving after race and gender are selected', async () => {
     function mockGateway() {
       return {
-        getAdjustments: () => { return [{ 'key': 'str', 'value': 99 }, { 'key': 'dex', 'value': -99 }] }
+        getAdjustments: () => { return { 'str': 99, 'dex': -99 } }
+        // getAdjustments: () => { return [{ 'key': 'str', 'value': 99 }, { 'key': 'dex', 'value': -99 }] }
       }
     }
     const onUpdateFn = jest.fn();

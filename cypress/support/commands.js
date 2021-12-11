@@ -16,12 +16,12 @@ Cypress.Commands.add('finishCharacter', () => {
     cy.get('[type="radio"]').check('M');
     cy.get('[type="radio"]').check('F');
     cy.get('button').contains('Save').click();
-    cy.contains('Select class');
+    cy.contains('Select Class');
     cy.get('[data-cy=classSelect]').then(($select) => {
         const text = $select[0][1].text;
         cy.get('[data-cy=classSelect]').select(text);
     });
-    cy.contains('Select alignment');
+    cy.contains('Select Alignment');
     cy.get('[data-cy=alignmentSelect').then(($select) => {
         const text = $select[0][1].text;
         cy.get('[data-cy=alignmentSelect]').select(text);

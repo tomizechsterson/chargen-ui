@@ -11,7 +11,10 @@ export default class MainApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedService: ''
+      selectedService:
+        localStorage.getItem('serviceSelection')
+          ? localStorage.getItem('serviceSelection')
+          : ''
     };
 
     this.handleSelectService = this.handleSelectService.bind(this);
@@ -19,6 +22,7 @@ export default class MainApp extends Component {
 
   handleSelectService(e) {
     this.setState({ selectedService: e.target.value });
+    localStorage.setItem('serviceSelection', e.target.value);
   }
 
   getDD35Gateway = () => {
@@ -34,6 +38,8 @@ export default class MainApp extends Component {
   };
 
   render() {
+    const { selectedService } = this.state;
+
     return(
       <BrowserRouter>
         <div className='App'>
@@ -47,7 +53,15 @@ export default class MainApp extends Component {
           </ul>
           <div className='selectorContent'>
             <Routes>
-              <Route path='/' element={ <SelectorHome onSelectService={ this.handleSelectService } /> }/>
+              <Route
+                path='/'
+                element={
+                  <SelectorHome
+                    onSelectService={ this.handleSelectService }
+                    selectedService={ selectedService }
+                  />
+                }
+              />
               <Route path='/add2' element={ <SelectorADD2 /> }/>
               <Route path='/dd35' element={ <SelectorDD35 gateway={ this.getDD35Gateway() } /> }/>
             </Routes>

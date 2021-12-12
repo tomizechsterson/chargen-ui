@@ -3,9 +3,11 @@ import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import SelectorHome from "./GameSelection/SelectorHome";
 import SelectorADD2 from "./GameSelection/SelectorADD2";
 import SelectorDD35 from "./GameSelection/SelectorDD35";
+import Urls from "./ApiUrls";
 import LocalGatewayDD35 from "./DataAccess/LocalGatewayDD35";
 import ServerGatewayDD35 from "./DataAccess/ServerGatewayDD35";
-import Urls from "./ApiUrls";
+import LocalGatewayADD2 from "./DataAccess/LocalGatewayADD2";
+import ServerGatewayADD2 from "./DataAccess/ServerGatewayADD2";
 
 export default class MainApp extends Component {
   constructor(props) {
@@ -37,6 +39,18 @@ export default class MainApp extends Component {
       return new LocalGatewayDD35();
   };
 
+  getADD2Gateway = () => {
+    const { selectedService } = this.state;
+    const { env } = this.props;
+
+    if(selectedService === 'local')
+      return new LocalGatewayADD2();
+    else if(selectedService === 'netcore')
+      return new ServerGatewayADD2(Urls.ADD2Url(env));
+    else
+      return new LocalGatewayADD2();
+  };
+
   render() {
     const { selectedService } = this.state;
 
@@ -62,7 +76,7 @@ export default class MainApp extends Component {
                   />
                 }
               />
-              <Route path='/add2' element={ <SelectorADD2 /> }/>
+              <Route path='/add2' element={ <SelectorADD2 gateway={ this.getADD2Gateway() } /> }/>
               <Route path='/dd35' element={ <SelectorDD35 gateway={ this.getDD35Gateway() } /> }/>
             </Routes>
           </div>

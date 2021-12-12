@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2FinalAttributes from "../ADD2FinalAttributes";
+import MockGatewayADD2 from "../../DataAccess/mockGatewayADD2";
 
 describe('Final Attributes Component', () => {
   it('Displays error message if Save is clicked too soon',() => {
@@ -17,19 +18,12 @@ describe('Final Attributes Component', () => {
 
   it('Allows rolling and saving final attributes', async () => {
     const onUpdateFn = jest.fn();
-    function mockGateway() {
-      return {
-        getHWA: () => { return [99, 999, 99] },
-        getHPGP: () => { return [99, 9999] },
-        getFinalAttributes: () => { return [99, 99, 99, 99, 99, 99] }
-      }
-    }
 
     render(
       <ADD2FinalAttributes
         selectedChar={ testChar }
         onUpdate={ onUpdateFn }
-        gateway={ mockGateway() }
+        gateway={ new MockGatewayADD2() }
       />
     );
 

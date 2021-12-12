@@ -3,18 +3,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import Assignment from '../Assignment';
+import MockGatewayADD2 from "../../DataAccess/mockGatewayADD2";
 
 describe('Assignment component for Double Stat Assignment rule', () => {
-  // noinspection DuplicatedCode
-  function mockGateway() {
-    return {
-      rollStats: () => {
-        return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3],
-          [3, 3, 3], [3, 3, 4], [3, 4, 4], [4, 4, 4], [4, 4, 5], [4, 5, 5]]
-      }
-    }
-  }
-
   it('displays the expected initial state', () => {
     render(<Assignment double={ true }/>);
 
@@ -23,7 +14,7 @@ describe('Assignment component for Double Stat Assignment rule', () => {
   });
 
   it('displays the expected output after rolling stats', async () => {
-    render(<Assignment double={ true } gateway={ mockGateway() } />);
+    render(<Assignment double={ true } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
     await waitFor(() => expect(screen.getByRole('button', { name: /^3$/ })).toBeInTheDocument());
@@ -53,7 +44,7 @@ describe('Assignment component for Double Stat Assignment rule', () => {
   });
 
   it('allows selecting and deselecting rolls and stats', async () => {
-    render(<Assignment double={ true } gateway={ mockGateway() } />);
+    render(<Assignment double={ true } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => expect(screen.getByText(/Selected Stat: , Selected Roll:/)).toBeInTheDocument());
 
@@ -79,7 +70,7 @@ describe('Assignment component for Double Stat Assignment rule', () => {
   });
 
   it('enables Assign button after selecting a stat and roll', async () => {
-    render(<Assignment double={ true } gateway={ mockGateway() } />);
+    render(<Assignment double={ true } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => expect(screen.getByRole('button', { name: /Assign/ })).toBeDisabled());
 
@@ -91,7 +82,7 @@ describe('Assignment component for Double Stat Assignment rule', () => {
   });
 
   it('enables Reset button and disables assigned roll button after assigning a roll to a stat', async () => {
-    render(<Assignment double={ true } gateway={ mockGateway() } />);
+    render(<Assignment double={ true } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'CHR' })));
 
@@ -103,7 +94,7 @@ describe('Assignment component for Double Stat Assignment rule', () => {
   });
 
   it('resets stat assignments as expected', async () => {
-    render(<Assignment double={ true } gateway={ mockGateway() } />);
+    render(<Assignment double={ true } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'STR' })));
     userEvent.click(screen.getByRole('button', { name: /14/ }));

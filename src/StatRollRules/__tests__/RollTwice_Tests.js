@@ -3,18 +3,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import RollTwice from "../RollTwice";
+import MockGatewayADD2 from "../../DataAccess/mockGatewayADD2";
 
 describe('Roll Twice Component', () => {
-  // noinspection DuplicatedCode
-  function mockGateway() {
-    return {
-      rollStats: () => {
-        return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3],
-          [3, 3, 3], [3, 3, 4], [3, 4, 4], [4, 4, 4], [4, 4, 5], [4, 5, 5]]
-      }
-    }
-  }
-
   it('renders expected initial state', () => {
     render(<RollTwice />);
 
@@ -33,7 +24,7 @@ describe('Roll Twice Component', () => {
   });
 
   it('displays the expected output after rolling stats', async () => {
-    render(<RollTwice selectedChar={ testChar } gateway={ mockGateway() } />);
+    render(<RollTwice selectedChar={ testChar } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
     await waitFor(() => expect(screen.getByText(/STR: 4/)).toBeInTheDocument());
@@ -52,7 +43,7 @@ describe('Roll Twice Component', () => {
 
   it('updates character as expected', async () => {
     const updateFn = jest.fn();
-    render(<RollTwice selectedChar={ testChar } gateway={ mockGateway() } onUpdate={ updateFn } />);
+    render(<RollTwice selectedChar={ testChar } gateway={ new MockGatewayADD2() } onUpdate={ updateFn } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
     await waitFor(() => expect(screen.getByText(/STR: 4/)).toBeInTheDocument());

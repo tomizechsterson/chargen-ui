@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2RaceSelection from "../ADD2RaceSelection";
+import MockGatewayADD2 from "../../DataAccess/mockGatewayADD2";
 
 describe('Race Selection Component', () => {
   it('Displays error message if Save is clicked before race is selected', () => {
@@ -16,13 +17,8 @@ describe('Race Selection Component', () => {
   });
 
   it('Displays error message if Save is clicked before gender is selected', () => {
-    function mockGateway() {
-      return {
-        getAdjustments: () => { return { 'str': 99, 'dex': -99 } }
-      }
-    }
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
-    render(<ADD2RaceSelection selectedChar={ testChar } gateway={ mockGateway() } />);
+    render(<ADD2RaceSelection selectedChar={ testChar } gateway={ new MockGatewayADD2() } />);
 
     userEvent.selectOptions(screen.getByRole('combobox'), 'Test Race');
     userEvent.click(screen.getByRole('button', { name: /Save/ }));
@@ -32,18 +28,12 @@ describe('Race Selection Component', () => {
   });
 
   it('Allows saving after race and gender are selected', async () => {
-    function mockGateway() {
-      return {
-        getAdjustments: () => { return { 'str': 99, 'dex': -99 } }
-        // getAdjustments: () => { return [{ 'key': 'str', 'value': 99 }, { 'key': 'dex', 'value': -99 }] }
-      }
-    }
     const onUpdateFn = jest.fn();
     render(
       <ADD2RaceSelection
         selectedChar={ testChar }
         onUpdate={ onUpdateFn }
-        gateway={ mockGateway() }
+        gateway={ new MockGatewayADD2() }
       />
     );
 

@@ -3,16 +3,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import Assignment from '../Assignment';
+import MockGatewayADD2 from "../../DataAccess/mockGatewayADD2";
 
 describe('Assignment roll rule component', () => {
-  function mockGateway() {
-    return {
-      rollStats: () => {
-        return [[1, 1, 1], [1, 1, 2], [1, 2, 2], [2, 2, 2], [2, 2, 3], [2, 3, 3]]
-      }
-    }
-  }
-
   it('displays the expected initial state', () => {
     render(<Assignment double={ false }/>);
 
@@ -42,7 +35,7 @@ describe('Assignment roll rule component', () => {
   });
 
   it('displays the expected output after rolling stats', async () => {
-    render(<Assignment double={ false } gateway={ mockGateway() } />);
+    render(<Assignment double={ false } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
     await waitFor(() => expect(screen.getByRole('button', { name: /3/ })).toBeInTheDocument());
@@ -60,7 +53,7 @@ describe('Assignment roll rule component', () => {
   });
 
   it('allows selecting and deselecting rolls and stats', async () => {
-    render(<Assignment double={ false } gateway={ mockGateway() } />);
+    render(<Assignment double={ false } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => expect(screen.getByText(/Selected Stat: , Selected Roll:/)).toBeInTheDocument());
 
@@ -76,7 +69,7 @@ describe('Assignment roll rule component', () => {
   });
 
   it('enables Assign button after selecting a stat and roll', async () => {
-    render(<Assignment double={ false } gateway={ mockGateway() } />);
+    render(<Assignment double={ false } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => expect(screen.getByRole('button', { name: /Assign/ })).toBeDisabled());
 
@@ -87,7 +80,7 @@ describe('Assignment roll rule component', () => {
   });
 
   it('enables Reset button and disables assigned roll button after assigning a roll to a stat', async () => {
-    render(<Assignment double={ false } gateway={ mockGateway() } />);
+    render(<Assignment double={ false } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'STR' })));
 
@@ -99,7 +92,7 @@ describe('Assignment roll rule component', () => {
   });
 
   it('resets stat assignments as expected', async () => {
-    render(<Assignment double={ false } gateway={ mockGateway() } />);
+    render(<Assignment double={ false } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'STR' })));
     userEvent.click(screen.getByRole('button', { name: /8/ }));
@@ -139,7 +132,7 @@ describe('Assignment roll rule component', () => {
 
   it('updates the character as expected when clicking Save Stats', async () => {
     const updateFn = jest.fn();
-    render(<Assignment double={ false } selectedChar={ testChar } gateway={ mockGateway() } onUpdate={ updateFn } />);
+    render(<Assignment double={ false } selectedChar={ testChar } gateway={ new MockGatewayADD2() } onUpdate={ updateFn } />);
     // noinspection DuplicatedCode
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'STR' })));

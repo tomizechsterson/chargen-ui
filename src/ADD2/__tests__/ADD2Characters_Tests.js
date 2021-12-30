@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2Characters from '../ADD2Characters';
@@ -20,12 +20,12 @@ describe('ADD2Characters', () => {
 
     userEvent.click(screen.getByRole('button', { name: /Create/ }));
 
-    expect(screen.queryAllByRole('row').length).toBe(2); // This counts the header row
+    expect(screen.queryAllByRole('row').length).toBe(2); // This always counts the header row
     expect(screen.getByRole('row', { name: /test/})).toBeInTheDocument();
 
     userEvent.type(screen.getByRole('textbox'), `${testData[1].name}{enter}`);
 
-    expect(screen.queryAllByRole('row').length).toBe(3); // This counts the header row
+    expect(screen.queryAllByRole('row').length).toBe(3);
     expect(screen.getByRole('row', { name: /test2/})).toBeInTheDocument();
   });
 
@@ -68,6 +68,23 @@ describe('ADD2Characters', () => {
 
     expect(screen.getByRole('textbox')).toHaveValue('');
     expect(screen.queryAllByRole('row').length).toBe(2);
+  });
+
+  it('updates character when saving stats', async () => {
+    render(<ADD2Characters serverGateway={ new MockGatewayADD2() } />);
+    userEvent.type(screen.getByRole('textbox'), `${testData[0].name}{enter}`);
+    userEvent.click(screen.getByRole('row', { name: /test1/ }));
+    userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
+    await waitFor(() => screen.getByRole('button', { name: /Save Stats/ }));
+
+    userEvent.click(screen.getByRole('button', { name: /Save Stats/ }));
+
+    await waitFor(() => expect(screen.getByText(/STR: 3/)).toBeInTheDocument());
+    expect(screen.getByText(/DEX: 4/)).toBeInTheDocument();
+    expect(screen.getByText(/CON: 5/)).toBeInTheDocument();
+    expect(screen.getByText(/INT: 6/)).toBeInTheDocument();
+    expect(screen.getByText(/WIS: 7/)).toBeInTheDocument();
+    expect(screen.getByText(/CHR: 8/)).toBeInTheDocument();
   });
 
   it('displays delete button after a character is selected', () => {

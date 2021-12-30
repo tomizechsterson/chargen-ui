@@ -45,7 +45,7 @@ export default class MockGatewayADD2 {
   };
 
   getRaces = async (character) => {
-    throw 'Not implemented yet!';
+    return ["TestRace1", "TestRace2"];
   };
 
   getAdjustments = async (selectedRace) => {

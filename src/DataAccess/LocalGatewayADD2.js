@@ -1,3 +1,5 @@
+import Roller from "../DieRolling/Roller";
+
 export default class LocalGatewayADD2 {
   constructor() {
     this.storageKey = 'localCharacters.ADD2';
@@ -34,11 +36,31 @@ export default class LocalGatewayADD2 {
   };
 
   rollStats = async (rollRule) => {
-    throw `rollStats with ${rollRule} not implemented yet!`;
+    if(rollRule === 'rollstats/rollonce') {
+      return new Roller('3d6', 6).roll();
+    }
+    else if(rollRule === 'rollstats/rolltwice') {
+      return new Roller('3d6', 12).roll();
+    }
+    else if(rollRule === 'rollstats/assignment') {
+      return new Roller('3d6', 6).roll();
+    }
+    else if(rollRule === 'rollstats/assignmentDouble') {
+      return new Roller('3d6', 12).roll();
+    }
+    else if(rollRule === 'rollstats/rollfour') {
+      return new Roller('4d6', 6).roll();
+    }
+    else if(rollRule === 'rollstats/AddSevenDice') {
+      return new Roller('1d6', 7).roll();
+    }
+    else
+      throw `Invalid roll rule: ${rollRule}`;
   };
 
   getRaces = async (character) => {
-    throw `getRaces with ${character.toString()} not implemented yet!`;
+    console.log('CHARACTER: ', character);
+    throw 'getRaces not implemented yet!';
   };
 
   getAdjustments = async (selectedRace) => {
@@ -46,7 +68,8 @@ export default class LocalGatewayADD2 {
   };
 
   getClasses = async (character) => {
-    throw `getClasses with ${character} not implemented yet!`;
+    console.log('CHARACTER: ', character);
+    throw 'getClasses not implemented yet!';
   };
 
   getAlignments = async (className) => {

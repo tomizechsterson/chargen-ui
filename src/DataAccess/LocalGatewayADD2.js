@@ -34,34 +34,34 @@ export default class LocalGatewayADD2 {
   };
 
   rollStats = async (rollRule) => {
-    throw 'Not implemented yet!';
+    throw `rollStats with ${rollRule} not implemented yet!`;
   };
 
   getRaces = async (character) => {
-    throw 'Not implemented yet!';
+    throw `getRaces with ${character.toString()} not implemented yet!`;
   };
 
   getAdjustments = async (selectedRace) => {
-    throw 'Not implemented yet!';
+    throw `getAdjustments with ${selectedRace} not implemented yet!`;
   };
 
   getClasses = async (character) => {
-    throw 'Not implemented yet!';
+    throw `getClasses with ${character} not implemented yet!`;
   };
 
   getAlignments = async (className) => {
-    throw 'Not implemented yet!';
+    throw `getAlignments with ${className} not implemented yet!`;
   };
 
   getHWA = async (race, gender) => {
-    throw 'Not implemented yet!';
+    throw `getHWA with ${gender} ${race} not implemented yet!`;
   };
 
   getHPGP = async (className) => {
-    throw 'Not implemented yet!';
+    throw `getHPGP with ${className} not implemented yet!`;
   };
 
   getFinalAttributes = async (race, className) => {
-    throw 'Not implemented yet!';
+    throw `getFinalAttributes with ${race} ${className} not implemented yet!`;
   };
 }

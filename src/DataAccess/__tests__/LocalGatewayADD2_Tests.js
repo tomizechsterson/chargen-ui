@@ -124,13 +124,17 @@ describe('LocalGatewayDD35 Tests', () => {
 
   describe('Race Selection', () => {
     it('allows selecting of races', async () => {
-      let races = await gateway.getRaces({ name: 'test', str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3 });
+      const races = await gateway.getRaces({ name: 'test', str: 3, dex: 3, con: 3, int: 3, wis: 3, chr: 3 });
 
       expect(races).toStrictEqual(['Human']);
+    });
+  });
 
-      races = await gateway.getRaces({ name: 'test', str: 8, dex: 7, con: 11, int: 8, wis: 3, chr: 8 });
+  describe('Racial Stat Adjustments', () => {
+    it('returns expected stat adjustments', async () => {
+      const adjustments = await gateway.getAdjustments('Elf');
 
-      expect(races).toStrictEqual(['Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Halfling', 'Human'])
+      expect(adjustments).toStrictEqual({ 'dex': 1, 'con': -1 });
     });
   });
 });

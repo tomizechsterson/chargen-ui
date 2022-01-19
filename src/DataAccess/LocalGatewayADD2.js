@@ -1,5 +1,6 @@
 import Roller from "../DieRolling/Roller";
 import AvailableRaces from "../ADD2/CharacterCreation/AvailableRaces";
+import RacialStatAdjust from "../ADD2/CharacterCreation/RacialStatAdjust";
 
 export default class LocalGatewayADD2 {
   constructor() {
@@ -64,7 +65,7 @@ export default class LocalGatewayADD2 {
   };
 
   getAdjustments = async (selectedRace) => {
-    throw `getAdjustments with ${selectedRace} not implemented yet!`;
+    return new RacialStatAdjust(selectedRace).adjustments();
   };
 
   getClasses = async (character) => {

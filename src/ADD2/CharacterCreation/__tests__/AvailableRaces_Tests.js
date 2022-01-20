@@ -1,4 +1,4 @@
-import AvailableRaces from "../AvailableRaces";
+import AvailableRaces from '../AvailableRaces';
 
 describe('Available Races', () => {
   it('Allows Human for the most unlucky person ever', () => {

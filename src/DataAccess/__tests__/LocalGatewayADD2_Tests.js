@@ -137,4 +137,18 @@ describe('LocalGatewayDD35 Tests', () => {
       expect(adjustments).toStrictEqual({ 'dex': 1, 'con': -1 });
     });
   });
+
+  describe('Class Selection', () => {
+    it('allows selecting of single classes for Human', async () => {
+      const classes = await gateway.getClasses({ name: 'test', str: 9, dex: 3, con: 3, int: 9, wis: 3, chr: 3, race: 'Human' });
+
+      expect(classes).toStrictEqual(['Fighter', 'Mage']);
+    });
+
+    it('includes multi-classes', async () => {
+      const classes = await gateway.getClasses({ name: 'test', str: 9, dex: 9, con: 3, int: 3, wis: 3, chr: 3, race: 'Halfling' });
+
+      expect(classes).toStrictEqual(['Fighter', 'Thief', 'Fighter/Thief']);
+    });
+  });
 });

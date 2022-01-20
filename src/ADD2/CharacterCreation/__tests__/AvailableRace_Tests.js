@@ -1,4 +1,4 @@
-import AvailableRace from "../AvailableRace";
+import AvailableRace from '../AvailableRace';
 
 describe('Available Race', () => {
   it('Correctly returns availability', () => {

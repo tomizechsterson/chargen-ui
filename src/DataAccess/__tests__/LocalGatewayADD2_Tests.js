@@ -151,4 +151,22 @@ describe('LocalGatewayDD35 Tests', () => {
       expect(classes).toStrictEqual(['Fighter', 'Thief', 'Fighter/Thief']);
     });
   });
+
+  describe('Alignment Selection', () => {
+    it('allows selection of alignment for single class', async () => {
+      const alignments = await gateway.getAlignments('Druid');
+
+      expect(alignments).toStrictEqual(['True Neutral']);
+    });
+
+    it('allows selection of alignments for multi-class', async () => {
+      const alignments = await gateway.getAlignments('Fighter/Thief');
+
+      expect(alignments).toStrictEqual([
+        'Lawful Good', 'Neutral Good', 'Chaotic Good',
+        'Lawful Neutral', 'True Neutral', 'Chaotic Neutral',
+        'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'
+      ]);
+    });
+  });
 });

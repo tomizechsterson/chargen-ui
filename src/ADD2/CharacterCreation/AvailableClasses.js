@@ -20,19 +20,19 @@ export default class AvailableClasses {
       new AvailableClass('Bard', 3, 12, 3, 13, 3, 15, [ 'Half-Elf', 'Human' ])
     ];
     this.multiClassesAvailable = {
-      'Dwarf': [ 'Fighter/Cleric', 'Fighter/Thief' ],
-      'Elf': [ 'Fighter/Mage', 'Fighter/Thief', 'Mage/Thief', 'Fighter/Mage/Thief' ],
-      'Gnome': [ 'Fighter/Cleric', 'Fighter/Thief', 'Cleric/Thief' ],
-      'Half-Elf': [ 'Fighter/Cleric', 'Fighter/Thief', 'Fighter/Druid', 'Fighter/Mage',
+      'Dwarf': ['Fighter/Cleric', 'Fighter/Thief'],
+      'Elf': ['Fighter/Mage', 'Fighter/Thief', 'Mage/Thief', 'Fighter/Mage/Thief'],
+      'Gnome': ['Fighter/Cleric', 'Fighter/Thief', 'Cleric/Thief'],
+      'Half-Elf': ['Fighter/Cleric', 'Fighter/Thief', 'Fighter/Druid', 'Fighter/Mage',
         'Cleric/Ranger', 'Druid/Ranger', 'Cleric/Mage', 'Druid/Mage', 'Thief/Mage', 'Fighter/Mage/Cleric',
-        'Fighter/Mage/Druid', 'Fighter/Mage/Thief' ],
-      'Halfling': [ 'Fighter/Thief' ],
+        'Fighter/Mage/Druid', 'Fighter/Mage/Thief'],
+      'Halfling': ['Fighter/Thief'],
       'Human': []
     };
   }
 
   allRaces = () => {
-    return [ 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Halfling', 'Human' ];
+    return ['Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Halfling', 'Human'];
   };
 
   select = () => {

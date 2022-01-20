@@ -2,6 +2,7 @@ import Roller from "../DieRolling/Roller";
 import AvailableRaces from "../ADD2/CharacterCreation/AvailableRaces";
 import RacialStatAdjust from "../ADD2/CharacterCreation/RacialStatAdjust";
 import AvailableClasses from "../ADD2/CharacterCreation/AvailableClasses";
+import AllowedAlignments from "../ADD2/CharacterCreation/AllowedAlignments";
 
 export default class LocalGatewayADD2 {
   constructor() {
@@ -82,7 +83,7 @@ export default class LocalGatewayADD2 {
   };
 
   getAlignments = async (className) => {
-    throw `getAlignments with ${className} not implemented yet!`;
+    return new AllowedAlignments(className).get();
   };
 
   getHWA = async (race, gender) => {

@@ -14,6 +14,6 @@ describe('Available Classes', () => {
   it('Returns expected multi-classes', () => {
     let results = new AvailableClasses('Dwarf', 13, 13, 14, 13, 14, 17).select();
 
-    expect(results).toStrictEqual([ 'Fighter', 'Cleric', 'Thief', 'Fighter/Cleric', 'Fighter/Thief' ])
+    expect(results).toStrictEqual(['Fighter', 'Cleric', 'Thief', 'Fighter/Cleric', 'Fighter/Thief'])
   });
 });

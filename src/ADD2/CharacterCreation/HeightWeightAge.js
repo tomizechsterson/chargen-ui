@@ -32,4 +32,8 @@ export default class HeightWeightAge {
   age = () => {
     return this.heightWeightAgeRolls.find(r => r.race === this.race && r.gender === this.gender).rollAge();
   };
+
+  roll = () => {
+    return [this.height(), this.weight(), this.age()];
+  };
 };

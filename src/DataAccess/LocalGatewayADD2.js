@@ -88,8 +88,7 @@ export default class LocalGatewayADD2 {
   };
 
   getHWA = async (race, gender) => {
-    const hwa = new HeightWeightAge(race, gender);
-    return [hwa.height(), hwa.weight(), hwa.age()];
+    return new HeightWeightAge(race, gender).roll();
   };
 
   getHPGP = async (className) => {

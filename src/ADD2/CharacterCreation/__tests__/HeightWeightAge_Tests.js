@@ -27,4 +27,15 @@ describe('Height/Weight/Age', () => {
     expect(age).toBeGreaterThanOrEqual(45);
     expect(age).toBeLessThanOrEqual(70);
   });
+
+  it('returns the expected roll', () => {
+    const roll = heightWeightAge.roll();
+
+    expect(roll[0]).toBeGreaterThanOrEqual(42);
+    expect(roll[0]).toBeLessThanOrEqual(51);
+    expect(roll[1]).toBeGreaterThanOrEqual(109);
+    expect(roll[1]).toBeLessThanOrEqual(145);
+    expect(roll[2]).toBeGreaterThanOrEqual(45);
+    expect(roll[2]).toBeLessThanOrEqual(70);
+  });
 });

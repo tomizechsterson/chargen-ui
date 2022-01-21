@@ -169,4 +169,17 @@ describe('LocalGatewayDD35 Tests', () => {
       ]);
     });
   });
+
+  describe('Height/Weight/Age', () => {
+    it('returns expected height/weight/age from gateway', async () => {
+      const hwa = await gateway.getHWA('Elf', 'F');
+
+      expect(hwa[0]).toBeGreaterThanOrEqual(51);
+      expect(hwa[0]).toBeLessThanOrEqual(60);
+      expect(hwa[1]).toBeGreaterThanOrEqual(73);
+      expect(hwa[1]).toBeLessThanOrEqual(100);
+      expect(hwa[2]).toBeGreaterThanOrEqual(105);
+      expect(hwa[2]).toBeLessThanOrEqual(130);
+    });
+  });
 });

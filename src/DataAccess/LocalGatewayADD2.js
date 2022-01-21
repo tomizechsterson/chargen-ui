@@ -3,6 +3,7 @@ import AvailableRaces from "../ADD2/CharacterCreation/AvailableRaces";
 import RacialStatAdjust from "../ADD2/CharacterCreation/RacialStatAdjust";
 import AvailableClasses from "../ADD2/CharacterCreation/AvailableClasses";
 import AllowedAlignments from "../ADD2/CharacterCreation/AllowedAlignments";
+import HeightWeightAge from "../ADD2/CharacterCreation/HeightWeightAge";
 
 export default class LocalGatewayADD2 {
   constructor() {
@@ -87,7 +88,8 @@ export default class LocalGatewayADD2 {
   };
 
   getHWA = async (race, gender) => {
-    throw `getHWA with ${gender} ${race} not implemented yet!`;
+    const hwa = new HeightWeightAge(race, gender);
+    return [hwa.height(), hwa.weight(), hwa.age()];
   };
 
   getHPGP = async (className) => {

@@ -3,16 +3,9 @@ import { render, within, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import Add7Dice from "../Add7Dice";
+import MockGatewayADD2 from "../../DataAccess/mockGatewayADD2";
 
 describe('Add7Dice component', () => {
-  function mockGateway() {
-    return {
-      rollStats: () => {
-        return [[1], [2], [3], [4], [5], [6], [1]]
-      }
-    }
-  }
-
   it('displays the expected initial state', () => {
     render(<Add7Dice />);
 
@@ -42,7 +35,7 @@ describe('Add7Dice component', () => {
   });
 
   it('displays an alert if Save Stats is clicked before assigning all rolls', async () => {
-    render(<Add7Dice gateway={ mockGateway() } />);
+    render(<Add7Dice gateway={ new MockGatewayADD2() } />);
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => expect(screen.getByText(/Selected Stat:/)).toBeInTheDocument());
@@ -54,7 +47,7 @@ describe('Add7Dice component', () => {
   });
 
   it('displays the expected output after rolling stats', async () => {
-    render(<Add7Dice gateway={ mockGateway() } />);
+    render(<Add7Dice gateway={ new MockGatewayADD2() } />);
 
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
 
@@ -68,7 +61,7 @@ describe('Add7Dice component', () => {
   });
 
   it('allows selecting and deselecting rolls and stats', async () => {
-    render(<Add7Dice gateway={ mockGateway() } />);
+    render(<Add7Dice gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => expect(screen.getByText(/Selected Stat: , Selected Roll:/)).toBeInTheDocument());
 
@@ -84,7 +77,7 @@ describe('Add7Dice component', () => {
   });
 
   it('enables Assign button after selecting a stat and roll', async () => {
-    render(<Add7Dice gateway={ mockGateway() } />);
+    render(<Add7Dice gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => expect(screen.getByRole('button', { name: /Assign/ })).toBeDisabled());
 
@@ -95,7 +88,7 @@ describe('Add7Dice component', () => {
   });
 
   it('enables Reset button and disables assigned roll button after assigning a roll to a stat', async () => {
-    render(<Add7Dice gateway={ mockGateway() } />);
+    render(<Add7Dice gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'CHR' })));
 
@@ -107,7 +100,7 @@ describe('Add7Dice component', () => {
   });
 
   it('prevents a stat from exceeding 18 when assigning a roll and deselects offending roll', async () => {
-    render(<Add7Dice selectedChar={ testChar } gateway={ mockGateway() } />);
+    render(<Add7Dice selectedChar={ testChar } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => expect(screen.getByText(/Selected Stat: , Selected Roll:/)).toBeInTheDocument());
     preventStatFromExceeding18('STR');
@@ -119,7 +112,7 @@ describe('Add7Dice component', () => {
   });
 
   it('resets stat assignments as expected', async () => {
-    render(<Add7Dice selectedChar={ testChar } gateway={ mockGateway() } />);
+    render(<Add7Dice selectedChar={ testChar } gateway={ new MockGatewayADD2() } />);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'STR' })));
     userEvent.click(within(screen.getByTestId('add7Rolls')).getAllByRole('button', { name: /1/ })[0]);
@@ -163,7 +156,7 @@ describe('Add7Dice component', () => {
 
   it('updates the character as expected when clicking Save Stats', async () => {
     const updateFn = jest.fn();
-    render(<Add7Dice selectedChar={ testChar } gateway={ mockGateway() } onUpdate={ updateFn }/>);
+    render(<Add7Dice selectedChar={ testChar } gateway={ new MockGatewayADD2() } onUpdate={ updateFn }/>);
     userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
     await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'CHR' })));
     userEvent.click(within(screen.getByTestId('add7Rolls')).getAllByRole('button', { name: /1/ })[0]);

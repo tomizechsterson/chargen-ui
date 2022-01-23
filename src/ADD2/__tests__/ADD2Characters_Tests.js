@@ -1,35 +1,36 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ADD2Characters from '../ADD2Characters';
+import MockGatewayADD2 from "../../DataAccess/mockGatewayADD2";
 
 describe('ADD2Characters', () => {
   it('does not display Delete button before a character is selected', () => {
-    render(<ADD2Characters useTestData={ true } testData={ getTestData() } />);
+    render(<ADD2Characters serverGateway={ new MockGatewayADD2() } />);
 
     expect(screen.queryByRole('button', { name: /Delete/ })).not.toBeInTheDocument();
   });
 
   it('Adds a character to the table via button and enter key', () => {
-    render(<ADD2Characters useTestData={ true } testData={ [] } />);
+    render(<ADD2Characters serverGateway={ new MockGatewayADD2() } />);
     expect(screen.queryAllByRole('row').length).toBe(0);
-    userEvent.type(screen.getByRole('textbox'), 'test');
-    expect(screen.getByRole('textbox')).toHaveValue('test');
+    userEvent.type(screen.getByRole('textbox'), `${testData[0].name}`);
+    expect(screen.getByRole('textbox')).toHaveValue('test1');
 
     userEvent.click(screen.getByRole('button', { name: /Create/ }));
 
-    expect(screen.queryAllByRole('row').length).toBe(2); // This counts the header row
+    expect(screen.queryAllByRole('row').length).toBe(2); // This always counts the header row
     expect(screen.getByRole('row', { name: /test/})).toBeInTheDocument();
 
-    userEvent.type(screen.getByRole('textbox'), 'newTest{enter}');
+    userEvent.type(screen.getByRole('textbox'), `${testData[1].name}{enter}`);
 
-    expect(screen.queryAllByRole('row').length).toBe(3); // This counts the header row
-    expect(screen.getByRole('row', { name: /newTest/})).toBeInTheDocument();
+    expect(screen.queryAllByRole('row').length).toBe(3);
+    expect(screen.getByRole('row', { name: /test2/})).toBeInTheDocument();
   });
 
   it('prevents adding a new character if only spaces or blank with button and enter key', () => {
-    render(<ADD2Characters useTestData={ true } testData={ [] } />);
+    render(<ADD2Characters serverGateway={ new MockGatewayADD2() } />);
     expect(screen.queryAllByRole('row').length).toBe(0);
 
     userEvent.click(screen.getByRole('button', { name: /Create/ }));
@@ -55,22 +56,40 @@ describe('ADD2Characters', () => {
   });
 
   it('prevents adding a character with duplicate name', () => {
-    render(<ADD2Characters useTestData={ true } testData={ [] } />);
+    render(<ADD2Characters serverGateway={ new MockGatewayADD2() } />);
     expect(screen.queryAllByRole('row').length).toBe(0);
 
-    userEvent.type(screen.getByRole('textbox'), 'test{enter}');
+    userEvent.type(screen.getByRole('textbox'), `${testData[0].name}{enter}`);
     expect(screen.getByRole('row', { name: /test/ })).toBeInTheDocument();
     expect(screen.queryAllByRole('row').length).toBe(2);
 
-    userEvent.type(screen.getByRole('textbox'), 'test');
+    userEvent.type(screen.getByRole('textbox'), `${testData[0].name}`);
     userEvent.click(screen.getByRole('button', { name: /Create/ }));
 
     expect(screen.getByRole('textbox')).toHaveValue('');
     expect(screen.queryAllByRole('row').length).toBe(2);
   });
 
+  it('updates character when saving stats', async () => {
+    render(<ADD2Characters serverGateway={ new MockGatewayADD2() } />);
+    userEvent.type(screen.getByRole('textbox'), `${testData[0].name}{enter}`);
+    userEvent.click(screen.getByRole('row', { name: /test1/ }));
+    userEvent.click(screen.getByRole('button', { name: /Roll Stats/ }));
+    await waitFor(() => screen.getByRole('button', { name: /Save Stats/ }));
+
+    userEvent.click(screen.getByRole('button', { name: /Save Stats/ }));
+
+    await waitFor(() => expect(screen.getByText(/STR: 3/)).toBeInTheDocument());
+    expect(screen.getByText(/DEX: 4/)).toBeInTheDocument();
+    expect(screen.getByText(/CON: 5/)).toBeInTheDocument();
+    expect(screen.getByText(/INT: 6/)).toBeInTheDocument();
+    expect(screen.getByText(/WIS: 7/)).toBeInTheDocument();
+    expect(screen.getByText(/CHR: 8/)).toBeInTheDocument();
+  });
+
   it('displays delete button after a character is selected', () => {
-    render(<ADD2Characters useTestData={ true } testData={ getTestData() } />);
+    render(<ADD2Characters serverGateway={ new MockGatewayADD2() } />);
+    userEvent.type(screen.getByRole('textbox'), `${testData[0].name}{enter}`);
 
     userEvent.click(screen.getByRole('row', { name: /test1/ }));
 
@@ -78,9 +97,24 @@ describe('ADD2Characters', () => {
   });
 
   it('allows deleting a character', () => {
-    render(<ADD2Characters useTestData={ true } testData={ getTestData() } />);
+    render(<ADD2Characters serverGateway={ new MockGatewayADD2() } />);
     window.confirm = jest.fn(() => true);
-    expect(screen.queryAllByRole('row')).toHaveLength(4);
+    userEvent.type(screen.getByRole('textbox'), `${testData[0].name}{enter}`);
+    userEvent.type(screen.getByRole('textbox'), `${testData[1].name}{enter}`);
+    expect(screen.queryAllByRole('row')).toHaveLength(3);
+
+    userEvent.click(screen.getByRole('row', { name: /test2/ }));
+    userEvent.click(screen.getByRole('button', { name: /Delete/ }));
+
+    expect(screen.queryAllByRole('row')).toHaveLength(2);
+  });
+
+  it('can cancel character deletion', () => {
+    render(<ADD2Characters serverGateway={ new MockGatewayADD2() } />);
+    window.confirm = jest.fn(() => false);
+    userEvent.type(screen.getByRole('textbox'), `${testData[0].name}{enter}`);
+    userEvent.type(screen.getByRole('textbox'), `${testData[1].name}{enter}`);
+    expect(screen.queryAllByRole('row')).toHaveLength(3);
 
     userEvent.click(screen.getByRole('row', { name: /test1/ }));
     userEvent.click(screen.getByRole('button', { name: /Delete/ }));
@@ -88,22 +122,9 @@ describe('ADD2Characters', () => {
     expect(screen.queryAllByRole('row')).toHaveLength(3);
   });
 
-  it('can cancel character deletion', () => {
-    render(<ADD2Characters useTestData={ true } testData={ getTestData() } />);
-    window.confirm = jest.fn(() => false);
-    expect(screen.queryAllByRole('row')).toHaveLength(4);
-
-    userEvent.click(screen.getByRole('row', { name: /test1/ }));
-    userEvent.click(screen.getByRole('button', { name: /Delete/ }));
-
-    expect(screen.queryAllByRole('row')).toHaveLength(4);
-  });
-
-  const getTestData = () => {
-    return [
-      { id: 1, name: 'test1', str: 0, dex: 0, con: 0, int: 0, wis: 0, chr: 0, completionStep: 1 },
-      { id: 2, name: 'test2', str: 0, dex: 0, con: 0, int: 0, wis: 0, chr: 0, completionStep: 1 },
-      { id: 3, name: 'test3', str: 0, dex: 0, con: 0, int: 0, wis: 0, chr: 0, completionStep: 1 }
-    ];
-  }
+  const testData =
+  [
+    { id: 1, name: 'test1' },
+    { id: 2, name: 'test2' }
+  ];
 });

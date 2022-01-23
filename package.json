@@ -20,14 +20,17 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "coveralls": "^3.1.1",
-    "cypress": "^9.1.1",
+    "cypress": "^9.3.1",
     "msw": "^0.35.0",
     "sinon": "^6.3.5"
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
-      "!src/index.js"
+      "!src/index.js",
+      "!src/App.js",
+      "!src/GameSelection/SelectorADD2.js",
+      "!src/GameSelection/SelectorDD35.js"
     ]
   },
   "browserslist": [

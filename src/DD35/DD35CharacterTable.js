@@ -58,8 +58,8 @@ export default class DD35CharacterTable extends Component {
 
     if (window.confirm(`Are you sure you want to delete ${charToDelete.name}?`)) {
       characterData.splice(index, 1);
-      this.setState({ characterData: characterData });
 
+      this.setState({ characterData: characterData });
       await gateway.deleteCharacter(id);
     }
   }

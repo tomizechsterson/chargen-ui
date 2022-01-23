@@ -1,6 +1,6 @@
 export default class Urls {
-  static ADD2Url = () => {
-    return process.env.NODE_ENV === 'development'
+  static ADD2Url = (env) => {
+    return env === 'development'
       ? 'http://localhost:5000/api/ADD2Character/'
       : 'https://add2ent-dev.azurewebsites.net/api/add2character/';
   };

@@ -44,6 +44,8 @@ At this point, you should have everything you need to fire up your IDE of choice
 Simply run `npm start` in your terminal of choice at the root of the project, and this will start up the development server and attempt to open your default browser to view the app.
 
 **Note for Brave users:** For some reason Brave has trouble with this, but you can just as easily surf to the localhost address manually to view the app in this browser.
+
+If you don't have an external service running to handle the data store, you can select Local Storage in the dropdown on the Home tab. This will allow the app to run without issues when it's by itself.
  
 ## Running the Tests
  

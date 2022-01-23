@@ -193,4 +193,12 @@ describe('LocalGatewayDD35 Tests', () => {
       expect(initialHPGP[1]).toBeLessThanOrEqual(120);
     });
   });
+
+  describe('Final Attributes', () => {
+    it('returns movement rate and saving throws', async () => {
+      const results = await gateway.getFinalAttributes('Human', 'Fighter');
+
+      expect(results).toStrictEqual([12, 14, 16, 15, 17, 17]);
+    });
+  });
 });

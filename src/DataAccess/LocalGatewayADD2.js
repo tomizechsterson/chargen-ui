@@ -6,6 +6,8 @@ import AllowedAlignments from "../ADD2/CharacterCreation/AllowedAlignments";
 import HeightWeightAge from "../ADD2/CharacterCreation/HeightWeightAge";
 import HP from "../ADD2/CharacterCreation/HP";
 import Funds from "../ADD2/CharacterCreation/Funds";
+import MovementRate from "../ADD2/CharacterCreation/MovementRate";
+import SavingThrows from "../ADD2/CharacterCreation/SavingThrows";
 
 export default class LocalGatewayADD2 {
   constructor() {
@@ -98,6 +100,6 @@ export default class LocalGatewayADD2 {
   };
 
   getFinalAttributes = async (race, className) => {
-    throw `getFinalAttributes with ${race} ${className} not implemented yet!`;
+    return [new MovementRate(race).get(), ...new SavingThrows(className).get()];
   };
 }

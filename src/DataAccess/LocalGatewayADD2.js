@@ -4,6 +4,8 @@ import RacialStatAdjust from "../ADD2/CharacterCreation/RacialStatAdjust";
 import AvailableClasses from "../ADD2/CharacterCreation/AvailableClasses";
 import AllowedAlignments from "../ADD2/CharacterCreation/AllowedAlignments";
 import HeightWeightAge from "../ADD2/CharacterCreation/HeightWeightAge";
+import HP from "../ADD2/CharacterCreation/HP";
+import Funds from "../ADD2/CharacterCreation/Funds";
 
 export default class LocalGatewayADD2 {
   constructor() {
@@ -92,7 +94,7 @@ export default class LocalGatewayADD2 {
   };
 
   getHPGP = async (className) => {
-    throw `getHPGP with ${className} not implemented yet!`;
+    return [new HP(className).roll(), new Funds(className).get()];
   };
 
   getFinalAttributes = async (race, className) => {

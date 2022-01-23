@@ -182,4 +182,15 @@ describe('LocalGatewayDD35 Tests', () => {
       expect(hwa[2]).toBeLessThanOrEqual(130);
     });
   });
+
+  describe('Starting Funds and HP', () => {
+    it('returns expected funds and HP from gateway', async () => {
+      const initialHPGP = await gateway.getHPGP('Bard');
+
+      expect(initialHPGP[0]).toBeGreaterThanOrEqual(1);
+      expect(initialHPGP[0]).toBeLessThanOrEqual(6);
+      expect(initialHPGP[1]).toBeGreaterThanOrEqual(20);
+      expect(initialHPGP[1]).toBeLessThanOrEqual(120);
+    });
+  });
 });

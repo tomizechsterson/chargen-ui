@@ -5,8 +5,8 @@ describe('<RollOnce />', () => {
   it('renders expected initial state', () => {
     cy.mount(<RollOnce />);
 
-    cy.get('button').contains('Roll Stats').should('exist');
-    cy.get('button').contains('Save Stats').should('exist');
+    cy.findByRole('button', { name: /Roll Stats/ }).should('exist');
+    cy.findByRole('button', { name: /Save Stats/ }).should('exist');
   });
 
   it('displays an error message if save is clicked before rolling', () => {
@@ -14,7 +14,7 @@ describe('<RollOnce />', () => {
     const stub = cy.stub();
     cy.on('window:alert', stub);
 
-    cy.get('button').contains('Save Stats')
+    cy.findByRole('button', { name: /Save Stats/})
         .click()
         .then(() => {
           expect(stub.getCall(0)).to.be.calledWith('must roll stats to save');
@@ -25,20 +25,20 @@ describe('<RollOnce />', () => {
     cy.mount(<RollOnce selectedChar={ testChar }
                        gateway={ new MockGatewayADD2() } />);
 
-    cy.get('button').contains('Roll Stats').click();
+    cy.findByRole('button', { name: /Roll Stats/ }).click();
 
-    cy.contains('STR: 3');
-    cy.contains('(1 + 1 + 1)');
-    cy.contains('DEX: 4');
-    cy.contains('(1 + 1 + 2)');
-    cy.contains('CON: 5');
-    cy.contains('(1 + 2 + 2)');
-    cy.contains('INT: 6');
-    cy.contains('(2 + 2 + 2)');
-    cy.contains('WIS: 7');
-    cy.contains('(2 + 2 + 3)');
-    cy.contains('CHR: 8');
-    cy.contains('(2 + 3 + 3)');
+    cy.findByText(/STR: 3/).should('exist');
+    cy.findByTestId('strRoll').should('have.text', '(1 + 1 + 1)');
+    cy.findByText(/DEX: 4/).should('exist');
+    cy.findByTestId('dexRoll').should('have.text', '(1 + 1 + 2)');
+    cy.findByText(/CON: 5/).should('exist');
+    cy.findByTestId('conRoll').should('have.text', '(1 + 2 + 2)');
+    cy.findByText(/INT: 6/).should('exist');
+    cy.findByTestId('intRoll').should('have.text', '(2 + 2 + 2)');
+    cy.findByText(/WIS: 7/).should('exist');
+    cy.findByTestId('wisRoll').should('have.text', '(2 + 2 + 3)');
+    cy.findByText(/CHR: 8/).should('exist');
+    cy.findByTestId('chrRoll').should('have.text', '(2 + 3 + 3)');
   });
 
   it('updates character as expected', () => {
@@ -46,11 +46,10 @@ describe('<RollOnce />', () => {
     cy.mount(<RollOnce selectedChar={ testChar }
                        gateway={ new MockGatewayADD2() }
                        onUpdate={ onUpdateSpy }/>);
-    cy.get('button').contains('Roll Stats').click();
+    cy.findByRole('button', { name: /Roll Stats/ }).click();
 
-    cy.get('button').contains('Save Stats').click();
+    cy.findByRole('button', { name: /Save Stats/ }).click();
 
-    // This doesn't care what it's called with... A cypress bug....???
     cy.get('@onUpdateSpy').should('have.been.calledWith', updatedChar);
   });
 

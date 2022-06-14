@@ -14,7 +14,8 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
-import { mount } from 'cypress/react'
+//import './commands';
+import { mount } from 'cypress/react';
+import '@testing-library/cypress/add-commands';
 
 Cypress.Commands.add('mount', mount)

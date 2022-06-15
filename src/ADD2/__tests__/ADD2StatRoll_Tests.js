@@ -6,13 +6,13 @@ import ADD2StatRoll from "../ADD2StatRoll";
 
 describe('ADD2StatRoll Component', () => {
   it('defaults to the Roll Once rule', () => {
-    render(<ADD2StatRoll />);
+    render(<ADD2StatRoll selectedChar={testChar}/>);
 
     expect(screen.getByText(/Standard Stat Rolling. Roll once per stat and that's it./)).toBeInTheDocument();
   });
 
   it('can select the Roll Twice rule', () => {
-    render(<ADD2StatRoll />);
+    render(<ADD2StatRoll selectedChar={testChar}/>);
 
     userEvent.selectOptions(screen.getByRole('combobox'), 'Roll Twice');
 
@@ -20,7 +20,7 @@ describe('ADD2StatRoll Component', () => {
   });
 
   it('can select the Stat Assignment rule', () => {
-    render(<ADD2StatRoll />);
+    render(<ADD2StatRoll selectedChar={testChar}/>);
 
     userEvent.selectOptions(screen.getByRole('combobox'), 'Stat Assignment');
 
@@ -28,7 +28,7 @@ describe('ADD2StatRoll Component', () => {
   });
 
   it('can select the Double Stat Assignment rule', () => {
-    render(<ADD2StatRoll />);
+    render(<ADD2StatRoll selectedChar={testChar}/>);
 
     userEvent.selectOptions(screen.getByRole('combobox'), 'Double Stat Assignment');
 
@@ -36,7 +36,7 @@ describe('ADD2StatRoll Component', () => {
   });
 
   it('can select the Roll 4 Dice rule', () => {
-    render(<ADD2StatRoll />);
+    render(<ADD2StatRoll selectedChar={testChar}/>);
 
     userEvent.selectOptions(screen.getByRole('combobox'), 'Roll 4 dice');
 

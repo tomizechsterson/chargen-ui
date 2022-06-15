@@ -2,28 +2,28 @@ import React, { useState } from 'react';
 import RollOnceDisplay from './RollOnceDisplay';
 
 export default function RollOnce ({ selectedChar, onUpdate, gateway }) {
-  const [selectedCharState, setSelectedCharState] = useState({});
-  const [rollsState, setRollsState] = useState([]);
+  const [selectedCharState, setSelectedCharState] = useState(selectedChar);
+  const [rolls, setRolls] = useState([]);
 
   async function rollStats() {
-    const rolls = await gateway.rollStats('rollstats/rollonce');
-    selectedChar.str = rolls[0].reduce((a, b) => a + b, 0);
-    selectedChar.dex = rolls[1].reduce((a, b) => a + b, 0);
-    selectedChar.con = rolls[2].reduce((a, b) => a + b, 0);
-    selectedChar.int = rolls[3].reduce((a, b) => a + b, 0);
-    selectedChar.wis = rolls[4].reduce((a, b) => a + b, 0);
-    selectedChar.chr = rolls[5].reduce((a, b) => a + b, 0);
+    const dieRolls = await gateway.rollStats('rollstats/rollonce');
+    selectedCharState.str = dieRolls[0].reduce((a, b) => a + b, 0);
+    selectedCharState.dex = dieRolls[1].reduce((a, b) => a + b, 0);
+    selectedCharState.con = dieRolls[2].reduce((a, b) => a + b, 0);
+    selectedCharState.int = dieRolls[3].reduce((a, b) => a + b, 0);
+    selectedCharState.wis = dieRolls[4].reduce((a, b) => a + b, 0);
+    selectedCharState.chr = dieRolls[5].reduce((a, b) => a + b, 0);
 
-    setRollsState(rolls);
-    setSelectedCharState(selectedChar);
+    setRolls(dieRolls);
+    setSelectedCharState(selectedCharState);
   }
 
   function handleUpdate() {
-    if (rollsState.length === 0) {
+    if (rolls.length === 0) {
       alert('must roll stats to save');
     } else {
-      selectedChar.completionStep++;
-      onUpdate(selectedChar);
+      selectedCharState.completionStep++;
+      onUpdate(selectedCharState);
     }
   }
 
@@ -32,7 +32,7 @@ export default function RollOnce ({ selectedChar, onUpdate, gateway }) {
         <button onClick={ rollStats }>Roll Stats</button>
         <br/>
         <p>Standard Stat Rolling. Roll once per stat and that's it.</p>
-        <RollOnceDisplay selectedChar={ selectedCharState } rolls={ rollsState }/>
+        <RollOnceDisplay selectedChar={ selectedCharState } rolls={ rolls }/>
         <button onClick={ handleUpdate }>Save Stats</button>
       </div>
   );

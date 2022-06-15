@@ -1,7 +1,6 @@
 import React from 'react';
 
-const StatsDisplay = (props) => {
-  const { selectedChar } = props;
+export default function StatsDisplay ({ selectedChar }) {
   return (
     <div>
       <p>
@@ -20,4 +19,3 @@ const StatsDisplay = (props) => {
     </div>
   );
 };
-export default StatsDisplay;

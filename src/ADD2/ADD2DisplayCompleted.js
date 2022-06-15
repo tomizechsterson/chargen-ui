@@ -3,8 +3,7 @@ import StatsDisplay from '../GeneralDisplays/StatsDisplay';
 import VitalsDisplay from '../GeneralDisplays/VitalsDisplay';
 import SavingThrowsDisplay from '../GeneralDisplays/SavingThrowsDisplay';
 
-const ADD2DisplayCompleted = (props) => {
-  const { selectedChar } = props;
+export default function ADD2DisplayCompleted ({ selectedChar }) {
   return (
     <div>
       <h2>Character Details</h2>
@@ -17,4 +16,3 @@ const ADD2DisplayCompleted = (props) => {
     </div>
   );
 };
-export default ADD2DisplayCompleted;

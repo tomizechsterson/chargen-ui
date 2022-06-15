@@ -1,7 +1,6 @@
 import React from 'react';
 
-const RollOnceDisplay = (props) => {
-  const { selectedChar, rolls } = props;
+export default function RollOnceDisplay ({ selectedChar, rolls }) {
   const rollsStyle = {
     color: '#999'
   };
@@ -33,4 +32,3 @@ const RollOnceDisplay = (props) => {
     </p>
   );
 };
-export default RollOnceDisplay;

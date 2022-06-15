@@ -1,7 +1,6 @@
 import React from 'react';
 
-const SavingThrowsDisplay = (props) => {
-  const { selectedChar } = props;
+export default function SavingThrowsDisplay ({ selectedChar }) {
   return (
     <div>
       <h4>Saving Throws</h4>
@@ -15,4 +14,3 @@ const SavingThrowsDisplay = (props) => {
     </div>
   );
 };
-export default SavingThrowsDisplay;

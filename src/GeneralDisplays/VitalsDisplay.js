@@ -1,7 +1,6 @@
 import React from 'react';
 
-const VitalsDisplay = (props) => {
-  const { selectedChar } = props;
+export default function VitalsDisplay ({ selectedChar }) {
   const feet = (inches) => {
     return Math.trunc(inches / 12);
   };
@@ -19,4 +18,3 @@ const VitalsDisplay = (props) => {
     </div>
   );
 };
-export default VitalsDisplay;

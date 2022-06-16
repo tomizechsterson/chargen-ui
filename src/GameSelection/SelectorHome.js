@@ -1,7 +1,6 @@
 import React from 'react';
 
-const SelectorHome = (props) => {
-  const { onSelectService, selectedService } = props;
+export default function SelectorHome ({ onSelectService, selectedService }) {
   return (
     <div>
       <p>To get started, select a data store below, and select a game above.</p>
@@ -13,4 +12,3 @@ const SelectorHome = (props) => {
     </div>
   );
 };
-export default SelectorHome;

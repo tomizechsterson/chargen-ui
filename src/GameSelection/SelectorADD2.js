@@ -1,9 +1,7 @@
 import React from 'react';
 import ADD2Characters from '../ADD2/ADD2Characters';
 
-const SelectorADD2 = (props) => {
-  const { gateway } = props;
-
+export default function SelectorADD2 ({ gateway }) {
   return (
     <div>
       <ADD2Characters
@@ -12,4 +10,3 @@ const SelectorADD2 = (props) => {
     </div>
   );
 };
-export default SelectorADD2;

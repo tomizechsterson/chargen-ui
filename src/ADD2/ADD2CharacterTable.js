@@ -1,11 +1,10 @@
 import React from 'react';
 import './ADD2CharacterTable.css';
 
-const ADD2CharacterTable = (props) => {
+export default function ADD2CharacterTable ({ characters, onSelect }) {
   const completeStep = 6;
-  const entries = props.characters;
-  const rowItems = entries.map(function(item) {
-    return <tr key={item.id} onClick={ () => props.onSelect(item.id) }>
+  const rowItems = characters.map(function(item) {
+    return <tr key={item.id} onClick={ () => onSelect(item.id) }>
       <td>{item.name}</td>
       <td>{item.race}</td>
       <td>{item.className}</td>
@@ -35,4 +34,3 @@ const ADD2CharacterTable = (props) => {
     );
   }
 };
-export default ADD2CharacterTable;

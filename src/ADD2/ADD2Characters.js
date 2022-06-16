@@ -180,7 +180,6 @@ export default class ADD2Characters extends Component {
           <ADD2CharacterDetails
             selectedChar={ selected }
             gateway={ serverGateway }
-            onDelete={ this.handleDelete }
             onUpdate={ this.handleUpdate }
           />
           {

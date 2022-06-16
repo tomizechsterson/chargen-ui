@@ -2,8 +2,7 @@ import React from 'react';
 import ADD2DisplayCompleted from './ADD2DisplayCompleted';
 import ADD2CharacterCreation from './ADD2CharacterCreation';
 
-const ADD2CharacterDetails = (props) => {
-  const { selectedChar, onUpdate, gateway } = props;
+export default function ADD2CharacterDetails ({ selectedChar, onUpdate, gateway }) {
   const isOneSelected = Boolean(selectedChar);
   const completeStep = 6;
 
@@ -27,4 +26,3 @@ const ADD2CharacterDetails = (props) => {
     </div>
   );
 };
-export default ADD2CharacterDetails;

@@ -5,8 +5,7 @@ import ADD2ClassSelection from "./ADD2ClassSelection";
 import ADD2AlignmentSelection from "./ADD2AlignmentSelection";
 import ADD2FinalAttributes from "./ADD2FinalAttributes";
 
-const ADD2CharacterCreation = (props) => {
-  const { selectedChar, onUpdate, gateway } = props;
+export default function ADD2CharacterCreation ({ selectedChar, onUpdate, gateway }) {
   return (
     <div>
       <h2>Character Creation</h2>
@@ -54,4 +53,3 @@ const ADD2CharacterCreation = (props) => {
     </div>
   );
 };
-export default ADD2CharacterCreation;

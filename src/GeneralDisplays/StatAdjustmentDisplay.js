@@ -1,7 +1,6 @@
 import React from 'react';
 
-const StatAdjustmentDisplay = (props) => {
-  const { text, stat, adjustment } = props;
+export default function StatAdjustmentDisplay ({ text, stat, adjustment }) {
   const displayStyle = {
     color: '#999',
     paddingLeft: '10px'
@@ -18,4 +17,3 @@ const StatAdjustmentDisplay = (props) => {
     </div>
   );
 };
-export default StatAdjustmentDisplay;

@@ -1,38 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import RollTwiceDisplay from './RollTwiceDisplay';
 
-export default class RollTwice extends Component {
-  constructor(props) {
-    super(props);
+export default function RollTwice ({ selectedChar, onUpdate, gateway }) {
+  const [selectedCharState, setSelectedCharState] = useState(selectedChar);
+  const [rolls, setRolls] = useState([]);
 
-    this.state = { selectedChar: {}, rolls: [] };
-
-    this.rollStats = this.rollStats.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-  }
-
-  static getHigherRoll(roll1, roll2) {
+  function getHigherRoll(roll1, roll2) {
     let total1 = roll1.reduce((a, b) => a + b, 0);
     let total2 = roll2.reduce((a, b) => a + b, 0);
 
     return total1 > total2 ? total1 : total2;
   }
 
-  async rollStats() {
-    const { selectedChar, gateway } = this.props;
-    const rolls = await gateway.rollStats('rollstats/rolltwice');
-    selectedChar.str = RollTwice.getHigherRoll(rolls[0], rolls[1]);
-    selectedChar.dex = RollTwice.getHigherRoll(rolls[2], rolls[3]);
-    selectedChar.con = RollTwice.getHigherRoll(rolls[4], rolls[5]);
-    selectedChar.int = RollTwice.getHigherRoll(rolls[6], rolls[7]);
-    selectedChar.wis = RollTwice.getHigherRoll(rolls[8], rolls[9]);
-    selectedChar.chr = RollTwice.getHigherRoll(rolls[10], rolls[11]);
-    this.setState({ rolls: rolls, selectedChar: selectedChar });
+  async function rollStats() {
+    const dieRolls = await gateway.rollStats('rollstats/rolltwice');
+    selectedCharState.str = getHigherRoll(dieRolls[0], dieRolls[1]);
+    selectedCharState.dex = getHigherRoll(dieRolls[2], dieRolls[3]);
+    selectedCharState.con = getHigherRoll(dieRolls[4], dieRolls[5]);
+    selectedCharState.int = getHigherRoll(dieRolls[6], dieRolls[7]);
+    selectedCharState.wis = getHigherRoll(dieRolls[8], dieRolls[9]);
+    selectedCharState.chr = getHigherRoll(dieRolls[10], dieRolls[11]);
+
+    setRolls(dieRolls);
+    setSelectedCharState(selectedCharState);
   }
 
-  handleUpdate() {
-    const { selectedChar, onUpdate } = this.props;
-    if (this.state.rolls.length === 0) {
+  function handleUpdate() {
+    if (rolls.length === 0) {
       alert('must roll stats to save');
     } else {
       selectedChar.completionStep++;
@@ -40,15 +34,13 @@ export default class RollTwice extends Component {
     }
   }
 
-  render() {
-    return (
-      <div>
-        <button onClick={ this.rollStats }>Roll Stats</button>
-        <br/>
-        <p>The higher of two rolls is selected for each ability score</p>
-        <RollTwiceDisplay selectedChar={ this.state.selectedChar } rolls={ this.state.rolls }/>
-        <button onClick={ this.handleUpdate }>Save Stats</button>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <button onClick={ rollStats }>Roll Stats</button>
+      <br/>
+      <p>The higher of two rolls is selected for each ability score</p>
+      <RollTwiceDisplay selectedChar={ selectedCharState } rolls={ rolls }/>
+      <button onClick={ handleUpdate }>Save Stats</button>
+    </div>
+  );
 }

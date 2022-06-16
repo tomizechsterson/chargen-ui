@@ -7,14 +7,14 @@ import MockGatewayADD2 from "../../DataAccess/mockGatewayADD2";
 
 describe('Roll Twice Component', () => {
   it('renders expected initial state', () => {
-    render(<RollTwice />);
+    render(<RollTwice selectedChar={ testChar } />);
 
     expect(screen.getByRole('button', { name: /Roll Stats/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Save Stats/ })).toBeInTheDocument();
   });
 
   it('displays an error message if save is clicked before rolling', () => {
-    render(<RollTwice />);
+    render(<RollTwice selectedChar={ testChar } />);
     const alertMock = jest.spyOn(window, 'alert').mockImplementation();
 
     userEvent.click(screen.getByRole('button', { name: /Save Stats/ }));

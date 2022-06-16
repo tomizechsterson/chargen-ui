@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import RollFourDisplay from './RollFourDisplay';
 
-export default class RollFour extends Component {
-  constructor(props) {
-    super(props);
+export default function RollFour ({ selectedChar, onUpdate, gateway }) {
+  const [selectedCharState, setSelectedCharState] = useState(selectedChar);
+  const [rolls, setRolls] = useState([]);
 
-    this.state = { selectedChar: {}, rolls: [] };
-
-    this.rollStats = this.rollStats.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-  }
-
-  static addThreeLargest(roll) {
+  function addThreeLargest(roll) {
     const sorted = roll.sort(function(a, b) {
       return b - a
     });
@@ -22,21 +16,21 @@ export default class RollFour extends Component {
     return total;
   }
 
-  async rollStats() {
-    const { selectedChar, gateway } = this.props;
-    const rolls = await gateway.rollStats('rollstats/rollfour');
-    selectedChar.str = RollFour.addThreeLargest(rolls[0]);
-    selectedChar.dex = RollFour.addThreeLargest(rolls[1]);
-    selectedChar.con = RollFour.addThreeLargest(rolls[2]);
-    selectedChar.int = RollFour.addThreeLargest(rolls[3]);
-    selectedChar.wis = RollFour.addThreeLargest(rolls[4]);
-    selectedChar.chr = RollFour.addThreeLargest(rolls[5]);
-    this.setState({ rolls: rolls, selectedChar: selectedChar });
+  async function rollStats() {
+    const dieRolls = await gateway.rollStats('rollstats/rollfour');
+    selectedCharState.str = addThreeLargest(dieRolls[0]);
+    selectedCharState.dex = addThreeLargest(dieRolls[1]);
+    selectedCharState.con = addThreeLargest(dieRolls[2]);
+    selectedCharState.int = addThreeLargest(dieRolls[3]);
+    selectedCharState.wis = addThreeLargest(dieRolls[4]);
+    selectedCharState.chr = addThreeLargest(dieRolls[5]);
+
+    setRolls(dieRolls);
+    setSelectedCharState(selectedCharState);
   }
 
-  handleUpdate() {
-    const { selectedChar, onUpdate } = this.props;
-    if (this.state.rolls.length === 0) {
+  function handleUpdate() {
+    if (rolls.length === 0) {
       alert('must roll stats to save');
     } else {
       selectedChar.completionStep++;
@@ -44,15 +38,13 @@ export default class RollFour extends Component {
     }
   }
 
-  render() {
-    return (
-      <div>
-        <button onClick={ this.rollStats }>Roll Stats</button>
-        <br/>
-        <p>Only the three highest rolls are added to the ability score</p>
-        <RollFourDisplay selectedChar={ this.state.selectedChar } rolls={ this.state.rolls }/>
-        <button onClick={ this.handleUpdate }>Save Stats</button>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <button onClick={ rollStats }>Roll Stats</button>
+      <br/>
+      <p>Only the three highest rolls are added to the ability score</p>
+      <RollFourDisplay selectedChar={ selectedCharState } rolls={ rolls }/>
+      <button onClick={ handleUpdate }>Save Stats</button>
+    </div>
+  );
 }

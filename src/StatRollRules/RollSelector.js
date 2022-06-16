@@ -1,7 +1,6 @@
 import React from 'react';
 
-const RollSelector = (props) => {
-  const { rolls, onSelectRoll } = props;
+export default function RollSelector ({ rolls, onSelectRoll }) {
   const buttons = rolls.map(function(roll) {
     return <button
       key={ roll.id }
@@ -18,4 +17,3 @@ const RollSelector = (props) => {
     </div>
   );
 };
-export default RollSelector;

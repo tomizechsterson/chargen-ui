@@ -25,6 +25,7 @@ export default class AssignmentDisplay extends Component {
       this.setState({ selectedRoll: roll });
   }
 
+  // noinspection DuplicatedCode
   handleAssign() {
     const { selectedChar, rolls } = this.props;
     const { selectedStat, selectedRoll } = this.state;

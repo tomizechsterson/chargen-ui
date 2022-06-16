@@ -1,7 +1,6 @@
 import React from 'react';
 
-const AssignmentControl = (props) => {
-  const { stat, charStat, rolls, onSelectStat, onSelectRoll } = props;
+export default function AssignmentControl ({ stat, charStat, rolls, onSelectStat, onSelectRoll }) {
   const rollStyle = {
     color: '#999'
   };
@@ -72,4 +71,3 @@ const AssignmentControl = (props) => {
     );
   }
 };
-export default AssignmentControl;

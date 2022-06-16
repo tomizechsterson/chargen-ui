@@ -1,7 +1,6 @@
 import React from 'react';
 
-const RollFourDisplay = (props) => {
-  const { selectedChar, rolls } = props;
+export default function RollFourDisplay ({ selectedChar, rolls }) {
   const rollsStyle = {
     color: '#999'
   };
@@ -45,4 +44,3 @@ const RollFourDisplay = (props) => {
     </p>
   );
 };
-export default RollFourDisplay;

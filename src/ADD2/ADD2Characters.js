@@ -169,7 +169,7 @@ export default class ADD2Characters extends Component {
             placeholder='character name'
             value={ newCharName }
             onChange={ (e) => this.handleNewNameChange(e) }
-            onKeyPress={ this.handleKeyPress }
+            onKeyUp={ this.handleKeyPress }
           />
           <ADD2CharacterTable
             characters={ characterData }

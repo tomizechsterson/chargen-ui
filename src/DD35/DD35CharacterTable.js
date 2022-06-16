@@ -98,7 +98,7 @@ export default class DD35CharacterTable extends Component {
           placeholder='new name'
           value={ newCharName }
           onChange={ (e) => this.handleNewNameChange(e) }
-          onKeyPress={ this.handleKeyPress }
+          onKeyUp={ this.handleKeyPress }
         />
         { characterData.length < 1 && <p>No characters</p> }
         { characterData.length > 0 &&

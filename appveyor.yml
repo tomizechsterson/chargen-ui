@@ -17,3 +17,5 @@ test_script:
 after_test:
   - node ./node_modules/coveralls/bin/coveralls.js < lcov.info
   - rm lcov.info
+
+build: false

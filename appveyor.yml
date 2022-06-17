@@ -19,7 +19,7 @@ after_test:
   - rm lcov.info
   - npm run build
 
-build: false
+build: off
 
 artifacts:
   - path: build\

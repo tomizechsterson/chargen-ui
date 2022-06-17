@@ -27,8 +27,9 @@ export default function ADD2Characters ({ serverGateway }) {
       setCharacterData(data);
     }
 
+    // noinspection JSIgnoredPromiseFromCall
     fetchData();
-  }, [characterData]);
+  }, []);
 
   // async componentDidMount() {
   //   const { serverGateway } = this.props;
@@ -104,11 +105,6 @@ export default function ADD2Characters ({ serverGateway }) {
   }
 
   async function handleCreate() {
-    console.log('FUCK YOU!!!');
-    console.log('newCharName: ', newCharName);
-    // const { serverGateway } = this.props;
-    // const { newCharName, characterData } = this.state;
-
     function newNameIsUnique(newCharName) {
       const index = characterData.findIndex(function(c) {
         return c.name === newCharName;
@@ -118,15 +114,12 @@ export default function ADD2Characters ({ serverGateway }) {
     }
 
     if (newCharName.trim() && newNameIsUnique(newCharName)) {
-      console.log('new name is unique');
       let newId;
       const characters = characterData;
       if (characters.length === 0)
         newId = 1;
       else
         newId = characters[characters.length - 1].id + 1;
-
-      console.log('newId: ', newId);
 
       const newChar = {
         id: newId, name: newCharName,
@@ -173,8 +166,6 @@ export default function ADD2Characters ({ serverGateway }) {
   async function handleKeyPress(e) {
     if (e.key === 'Enter')
       await handleCreate();
-    else
-      setNewCharName(e.target.value)
   }
 
   //render() {
@@ -190,14 +181,14 @@ export default function ADD2Characters ({ serverGateway }) {
     return (
       <div style={topLevelColumnsStyle}>
         <div>
-          <button onClick={ () => handleCreate() }>Create</button>
+          <button onClick={ handleCreate }>Create</button>
           <input
             type='text'
             maxLength='32'
             placeholder='character name'
-            // value={ newCharName }
-            onChange={ (e) => handleNewNameChange(e) }
-            onKeyUp={(e) => handleKeyPress(e) }
+            value={ newCharName }
+            onChange={ handleNewNameChange }
+            onKeyUp={ handleKeyPress }
           />
           <ADD2CharacterTable
             characters={ characterData }

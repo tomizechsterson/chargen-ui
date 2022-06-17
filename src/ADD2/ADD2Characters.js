@@ -1,53 +1,68 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import ADD2CharacterTable from './ADD2CharacterTable';
 import ADD2CharacterDetails from './ADD2CharacterDetails';
 
-export default class ADD2Characters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      characterData: [],
-      selected: null,
-      newCharName: ''
-    };
-    this.isUnmounted = false;
+export default function ADD2Characters ({ serverGateway }) {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     characterData: [],
+  //     selected: null,
+  //     newCharName: ''
+  //   };
+  //   this.isUnmounted = false;
+  //
+  //   this.handleSelect = this.handleSelect.bind(this);
+  //   this.handleDelete = this.handleDelete.bind(this);
+  //   this.handleUpdate = this.handleUpdate.bind(this);
+  // }
 
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-  }
+  const [characterData, setCharacterData] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [newCharName, setNewCharName] = useState('');
 
-  async componentDidMount() {
-    const { serverGateway } = this.props;
-    const data = await serverGateway.getCharacters();
-    if (!this.isUnmounted)
-      this.setState({ characterData: data });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await serverGateway.getCharacters();
+      setCharacterData(data);
+    }
 
-  componentWillUnmount() {
-    this.isUnmounted = true;
-  }
+    fetchData();
+  }, [characterData]);
 
-  handleSelect(id) {
-    const { selected, characterData } = this.state;
+  // async componentDidMount() {
+  //   const { serverGateway } = this.props;
+  //   const data = await serverGateway.getCharacters();
+  //   if (!this.isUnmounted)
+  //     this.setState({ characterData: data });
+  // }
+  //
+  // componentWillUnmount() {
+  //   this.isUnmounted = true;
+  // }
+
+  function handleSelect(id) {
+    // const { selected, characterData } = this.state;
     if (!selected) {
       for (let i = 0; i < characterData.length; i++) {
         if (characterData[i].id === id) {
-          this.setState({ selected: characterData[i] });
+          // this.setState({ selected: characterData[i] });
+          setSelected(characterData[i]);
         }
       }
     } else {
       for (let i = 0; i < characterData.length; i++) {
         if (characterData[i].id === id && selected.id !== id) {
-          this.setState({ selected: characterData[i] });
+          // this.setState({ selected: characterData[i] });
+          setSelected(characterData[i]);
         }
       }
     }
   }
 
-  async handleDelete(id) {
-    const { serverGateway } = this.props;
-    const { characterData } = this.state;
+  async function handleDelete(id) {
+    // const { serverGateway } = this.props;
+    // const { characterData } = this.state;
     const index = characterData.findIndex(function(o) {
       return o.id === id;
     });
@@ -57,13 +72,14 @@ export default class ADD2Characters extends Component {
     if (window.confirm(`Are you sure you want to delete ${charToDelete.name}, the ${charToDelete.race} ${charToDelete.className}?`)) {
       characterData.splice(index, 1);
 
-      this.setState({ selected: null });
+      // this.setState({ selected: null });
+      setSelected(null);
       await serverGateway.deleteCharacter(id);
     }
   }
 
-  async handleUpdate(character) {
-    const { serverGateway } = this.props;
+  async function handleUpdate(character) {
+    // const { serverGateway } = this.props;
 
     if (character.completionStep === 2)
       character.availableRaces = await serverGateway.getRaces(character);
@@ -76,19 +92,22 @@ export default class ADD2Characters extends Component {
       character.availableAlignments = await serverGateway.getAlignments(character.className);
     }
 
-    const chars = this.state.characterData;
+    const chars = characterData;
     const i = chars.findIndex(function(o) {
       return o.id === character.id
     });
     chars[i] = character;
-    this.setState({ characterData: chars });
+    // this.setState({ characterData: chars });
+    setCharacterData(chars);
 
     await serverGateway.updateCharacter(character);
   }
 
-  async handleCreate() {
-    const { serverGateway } = this.props;
-    const { newCharName, characterData } = this.state;
+  async function handleCreate() {
+    console.log('FUCK YOU!!!');
+    console.log('newCharName: ', newCharName);
+    // const { serverGateway } = this.props;
+    // const { newCharName, characterData } = this.state;
 
     function newNameIsUnique(newCharName) {
       const index = characterData.findIndex(function(c) {
@@ -99,12 +118,15 @@ export default class ADD2Characters extends Component {
     }
 
     if (newCharName.trim() && newNameIsUnique(newCharName)) {
+      console.log('new name is unique');
       let newId;
       const characters = characterData;
       if (characters.length === 0)
         newId = 1;
       else
         newId = characters[characters.length - 1].id + 1;
+
+      console.log('newId: ', newId);
 
       const newChar = {
         id: newId, name: newCharName,
@@ -132,26 +154,32 @@ export default class ADD2Characters extends Component {
         funds: 0
       };
       const newCharList = characters.concat([newChar]);
-      this.setState({ characterData: newCharList, newCharName: '' });
+      // this.setState({ characterData: newCharList, newCharName: '' });
+      setCharacterData(newCharList);
+      setNewCharName('');
 
       await serverGateway.createCharacter(newChar);
     } else {
-      this.setState({ newCharName: '' });
+      // this.setState({ newCharName: '' });
+      setNewCharName('');
     }
   }
 
-  handleNewNameChange(e) {
-    this.setState({ newCharName: e.target.value });
+  function handleNewNameChange(e) {
+    // this.setState({ newCharName: e.target.value });
+    setNewCharName(e.target.value);
   }
 
-  handleKeyPress = async event => {
-    if (event.key === 'Enter')
-      await this.handleCreate();
-  };
+  async function handleKeyPress(e) {
+    if (e.key === 'Enter')
+      await handleCreate();
+    else
+      setNewCharName(e.target.value)
+  }
 
-  render() {
-    const { newCharName, characterData, selected } = this.state;
-    const { serverGateway } = this.props;
+  //render() {
+    // const { newCharName, characterData, selected } = this.state;
+    // const { serverGateway } = this.props;
     const topLevelColumnsStyle = {
       columnCount: 2,
       columnRuleStyle: 'solid',
@@ -162,31 +190,31 @@ export default class ADD2Characters extends Component {
     return (
       <div style={topLevelColumnsStyle}>
         <div>
-          <button onClick={ () => this.handleCreate() }>Create</button>
+          <button onClick={ () => handleCreate() }>Create</button>
           <input
             type='text'
             maxLength='32'
             placeholder='character name'
-            value={ newCharName }
-            onChange={ (e) => this.handleNewNameChange(e) }
-            onKeyUp={ this.handleKeyPress }
+            // value={ newCharName }
+            onChange={ (e) => handleNewNameChange(e) }
+            onKeyUp={(e) => handleKeyPress(e) }
           />
           <ADD2CharacterTable
             characters={ characterData }
-            onSelect={ this.handleSelect }
+            onSelect={ handleSelect }
           />
         </div>
         <div>
           <ADD2CharacterDetails
             selectedChar={ selected }
             gateway={ serverGateway }
-            onUpdate={ this.handleUpdate }
+            onUpdate={ handleUpdate }
           />
           {
-            selected && <button onClick={ () => this.handleDelete(selected.id) }>Delete</button>
+            selected && <button onClick={ () => handleDelete(selected.id) }>Delete</button>
           }
         </div>
       </div>
     );
-  }
+  //}
 }

@@ -1,27 +1,40 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default class DD35CharacterTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { newCharName: '', characterData: [] };
-    this.isUnmounted = false;
-  }
+export default function DD35CharacterTable ({ gateway, onSelect }) {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { newCharName: '', characterData: [] };
+  //   this.isUnmounted = false;
+  // }
 
-  async componentDidMount() {
-    const { gateway } = this.props;
-    const data = await gateway.get();
+  const [newCharName, setNewCharName] = useState('');
+  const [characterData, setCharacterData] = useState([]);
 
-    if (!this.isUnmounted)
-      this.setState({ characterData: data });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await gateway.get();
+      setCharacterData(data);
+    }
 
-  componentWillUnmount() {
-    this.isUnmounted = true;
-  }
+    // noinspection JSIgnoredPromiseFromCall
+    fetchData();
+  }, []);
 
-  async handleCreate() {
-    const { newCharName, characterData } = this.state;
-    const { gateway } = this.props;
+  // async componentDidMount() {
+  //   const { gateway } = this.props;
+  //   const data = await gateway.get();
+  //
+  //   if (!this.isUnmounted)
+  //     this.setState({ characterData: data });
+  // }
+  //
+  // componentWillUnmount() {
+  //   this.isUnmounted = true;
+  // }
+
+  async function handleCreate() {
+    // const { newCharName, characterData } = this.state;
+    // const { gateway } = this.props;
 
     function newNameIsUnique(name) {
       const index = characterData.findIndex(function(c) {
@@ -40,16 +53,20 @@ export default class DD35CharacterTable extends Component {
 
       const newChar = { id: newId, name: newCharName };
       const newCharList = characters.concat([newChar]);
-      this.setState({ characterData: newCharList, newCharName: '' });
+      // this.setState({ characterData: newCharList, newCharName: '' });
+      setCharacterData(newCharList);
+      setNewCharName('');
 
       await gateway.createCharacter(newChar);
-    } else
-      this.setState({ newCharName: '' });
+    } else {
+      // this.setState({ newCharName: '' });
+      setNewCharName('');
+    }
   }
 
-  async handleDelete(id) {
-    const { characterData } = this.state;
-    const { gateway } = this.props;
+  async function handleDelete(id) {
+    // const { characterData } = this.state;
+    // const { gateway } = this.props;
     const index = characterData.findIndex(function(c) {
       return c.id === id;
     });
@@ -59,23 +76,25 @@ export default class DD35CharacterTable extends Component {
     if (window.confirm(`Are you sure you want to delete ${charToDelete.name}?`)) {
       characterData.splice(index, 1);
 
-      this.setState({ characterData: characterData });
+      // this.setState({ characterData: characterData });
+      setCharacterData(characterData);
       await gateway.deleteCharacter(id);
     }
   }
 
-  handleNewNameChange(e) {
-    this.setState({ newCharName: e.target.value });
+  function handleNewNameChange(e) {
+    // this.setState({ newCharName: e.target.value });
+    setNewCharName(e.target.value);
   }
 
-  handleKeyPress = event => {
-    if (event.key === 'Enter')
-      this.handleCreate();
-  };
+  async function handleKeyPress(e){
+    if (e.key === 'Enter')
+      await handleCreate();
+  }
 
-  render() {
-    const { newCharName, characterData } = this.state;
-    const { onSelect } = this.props;
+  // render() {
+  //   const { newCharName, characterData } = this.state;
+  //   const { onSelect } = this.props;
 
     const rowItems = characterData.map(function(item) {
       return <tr key={item.id}>
@@ -84,21 +103,21 @@ export default class DD35CharacterTable extends Component {
           <button onClick={ () => onSelect(item) }>Edit</button>
         </td>
         <td>
-          <button onClick={ () => this.handleDelete(item.id) }>Delete</button>
+          <button onClick={ async () => await handleDelete(item.id) }>Delete</button>
         </td>
       </tr>
-    }.bind(this));
+    });
 
     return (
       <div>
-        <button onClick={ () => this.handleCreate() }>Create</button>
+        <button onClick={ () => handleCreate() }>Create</button>
         <input
           type='text'
           maxLength='32'
           placeholder='new name'
           value={ newCharName }
-          onChange={ (e) => this.handleNewNameChange(e) }
-          onKeyUp={ this.handleKeyPress }
+          onChange={ (e) => handleNewNameChange(e) }
+          onKeyUp={ handleKeyPress }
         />
         { characterData.length < 1 && <p>No characters</p> }
         { characterData.length > 0 &&
@@ -117,5 +136,5 @@ export default class DD35CharacterTable extends Component {
         }
       </div>
     );
-  }
+  // }
 }

@@ -10,7 +10,7 @@ This document spells out the required API contracts for this UI to work. It's sp
 
 Response:
 
-```
+```json
 [
 	{
 		"id": 1,  
@@ -80,7 +80,7 @@ Response:
 
 Response:
 
-```
+```json
 {
   "id": 1,
   "name": "Test1",
@@ -118,7 +118,7 @@ Response:
 
 Request Body:
 
-```
+```json
 {"id":7,"name":"asdfasdfaaa","completionStep":1,"str":0,"dex":0,"con":0,"int":0,"wis":0,"chr":0,"race":"none","gender":"n","height":0,"weight":0,"age":0,"className":"none","alignment":"none","paralyze":0,"rod":0,"petrification":0,"breath":0,"spell":0,"hp":0,"moveRate":0,"funds":0}
 ```
 
@@ -128,7 +128,7 @@ Request Body:
 
 Request Body:
 
-```
+```json
 {"id":5,"name":"asdfasdf","str":8,"dex":8,"con":14,"int":11,"wis":4,"chr":8,"race":"none","availableRaces":["Dwarf","Elf","Gnome","Half-Elf","Halfling","Human"],"gender":"n","height":0,"weight":0,"age":0,"className":"none","availableClasses":[],"alignment":"none","availableAlignments":[],"hp":0,"paralyze":0,"rod":0,"petrification":0,"breath":0,"spell":0,"moveRate":0,"funds":0,"completionStep":2}
 ```
 
@@ -144,7 +144,7 @@ There are 6 different rules that can be used to determine initial stats
 
 Response:
 
-```
+```json
 [
   [ 3, 2, 5 ],
   [ 1, 5, 6 ],
@@ -159,7 +159,7 @@ Response:
 
 Response:
 
-```
+```json
 [
   [ 3, 3, 6 ],
   [ 5, 6, 5 ],
@@ -180,7 +180,7 @@ Response:
 
 Response:
 
-```
+```json
 [
   [ 4, 6, 4 ],
   [ 2, 2, 4 ],
@@ -195,7 +195,7 @@ Response:
 
 Response:
 
-```
+```json
 [
   [ 5, 5, 6 ],
   [ 5, 5, 1 ],
@@ -216,7 +216,7 @@ Response:
 
 Response:
 
-```
+```json
 [
   [ 3, 6, 3, 4 ],
   [ 2, 2, 6, 3 ],
@@ -231,7 +231,9 @@ Response:
 
 Response:
 
-`[ [ 3 ], [ 3 ], [ 6 ], [ 2 ], [ 5 ], [ 3 ], [ 6 ] ]`
+```json
+[ [ 3 ], [ 3 ], [ 6 ], [ 2 ], [ 5 ], [ 3 ], [ 6 ] ]
+```
 
 ## Get Available Races
 
@@ -256,7 +258,7 @@ Example:
 
 Response:
 
-```
+```json
 [
   "Elf",
   "Gnome",
@@ -283,7 +285,7 @@ Most races in this game have associated stat adjustments when you select them:
 
 Response:
 
-```
+```json
 {
   "dex": 1,
   "con": -1
@@ -326,7 +328,7 @@ Example:
 
 Response:
 
-```
+```json
 [
   "Fighter",
   "Mage",
@@ -358,7 +360,7 @@ Once class is known, the available alignments can be queried
 
 Response:
 
-```
+```json
 [
   "Lawful Good",
   "Neutral Good",
@@ -389,7 +391,7 @@ Once race and gender have been chosen, the starting height, weight, and age can 
 
 Response:
 
-```
+```json
 [ 64, 99, 121 ]
 ```
 
@@ -405,7 +407,7 @@ Need to roll for starting HP and funds
 
 Response:
 
-```
+```json
 [ 3, 100 ]
 ```
 
@@ -427,7 +429,7 @@ Example:
 
 Response:
 
-```
+```json
 [ 12, 14, 16, 15, 17, 17 ]
 ```
 
@@ -445,7 +447,7 @@ The values are used as follows:
 
 Response:
 
-```
+```json
 [
   {
     "id": 1,
@@ -464,7 +466,7 @@ Response:
 
 Payload:
 
-```
+```json
 {"id":3,"name":"test"}
 ```
 
